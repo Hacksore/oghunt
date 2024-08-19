@@ -28,7 +28,7 @@ query GetAllPosts (
 }
 `;
 
-interface Post {
+export interface Post {
     id: string;
     name: string;
     url: string;
@@ -41,6 +41,7 @@ export interface PageInfo {
     hasNextPage: boolean | undefined
     endCursor: string | undefined
 }
+
 export async function getAllPost(endCursor?: string | null) {
     return (await fetch("https://api.producthunt.com/v2/api/graphql", {
         headers: {
