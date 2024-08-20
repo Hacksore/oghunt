@@ -4,7 +4,7 @@ import { filterPosts, getAllPost } from "./lib/data";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
-  description: "Sites on ProductHunt with ZERO AI Slop™",
+  description: "Sites on Product Hunt with ZERO AI Slop™",
   site: "https://oghunt.vercel.app",
 };
 
