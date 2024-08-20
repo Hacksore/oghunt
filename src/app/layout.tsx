@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <a href="#">
-          <div className="text-neutral-800 p-2 text-center text-xs md:text-sm flex items-center justify-center bg-gradient-to-r from-pink-300 to-orange-300">
+          <div className="text-neutral-800 p-2 font-bold text-center text-xs md:text-sm flex items-center justify-center bg-gradient-to-r from-pink-300 to-orange-300">
             <div className="relative h-[24px] w-[24px] md:mr-2">
               <Image src="/logo-128.png" alt="logo" fill sizes="24px" />
             </div>
