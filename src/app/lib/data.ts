@@ -97,7 +97,7 @@ export async function getAllPost(endCursor?: string | null) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PH_API_TOKEN}`,
+      Authorization: `Bearer ${process.env.PH_API_KEY}`,
     },
     method: "POST",
     body: JSON.stringify({
