@@ -11,7 +11,7 @@ export default function PostList({
   initPosts: Post[];
   initPageInfo: PageInfo;
 }) {
-  const date = format(new Date(), "MM/dd/yyyy");
+  const date = format(new Date(), "MMM do yyyy");
   const [posts, setPosts] = useState<Post[]>(initPosts);
   const pageInfo = useRef(initPageInfo);
 
@@ -27,7 +27,7 @@ export default function PostList({
   return (
     <div className="flex flex-col items-center">
       <div className="flex justify-start w-full pl-8 mb-8 ">
-        <div className="border p-2 rounded-full">{`${posts.length} products without AI launched on ${date}`}</div>
+        <div className="text-3xl">{`${posts.length} products without AI launched on ${date}`}</div>
       </div>
       {posts.map((post, index) => {
         return (
