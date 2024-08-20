@@ -1,7 +1,8 @@
 "use client";
-import { format } from "date-fns";
 
+import { format } from "date-fns";
 import { PageInfo, Post } from "../lib/data";
+import { filterPosts, PageInfo, Post } from "../lib/data";
 import { useCallback, useRef, useState } from "react";
 
 export default function PostList({
@@ -20,6 +21,9 @@ export default function PostList({
       .then((res) => res.json())
       .then((response) => {
         setPosts((prev) => [...prev, ...response.data.posts.nodes]);
+        setPosts((prev) =>
+          filterPosts([...prev, ...response.data.posts.nodes])
+        );
         pageInfo.current = response.data.posts.pageInfo;
       });
   }, [pageInfo.current]);
@@ -41,6 +45,10 @@ export default function PostList({
             </h2>
             <p className="text-lg max-w-[69ch] mb-2 opacity-60">
               {post.tagline}
+            </p>
+            <p>
+              {post.topics &&
+                post.topics.nodes.map(({ name }) => name).join(" | ")}
             </p>
             <p className="line-clamp-3 text-lg max-w-[69ch]">
               {post.description}
