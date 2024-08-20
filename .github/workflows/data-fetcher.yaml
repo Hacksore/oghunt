@@ -35,7 +35,7 @@ jobs:
       - name: Upload to R2
         run: pnpm upload-to-r2
         env:
-          API_KEY: ${{ secrets.API_KEY }}
+          PH_API_KEY: ${{ secrets.PH_API_KEY }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
