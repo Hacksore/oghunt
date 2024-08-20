@@ -6,7 +6,7 @@ export const Footer = () => {
           aria-label="github"
           target="_blank"
           rel="noreferrer"
-          href="https://github.com/overlayeddev/overlayed"
+          href="https://github.com/Hacksore/oghunt"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
