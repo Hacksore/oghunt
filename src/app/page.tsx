@@ -3,8 +3,8 @@ import PostList from "./component/PostList";
 import { filterPosts, getAllPost } from "./lib/data";
 
 const META_INFO = {
-  title: "Sean Boult - Portfilio Site",
-  description: "Full Stack Developer Who Likes React",
+  title: "oghunt",
+  description: "Sites on ProductHunt without AI",
   site: "https://oghunt.vercel.app",
 };
 
