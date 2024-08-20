@@ -1,7 +1,6 @@
 "use client";
 
 import { format } from "date-fns";
-import { PageInfo, Post } from "../lib/data";
 import { filterPosts, PageInfo, Post } from "../lib/data";
 import { useCallback, useRef, useState } from "react";
 
