@@ -1,5 +1,5 @@
 "use client";
-import { format, compareAsc } from "date-fns";
+import { format } from "date-fns";
 
 import { PageInfo, Post } from "../lib/data";
 import { useCallback, useRef, useState } from "react";
