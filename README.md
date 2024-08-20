@@ -1,5 +1,6 @@
 # oghunt
 Sites on ProductHunt with ZERO AI Slop™
+![no-slop-og](https://github.com/user-attachments/assets/c7c11807-0f76-47db-8283-45a67793b8a2)
 
 ### Development
 1. `pnpm i`
