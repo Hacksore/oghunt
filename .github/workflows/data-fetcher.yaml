@@ -2,13 +2,16 @@ name: Fetch Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: "0 * * * *"
+  push:
+    branches:
+      - yippe
 env:
   NODE_VERSION: "20"
 
 jobs:
   ingest:
-    name: Ingest 
+    name: Ingest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -35,6 +38,7 @@ jobs:
       - name: Upload to R2
         run: pnpm upload-to-r2
         env:
+          PH_API_KEY: ${{ secrets.PH_API_KEY }}
           R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
