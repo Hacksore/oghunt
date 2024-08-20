@@ -18,16 +18,33 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
+  background: linear-gradient(to bottom,
       transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.tag {
+  display: inline-block;
+  background-color: #ff9800;
+  /* Background color for the tags */
+  color: #ffffff;
+  /* Text color for the tags */
+  padding: 5px 10px;
+  /* Padding inside the tags */
+  margin: 5px;
+  /* Space between tags */
+  border-radius: 20px;
+  /* Rounded corners for the pill effect */
+  font-size: 14px;
+  /* Font size */
+  font-weight: bold;
+  /* Make text bold */
+  transition: background-color 0.3s ease;
+  text-decoration: none;
 }
