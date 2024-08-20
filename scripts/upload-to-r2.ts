@@ -1,8 +1,9 @@
 import "dotenv/config";
-import { getAllPost } from "../src/app/lib/data.js";
+import { getAllPost, filterPosts } from "../src/app/lib/data.js";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-const posts = await getAllPost();
+const response = await getAllPost();
+const posts = filterPosts(response.data.posts.nodes);
 
 if ("errors" in posts) {
   console.error(posts.errors);
