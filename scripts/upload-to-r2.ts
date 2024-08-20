@@ -2,7 +2,6 @@ import "dotenv/config";
 import { getAllPost } from "../src/app/lib/data.js";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
-// TODO: once this supports getting all the dailys it should be ok
 const posts = await getAllPost();
 
 const { R2_ACCOUNT_ID, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY } = process.env;
