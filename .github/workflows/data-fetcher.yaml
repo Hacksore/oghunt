@@ -34,3 +34,7 @@ jobs:
         run: pnpm install
       - name: Upload to R2
         run: pnpm upload-to-r2
+        env:
+          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_ACCESS_KEY_ID }}
