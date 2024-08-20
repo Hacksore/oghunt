@@ -28,7 +28,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  // TODO: typescript
   const posts: Post[] = await fetch(
     "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
   ).then((res) => res.json());
