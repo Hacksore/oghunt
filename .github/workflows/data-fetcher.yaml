@@ -2,13 +2,16 @@ name: Fetch Data
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: "0 * * * *"
+  push:
+    branches:
+      - yippe
 env:
   NODE_VERSION: "20"
 
 jobs:
   ingest:
-    name: Ingest 
+    name: Ingest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
