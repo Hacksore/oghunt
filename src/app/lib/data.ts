@@ -1,49 +1,50 @@
 const GET_ALL_POSTS = `
-query GetAllPosts (
-    $first: Int
-    $last: Int
-    $before: String
-    $after: String
-    $postedAfter: DateTime
-  	$postedBefore: DateTime
-) {
-    posts (
-        first: $first
-        last: $last
-        before: $before
-        after: $after
-        postedAfter: $postedAfter
-        postedBefore: $postedBefore
-    ) {
-        totalCount
-        pageInfo {
-            hasNextPage
-            endCursor
-        }
+query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $postedAfter: DateTime, $postedBefore: DateTime) {
+  posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    nodes {
+      id
+      createdAt
+      url
+      name
+      tagline
+      description
+      topics {
         nodes {
-            id
-            createdAt
-            url
-            name
-            tagline
-            description
+          description
+          name
         }
-  },
-}
-`;
+      }
+    }
+  }
+}`;
 
 export interface Post {
-    id: string;
-    name: string;
-    url: string;
-    tagline: string;
-    description: string;
-    createdAt: string;
+  id: string;
+  name: string;
+  url: string;
+  tagline: string;
+  description: string;
+  createdAt: string;
+  topics: Topic;
+}
+
+export interface Topic {
+  nodes: Node[];
+}
+
+export interface Node {
+  description: string;
+  name: string;
 }
 
 export interface PageInfo {
-    hasNextPage: boolean | undefined
-    endCursor: string | undefined
+  hasNextPage: boolean | undefined;
+  endCursor: string | undefined;
 }
 
 // Function to get the current date in PST (UTC-8)
@@ -117,28 +118,45 @@ export async function getAllPost(endCursor?: string | null) {
             };
         };
     };
-};
-
-export const filterPosts = (nodes: Post[]) => {
-    return nodes.filter((post) => {
-        // if the name, description or tagline contains "AI", "GPT", "artificial intelligence" or "machine learning" skip it
-        if (
-            post.name.toLowerCase().includes("ai") ||
-            post.tagline.toLowerCase().includes("ai") ||
-            post.description.toLowerCase().includes("ai") ||
-            post.name.toLowerCase().includes("gpt") ||
-            post.tagline.toLowerCase().includes("gpt") ||
-            post.description.toLowerCase().includes("gpt") ||
-            post.name.toLowerCase().includes("artificial intelligence") ||
-            post.tagline.toLowerCase().includes("artificial intelligence") ||
-            post.description.toLowerCase().includes("artificial intelligence") ||
-            post.name.toLowerCase().includes("machine learning") ||
-            post.tagline.toLowerCase().includes("machine learning") ||
-            post.description.toLowerCase().includes("machine learning")
-        ) {
-            return false;
-        }
-
-        return true;
-    });
+  };
 }
+
+export const filterPosts = (posts: Post[]) => {
+  return posts.filter((post) => {
+    // if the name, description or tagline contains "AI", "GPT", "artificial intelligence" or "machine learning" skip it
+    if (
+      post.name.toLowerCase().includes("ai") ||
+      post.tagline.toLowerCase().includes("ai") ||
+      post.description.toLowerCase().includes("ai") ||
+      post.name.toLowerCase().includes("gpt") ||
+      post.tagline.toLowerCase().includes("gpt") ||
+      post.description.toLowerCase().includes("gpt") ||
+      post.name.toLowerCase().includes("artificial intelligence") ||
+      post.tagline.toLowerCase().includes("artificial intelligence") ||
+      post.description.toLowerCase().includes("artificial intelligence") ||
+      post.name.toLowerCase().includes("machine learning") ||
+      post.tagline.toLowerCase().includes("machine learning") ||
+      post.description.toLowerCase().includes("machine learning")
+    ) {
+      return false;
+    }
+
+    if (
+      post.topics.nodes.some(
+        (node) =>
+          node.name.toLowerCase().includes("ai") ||
+          node.description.toLowerCase().includes("ai") ||
+          node.name.toLowerCase().includes("gpt") ||
+          node.description.toLowerCase().includes("gpt") ||
+          node.name.toLowerCase().includes("artificial intelligence") ||
+          node.description.toLowerCase().includes("artificial intelligence") ||
+          node.name.toLowerCase().includes("machine learning") ||
+          node.description.toLowerCase().includes("machine learning")
+      )
+    ) {
+      return false;
+    }
+
+    return true;
+  });
+};
