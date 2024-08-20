@@ -11,3 +11,5 @@ Create a ProductHunt account. Then, go to your [API Dashboard](https://www.produ
 ```
 API_TOKEN=myTokenHereUwu
 ```
+
+Architecture diagram is located at [public/og-hunt-diagram.excalidraw](/public/og-hunt-diagram.excalidraw) which you can upload to Excalidraw to view.

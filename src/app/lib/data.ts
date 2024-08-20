@@ -23,6 +23,16 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
   }
 }`;
 
+export interface PostResponse {
+  data: {
+    posts: {
+      nodes: Post[];
+      pageInfo: PageInfo;
+      totalCount: number;
+    };
+  };
+}
+
 export interface Post {
   id: string;
   name: string;
@@ -89,11 +99,13 @@ function getStartAndEndOfDayInUTC() {
   };
 }
 
-export async function getAllPost(endCursor?: string | null) {
+export async function getAllPost(
+  endCursor?: string | null,
+): Promise<PostResponse> {
   // Get the current UTC date and time based on PST day
   const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
 
-  return (await fetch("https://api.producthunt.com/v2/api/graphql", {
+  return await fetch("https://api.producthunt.com/v2/api/graphql", {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
@@ -109,15 +121,7 @@ export async function getAllPost(endCursor?: string | null) {
         postedBefore: postedBefore,
       },
     }),
-  }).then((res) => res.json())) as {
-    data: {
-      posts: {
-        nodes: Post[];
-        pageInfo: PageInfo;
-        totalCount: number;
-      };
-    };
-  };
+  }).then((res) => res.json());
 }
 
 export const filterPosts = (posts: Post[]) => {
@@ -150,7 +154,7 @@ export const filterPosts = (posts: Post[]) => {
           node.name.toLowerCase().includes("artificial intelligence") ||
           node.description.toLowerCase().includes("artificial intelligence") ||
           node.name.toLowerCase().includes("machine learning") ||
-          node.description.toLowerCase().includes("machine learning")
+          node.description.toLowerCase().includes("machine learning"),
       )
     ) {
       return false;
