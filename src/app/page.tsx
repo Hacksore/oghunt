@@ -1,7 +1,30 @@
+import { Metadata } from "next";
 import PostList from "./component/PostList";
 import { filterPosts, getAllPost } from "./lib/data";
 
- 
+const META_INFO = {
+  title: "Sean Boult - Portfilio Site",
+  description: "Full Stack Developer Who Likes React",
+  site: "https://oghunt.vercel.app",
+};
+
+export const metadata: Metadata = {
+  title: META_INFO.title,
+  description: META_INFO.description,
+  openGraph: {
+    title: META_INFO.title,
+    description: META_INFO.description,
+    images: [`${META_INFO.site}/no-slop-og.png`],
+    type: "website",
+  },
+  twitter: {
+    title: META_INFO.title,
+    description: META_INFO.description,
+    images: [`${META_INFO.site}/no-slop-og.png`],
+    card: "summary_large_image",
+  },
+};
+
 export default async function Page({
   searchParams,
 }: {
