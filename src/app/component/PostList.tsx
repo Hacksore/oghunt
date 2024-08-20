@@ -1,5 +1,6 @@
 "use client";
 
+import { format } from "date-fns";
 import { filterPosts, PageInfo, Post } from "../lib/data";
 import { useCallback, useRef, useState } from "react";
 
@@ -10,6 +11,7 @@ export default function PostList({
   initPosts: Post[];
   initPageInfo: PageInfo;
 }) {
+  const date = format(new Date(), "MMM do yyyy");
   const [posts, setPosts] = useState<Post[]>(initPosts);
   const pageInfo = useRef(initPageInfo);
 
@@ -17,6 +19,7 @@ export default function PostList({
     fetch(`/api/posts?endCursor=${pageInfo.current.endCursor}`)
       .then((res) => res.json())
       .then((response) => {
+        setPosts((prev) => [...prev, ...response.data.posts.nodes]);
         setPosts((prev) =>
           filterPosts([...prev, ...response.data.posts.nodes])
         );
@@ -26,6 +29,9 @@ export default function PostList({
 
   return (
     <div className="flex flex-col items-center">
+      <div className="flex justify-start w-full pl-8 mb-8 ">
+        <div className="text-3xl">{`${posts.length} products without AI launched on ${date}`}</div>
+      </div>
       {posts.map((post, index) => {
         return (
           <a
