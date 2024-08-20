@@ -38,6 +38,7 @@ export default function PostList({
           <a
             href={post.url}
             key={post.id}
+            target="_blank"
             className="flex flex-col items-start p-8 w-full group hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
           >
             <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
