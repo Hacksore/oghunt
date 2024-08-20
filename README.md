@@ -1,5 +1,5 @@
 # oghunt
-Sites on ProductHunt with ZERO AI Slop™
+Product Hunt with ZERO AI Slop™
 ![image](https://github.com/user-attachments/assets/733569f6-ca25-4f91-bda4-472f1c833646)
 
 ### Development
