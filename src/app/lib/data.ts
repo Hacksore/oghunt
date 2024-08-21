@@ -1,4 +1,4 @@
-import { GetAllPosts, GetAllPostsQuery, GetAllPostsQueryVariables, Post, PostFragmentFragment } from "@/__generated/graphql";
+import { GetAllPosts, GetAllPostsQuery, GetAllPostsQueryVariables, PostFragmentFragment } from "@/__generated/graphql";
 import { phClient } from "@/client";
 import { ApolloQueryResult } from "@apollo/client";
 import { GraphQLFormattedError } from "graphql";
@@ -77,7 +77,7 @@ export async function getAllPost(): Promise<(PostFragmentFragment[] | readonly G
   return allPosts;
 }
 
-export const filterPosts = (posts: Post[], showAi = false): Post[] => {
+export const filterPosts = (posts: PostFragmentFragment[], showAi = false): PostFragmentFragment[] => {
   const excludedTerms = [
     "ai",
     "gpt",
