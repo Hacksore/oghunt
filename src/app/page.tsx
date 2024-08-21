@@ -30,11 +30,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const results: Post[] = await fetch(
-    "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
+    "https://bigd.oghunt.com/latest.json"
   ).then((res) => res.json());
 
   const posts = filterPosts(results).sort(
-    (a, b) => b.votesCount - a.votesCount,
+    (a, b) => b.votesCount - a.votesCount
   );
   const aiPosts = filterPosts(results, true);
 
