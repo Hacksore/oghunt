@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { getAllPost, filterPosts } from "../src/app/lib/data.js";
+import { getAllPost } from "../src/app/lib/data.js";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 
 const posts = await getAllPost();

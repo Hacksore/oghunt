@@ -32,7 +32,8 @@ export default async function Page() {
     "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
   ).then((res) => res.json());
 
-  const posts = filterPosts(results)
+  const posts = filterPosts(results);
+  const aiPosts = filterPosts(results, true);
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">
@@ -40,8 +41,11 @@ export default async function Page() {
         Product Hunt with ZERO AI Slop™
       </h1>
       <div className="flex flex-col items-center">
-        <div className="flex justify-start w-full pl-8 mb-8 ">
-          <div className="text-3xl">{`${posts.length} products without AI launched today`}</div>
+        <div className="flex flex-col justify-start gap-2 w-full pl-8 mb-8 ">
+          <div className="text-3xl font-bold">{`${posts.length} products without AI launched today`}</div>
+          <div className="text-xl">
+            {aiPosts.length} AI Slop™ projects launched today
+          </div>
         </div>
         {posts.map((post, index) => {
           return (
