@@ -1,4 +1,4 @@
-import { GetAllPosts, GetAllPostsQuery, Post } from "@/__generated/graphql";
+import { GetAllPosts, GetAllPostsQuery, Post, PostEdge } from "@/__generated/graphql";
 import { phClient } from "@/client";
 
 // Function to get the current date in PST (UTC-8)
@@ -43,11 +43,10 @@ function getStartAndEndOfDayInUTC() {
   };
 }
 
-export async function getAllPost(): Promise<Post[]> {
-  // Get the current UTC date and time based on PST day
-  const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
-  let hasNextPage  = true;
-  let after = null;
+export async function getAllPost(): Promise<(Post[] | Array<Error>)> {
+  const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
+  let hasNextPage = true;
+  let after: string | null = null;
   const allPosts: Post[] = [];
 
   while (hasNextPage) {
@@ -58,12 +57,17 @@ export async function getAllPost(): Promise<Post[]> {
         after,
         postedAfter,
         postedBefore,
-      }
-    })
+      },
+    });
 
-    allPosts.push(res.data.posts.edges.map(edge => edge.node));
-    after = data.pageInfo.endCursor;
-    hasNextPage = data.pageInfo.hasNextPage;
+    if (res.errors) {
+      return res.errors;
+    }
+
+    allPosts.push(...res.data.posts.edges.map((edge: PostEdge) => edge.node));
+
+    after = res.data.posts.pageInfo.endCursor;
+    hasNextPage = res.data.posts.pageInfo.hasNextPage;
   }
 
   return allPosts;
@@ -77,8 +81,9 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
     "machine learning",
   ];
 
-  const containsExcludedTerm = (text: string): boolean => 
-    excludedTerms.some(term => text.toLowerCase().includes(term));
+  const containsExcludedTerm = (text?: string | null): boolean => {
+    return excludedTerms.some(term => text ?? ''.toLowerCase().includes(term));
+  }
 
   return posts.filter(post => {
     if (
@@ -90,10 +95,10 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
     }
 
     if (
-      post.topics.nodes.some(
-        node =>
-          containsExcludedTerm(node.name) ||
-          containsExcludedTerm(node.description)
+      post.topics.edges.some(
+        i => 
+          containsExcludedTerm(i.node.name) ||
+          containsExcludedTerm(i.node.description)
       )
     ) {
       return showAi;
