@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { Post } from "./lib/data";
+import { filterPosts, Post } from "./lib/data";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -28,9 +28,11 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const posts: Post[] = await fetch(
+  const results: Post[] = await fetch(
     "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
   ).then((res) => res.json());
+
+  const posts = filterPosts(results)
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">

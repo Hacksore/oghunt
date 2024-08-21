@@ -53,7 +53,7 @@ export interface Node {
 }
 
 export interface PageInfo {
-  hasNextPage: boolean | undefined;
+  hasNextPage: boolean;
   endCursor: string | undefined;
 }
 
@@ -99,62 +99,67 @@ function getStartAndEndOfDayInUTC() {
   };
 }
 
-export async function getAllPost(
-  endCursor?: string | null,
-): Promise<PostResponse> {
+export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
   const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
+  let hasNextPage  = true;
+  let after = null;
+  const allPosts: Post[] = [];
 
-  return await fetch("https://api.producthunt.com/v2/api/graphql", {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PH_API_KEY}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      query: GET_ALL_POSTS,
-      variables: {
-        first: 100,
-        after: endCursor,
-        postedAfter: postedAfter,
-        postedBefore: postedBefore,
+  while (hasNextPage) {
+    const response =  await fetch("https://api.producthunt.com/v2/api/graphql", {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.PH_API_KEY}`,
       },
-    }),
-  }).then((res) => res.json());
+      method: "POST",
+      body: JSON.stringify({
+        query: GET_ALL_POSTS,
+        variables: {
+          first: 100,
+          after: after,
+          postedAfter: postedAfter,
+          postedBefore: postedBefore,
+        },
+      }),
+    })
+    const result: PostResponse = await response.json();
+
+    const data = result.data?.posts;
+    allPosts.push(...data?.nodes);
+    after = data.pageInfo.endCursor;
+    hasNextPage = data.pageInfo.hasNextPage;
+  }
+
+  return allPosts;
 }
 
-export const filterPosts = (posts: Post[]) => {
-  return posts.filter((post) => {
-    // if the name, description or tagline contains "AI", "GPT", "artificial intelligence" or "machine learning" skip it
+export const filterPosts = (posts: Post[]): Post[] => {
+  const excludedTerms = [
+    "ai",
+    "gpt",
+    "artificial intelligence",
+    "machine learning",
+  ];
+
+  const containsExcludedTerm = (text: string): boolean => 
+    excludedTerms.some(term => text.toLowerCase().includes(term));
+
+  return posts.filter(post => {
     if (
-      post.name.toLowerCase().includes("ai") ||
-      post.tagline.toLowerCase().includes("ai") ||
-      post.description.toLowerCase().includes("ai") ||
-      post.name.toLowerCase().includes("gpt") ||
-      post.tagline.toLowerCase().includes("gpt") ||
-      post.description.toLowerCase().includes("gpt") ||
-      post.name.toLowerCase().includes("artificial intelligence") ||
-      post.tagline.toLowerCase().includes("artificial intelligence") ||
-      post.description.toLowerCase().includes("artificial intelligence") ||
-      post.name.toLowerCase().includes("machine learning") ||
-      post.tagline.toLowerCase().includes("machine learning") ||
-      post.description.toLowerCase().includes("machine learning")
+      containsExcludedTerm(post.name) ||
+      containsExcludedTerm(post.tagline) ||
+      containsExcludedTerm(post.description)
     ) {
       return false;
     }
 
     if (
       post.topics.nodes.some(
-        (node) =>
-          node.name.toLowerCase().includes("ai") ||
-          node.description.toLowerCase().includes("ai") ||
-          node.name.toLowerCase().includes("gpt") ||
-          node.description.toLowerCase().includes("gpt") ||
-          node.name.toLowerCase().includes("artificial intelligence") ||
-          node.description.toLowerCase().includes("artificial intelligence") ||
-          node.name.toLowerCase().includes("machine learning") ||
-          node.description.toLowerCase().includes("machine learning"),
+        node =>
+          containsExcludedTerm(node.name) ||
+          containsExcludedTerm(node.description)
       )
     ) {
       return false;
