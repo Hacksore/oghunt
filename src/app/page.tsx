@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { filterPosts, Post } from "./lib/data";
+import { Pill } from "./component/Pill";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -29,11 +30,11 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const results: Post[] = await fetch(
-    "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
+    "https://bigd.oghunt.com/latest.json"
   ).then((res) => res.json());
 
   const posts = filterPosts(results).sort(
-    (a, b) => b.votesCount - a.votesCount,
+    (a, b) => b.votesCount - a.votesCount
   );
   const aiPosts = filterPosts(results, true);
 
@@ -63,14 +64,12 @@ export default async function Page() {
               <p className="text-lg max-w-[69ch] mb-2 opacity-60">
                 {post.tagline}
               </p>
-              <p>
+              <div className="flex gap-2">
                 {post.topics &&
-                  post.topics.nodes.map(({ name }) => (
-                    <span key={name} className="word-pill">
-                      {name}
-                    </span>
+                  post.topics.nodes.map(({ id, name }) => (
+                    <Pill key={`${id}${post.id}`} name={name} />
                   ))}
-              </p>
+              </div>
               <p className="line-clamp-3 text-lg max-w-[69ch]">
                 {post.description}
               </p>

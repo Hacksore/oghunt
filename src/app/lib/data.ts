@@ -1,4 +1,4 @@
-// NOTE: use the graph explorer to build new queries 
+// NOTE: use the graph explorer to build new queries
 const GET_ALL_POSTS = `
 query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $postedAfter: DateTime, $postedBefore: DateTime) {
   posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
@@ -17,6 +17,7 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
       votesCount
       topics {
         nodes {
+          id
           description
           name
         }
@@ -51,6 +52,7 @@ export interface Topic {
 }
 
 export interface Node {
+  id: string;
   description: string;
   name: string;
 }
@@ -105,12 +107,12 @@ function getStartAndEndOfDayInUTC() {
 export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
   const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
-  let hasNextPage  = true;
+  let hasNextPage = true;
   let after = null;
   const allPosts: Post[] = [];
 
   while (hasNextPage) {
-    const response =  await fetch("https://api.producthunt.com/v2/api/graphql", {
+    const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -126,7 +128,7 @@ export async function getAllPost(): Promise<Post[]> {
           postedBefore: postedBefore,
         },
       }),
-    })
+    });
     const result: PostResponse = await response.json();
 
     const data = result.data?.posts;
@@ -146,10 +148,10 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
     "machine learning",
   ];
 
-  const containsExcludedTerm = (text: string): boolean => 
-    excludedTerms.some(term => text.toLowerCase().includes(term));
+  const containsExcludedTerm = (text: string): boolean =>
+    excludedTerms.some((term) => text.toLowerCase().includes(term));
 
-  return posts.filter(post => {
+  return posts.filter((post) => {
     if (
       containsExcludedTerm(post.name) ||
       containsExcludedTerm(post.tagline) ||
@@ -160,9 +162,9 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
 
     if (
       post.topics.nodes.some(
-        node =>
+        (node) =>
           containsExcludedTerm(node.name) ||
-          containsExcludedTerm(node.description)
+          containsExcludedTerm(node.description),
       )
     ) {
       return showAi;
