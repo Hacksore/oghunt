@@ -32,7 +32,9 @@ export default async function Page() {
     "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
   ).then((res) => res.json());
 
-  const posts = filterPosts(results).sort((a, b) => b.votesCount - a.votesCount);
+  const posts = filterPosts(results).sort(
+    (a, b) => b.votesCount - a.votesCount,
+  );
   const aiPosts = filterPosts(results, true);
 
   return (
@@ -63,7 +65,11 @@ export default async function Page() {
               </p>
               <p>
                 {post.topics &&
-                  post.topics.nodes.map(({ name }) => name).join(" | ")}
+                  post.topics.nodes.map(({ name }) => (
+                    <span key={name} className="word-pill">
+                      {name}
+                    </span>
+                  ))}
               </p>
               <p className="line-clamp-3 text-lg max-w-[69ch]">
                 {post.description}
