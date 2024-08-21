@@ -1,0 +1,28 @@
+query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $postedAfter: DateTime, $postedBefore: DateTime) {
+  posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        createdAt
+        url
+        name
+        tagline
+        description
+        votesCount
+        topics {
+          edges {
+            node {
+              description
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

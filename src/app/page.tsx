@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { filterPosts, Post } from "./lib/data";
+import { filterPosts  } from "./lib/data";
+import { phClient } from "@/client";
+import { GetAllPosts, GetAllPostsQuery } from "@/__generated/graphql";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -28,9 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const results: Post[] = await fetch(
-    "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
-  ).then((res) => res.json());
 
   const posts = filterPosts(results).sort((a, b) => b.votesCount - a.votesCount);
   const aiPosts = filterPosts(results, true);

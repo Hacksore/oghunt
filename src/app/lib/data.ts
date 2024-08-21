@@ -1,64 +1,5 @@
-// NOTE: use the graph explorer to build new queries 
-const GET_ALL_POSTS = `
-query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $postedAfter: DateTime, $postedBefore: DateTime) {
-  posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
-    totalCount
-    pageInfo {
-      hasNextPage
-      endCursor
-    }
-    nodes {
-      id
-      createdAt
-      url
-      name
-      tagline
-      description
-      votesCount
-      topics {
-        nodes {
-          description
-          name
-        }
-      }
-    }
-  }
-}`;
-
-export interface PostResponse {
-  data: {
-    posts: {
-      nodes: Post[];
-      pageInfo: PageInfo;
-      totalCount: number;
-    };
-  };
-}
-
-export interface Post {
-  id: string;
-  name: string;
-  url: string;
-  tagline: string;
-  description: string;
-  createdAt: string;
-  topics: Topic;
-  votesCount: number;
-}
-
-export interface Topic {
-  nodes: Node[];
-}
-
-export interface Node {
-  description: string;
-  name: string;
-}
-
-export interface PageInfo {
-  hasNextPage: boolean;
-  endCursor: string | undefined;
-}
+import { GetAllPosts, GetAllPostsQuery, Post } from "@/__generated/graphql";
+import { phClient } from "@/client";
 
 // Function to get the current date in PST (UTC-8)
 // ProductHunt is in PST
@@ -110,27 +51,17 @@ export async function getAllPost(): Promise<Post[]> {
   const allPosts: Post[] = [];
 
   while (hasNextPage) {
-    const response =  await fetch("https://api.producthunt.com/v2/api/graphql", {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.PH_API_KEY}`,
-      },
-      method: "POST",
-      body: JSON.stringify({
-        query: GET_ALL_POSTS,
-        variables: {
-          first: 100,
-          after: after,
-          postedAfter: postedAfter,
-          postedBefore: postedBefore,
-        },
-      }),
+    const res = await phClient().query<GetAllPostsQuery>({ 
+      query: GetAllPosts,
+      variables: {
+        first: 100,
+        after,
+        postedAfter,
+        postedBefore,
+      }
     })
-    const result: PostResponse = await response.json();
 
-    const data = result.data?.posts;
-    allPosts.push(...data?.nodes);
+    allPosts.push(res.data.posts.edges.map(edge => edge.node));
     after = data.pageInfo.endCursor;
     hasNextPage = data.pageInfo.hasNextPage;
   }
