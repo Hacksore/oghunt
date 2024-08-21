@@ -1,3 +1,4 @@
+// NOTE: use the graph explorer to build new queries 
 const GET_ALL_POSTS = `
 query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $postedAfter: DateTime, $postedBefore: DateTime) {
   posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
@@ -13,6 +14,7 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
       name
       tagline
       description
+      votesCount
       topics {
         nodes {
           description
@@ -41,6 +43,7 @@ export interface Post {
   description: string;
   createdAt: string;
   topics: Topic;
+  votesCount: number;
 }
 
 export interface Topic {

@@ -32,7 +32,7 @@ export default async function Page() {
     "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
   ).then((res) => res.json());
 
-  const posts = filterPosts(results);
+  const posts = filterPosts(results).sort((a, b) => b.votesCount - a.votesCount);
   const aiPosts = filterPosts(results, true);
 
   return (
@@ -56,7 +56,7 @@ export default async function Page() {
               className="flex flex-col items-start p-8 w-full group hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
             >
               <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
-                {index + 1}. {post.name}
+                {index + 1}. {post.name} - ⇧{post.votesCount}
               </h2>
               <p className="text-lg max-w-[69ch] mb-2 opacity-60">
                 {post.tagline}
