@@ -60,7 +60,7 @@ export default async function Page() {
               className="flex items-center gap-8 p-8 w-full group hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
             >
               <div className="flex flex-row items-center justify-center pb-2 gap-4">
-                <div className="border rounded-2xl p-4 border-[#434343] text-xl -ml-20">
+                <div className="border rounded-2xl p-4  border-[#434343]  text-xl">
                   #{index + 1}.
                 </div>
               </div>
