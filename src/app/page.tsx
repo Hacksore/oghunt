@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { filterPosts, Post } from "./lib/data";
 import { Pill } from "./component/Pill";
+import db from "./db";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -32,6 +33,14 @@ export default async function Page() {
   const results: Post[] = await fetch(
     "https://bigd.oghunt.com/latest.json"
   ).then((res) => res.json());
+
+  // save to the db
+  await db.post.createMany({
+    data: results.map((post) => ({
+      url: post.url,
+      hasAi: true
+    })),
+  })
 
   const posts = filterPosts(results).sort(
     (a, b) => b.votesCount - a.votesCount

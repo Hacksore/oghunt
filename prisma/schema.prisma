@@ -1,0 +1,22 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  url         String
+  hasAi       Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  name        String
+  tagline     String
+  description String
+  votesCount  Int      @default(0)
+}
