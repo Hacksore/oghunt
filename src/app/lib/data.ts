@@ -1,5 +1,7 @@
-import { GetAllPosts, GetAllPostsQuery, Post, PostEdge } from "@/__generated/graphql";
+import { GetAllPosts, GetAllPostsQuery, GetAllPostsQueryVariables, Post, PostFragmentFragment } from "@/__generated/graphql";
 import { phClient } from "@/client";
+import { ApolloQueryResult } from "@apollo/client";
+import { GraphQLFormattedError } from "graphql";
 
 // Function to get the current date in PST (UTC-8)
 // ProductHunt is in PST
@@ -43,14 +45,14 @@ function getStartAndEndOfDayInUTC() {
   };
 }
 
-export async function getAllPost(): Promise<(Post[] | Array<Error>)> {
+export async function getAllPost(): Promise<(PostFragmentFragment[] | readonly GraphQLFormattedError[])> {
   const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   let hasNextPage = true;
   let after: string | null = null;
-  const allPosts: Post[] = [];
+  const allPosts: PostFragmentFragment[] = [];
 
   while (hasNextPage) {
-    const res = await phClient().query<GetAllPostsQuery>({ 
+    const res: ApolloQueryResult<GetAllPostsQuery> = await phClient().query<GetAllPostsQuery, GetAllPostsQueryVariables>({
       query: GetAllPosts,
       variables: {
         first: 100,
@@ -63,11 +65,13 @@ export async function getAllPost(): Promise<(Post[] | Array<Error>)> {
     if (res.errors) {
       return res.errors;
     }
-
-    allPosts.push(...res.data.posts.edges.map((edge: PostEdge) => edge.node));
-
-    after = res.data.posts.pageInfo.endCursor;
-    hasNextPage = res.data.posts.pageInfo.hasNextPage;
+    
+    const posts = res.data.posts;
+    if (posts && posts.edges) {
+      allPosts.push(...posts.edges.map(edge => edge.node));
+    }
+    after = posts.pageInfo.endCursor ?? null;
+    hasNextPage = posts.pageInfo.hasNextPage;
   }
 
   return allPosts;

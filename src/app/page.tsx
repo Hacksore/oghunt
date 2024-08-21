@@ -63,7 +63,7 @@ export default async function Page() {
                 {post.tagline}
               </p>
               <p>
-                {post.topics.__typename === 'TopicConnection' &&
+                {post.topics &&
                   post.topics.edges.map((edge) => edge.node.name).join(" | ")}
               </p>
               <p className="line-clamp-3 text-lg max-w-[69ch]">

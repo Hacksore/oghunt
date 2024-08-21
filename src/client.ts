@@ -12,7 +12,6 @@ export function phClient(): ApolloClient<NormalizedCacheObject> {
       headers: {
         authorization: `token ${process.env.PH_API_KEY}`,
       },
-      fetch,
     }),
     cache: new InMemoryCache(),
   });

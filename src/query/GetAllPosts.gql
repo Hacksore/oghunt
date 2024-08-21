@@ -2,26 +2,14 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
   posts(first: $first, last: $last, before: $before, after: $after, postedAfter: $postedAfter, postedBefore: $postedBefore) {
     totalCount
     pageInfo {
+      hasPreviousPage
       hasNextPage
       endCursor
+      startCursor
     }
     edges {
       node {
-        id
-        createdAt
-        url
-        name
-        tagline
-        description
-        votesCount
-        topics {
-          edges {
-            node {
-              description
-              name
-            }
-          }
-        }
+        ...PostFragment
       }
     }
   }

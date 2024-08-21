@@ -1,0 +1,17 @@
+fragment PostFragment on Post {
+  id
+  createdAt
+  url
+  name
+  tagline
+  description
+  votesCount
+  topics {
+    edges {
+      node {
+        description
+        name
+      }
+    }
+  }
+}
