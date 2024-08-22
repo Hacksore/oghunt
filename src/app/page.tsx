@@ -1,12 +1,8 @@
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import {
-  filterPosts,
-  getAllPost as getAllDailyPostRightNow,
-  hasAi,
-} from "./lib/data";
+import { filterPosts } from "./utils/string";
 import { Pill } from "./component/Pill";
-import db from "./db";
+import { getTodaysLaunches } from "./lib/persistence";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -34,64 +30,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const posts = await getAllDailyPostRightNow();
-
-  // TODO : error handle
-  await Promise.allSettled(
-    posts.map((post) =>
-      db.post.upsert({
-        where: {
-          id: post.id,
-        },
-        update: {
-          votesCount: post.votesCount,
-          name: post.name,
-          description: post.description,
-          tagline: post.tagline,
-          url: post.url,
-          topics: {
-            connectOrCreate: post.topics.nodes.map(
-              ({ id, description, name }) => ({
-                where: {
-                  id,
-                },
-                create: {
-                  id,
-                  description,
-                  name,
-                },
-              }),
-            ),
-          },
-        },
-        create: {
-          id: post.id,
-          votesCount: post.votesCount,
-          name: post.name,
-          description: post.description,
-          tagline: post.tagline,
-          url: post.url,
-          hasAi: hasAi(post),
-          topics: {
-            connectOrCreate: post.topics.nodes.map(
-              ({ id, description, name }) => ({
-                where: {
-                  id,
-                },
-                create: {
-                  id,
-                  description,
-                  name,
-                },
-              }),
-            ),
-          },
-        },
-      }),
-    ),
-  );
-
-  const aiPosts: any = filterPosts(posts, true);
+  const posts = await getTodaysLaunches();
+  const aiPosts = filterPosts(posts, true);
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">
@@ -121,7 +61,7 @@ export default async function Page() {
               </p>
               <div className="flex gap-2">
                 {post.topics &&
-                  post.topics.nodes.map(({ id, name }) => (
+                  post.topics.map(({ id, name }) => (
                     <Pill key={`${id}${post.id}`} name={name} />
                   ))}
               </div>

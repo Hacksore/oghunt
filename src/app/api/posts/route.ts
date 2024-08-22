@@ -1,8 +1,20 @@
+import { NextApiRequest, NextApiResponse } from "next";
+import { fetchAndUpdateDatabase } from "../../lib/persistence";
+
 export const dynamic = "force-dynamic";
 
-export async function GET() {
-    const data = await fetch(
-        "https://pub-3db3ed9313c4427fadfa81f0323b18f8.r2.dev/latest.json",
-    ).then((res) => res.json());
-    return Response.json(data);
+// NOTE: this is called on cron job
+export async function GET(request: NextApiRequest, response: NextApiResponse) {
+  // const authHeader = request.headers.authorization;
+  // // TODO: disable in dev?
+  // if (
+  //   !process.env.CRON_SECRET ||
+  //   authHeader !== `Bearer ${process.env.CRON_SECRET}`
+  // ) {
+  //   return response.status(401).json({ success: false });
+  // }
+
+  await fetchAndUpdateDatabase();
+
+  return Response.json({ success: true });
 }

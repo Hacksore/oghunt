@@ -2,12 +2,11 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -16,7 +15,7 @@ model Topic {
 
   description String
   name        String
-  Post        Post?   @relation(fields: [postId], references: [id])
+  post        Post?   @relation(fields: [postId], references: [id])
   postId      String?
 
   @@unique([id])
