@@ -1,8 +1,9 @@
 import { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/react";
-import { filterPosts, Post } from "./lib/data";
-import { Pill } from "./component/Pill";
 import Image from "next/image";
+import { Analytics } from "@vercel/analytics/react";
+import { filterPosts } from "./utils/string";
+import { Pill } from "./component/Pill";
+import { getTodaysLaunches } from "./lib/persistence";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -10,7 +11,7 @@ const META_INFO = {
   site: "https://oghunt.vercel.app",
 };
 
-export const revalidate = 10; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
+export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const metadata: Metadata = {
   title: META_INFO.title,
@@ -30,14 +31,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const results: Post[] = await fetch(
-    "https://bigd.oghunt.com/latest.json"
-  ).then((res) => res.json());
-
-  const posts = filterPosts(results).sort(
-    (a, b) => b.votesCount - a.votesCount
-  );
-  const aiPosts = filterPosts(results, true);
+  const allPosts = await getTodaysLaunches();
+  const posts = filterPosts(allPosts);
+  const aiPosts = filterPosts(allPosts, true);
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">
@@ -65,7 +61,15 @@ export default async function Page() {
                 </div>
               </div>
 
-              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo" />}
+              {post.thumbnailUrl && (
+                <Image
+                  src={post.thumbnailUrl}
+                  height={124}
+                  width={124}
+                  className="rounded-lg"
+                  alt="logo"
+                />
+              )}
               <div className="flex flex-col items-start">
                 <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
                   {post.name} - ⇧{post.votesCount}
@@ -75,7 +79,7 @@ export default async function Page() {
                 </p>
                 <div className="flex gap-2">
                   {post.topics &&
-                    post.topics.nodes.map(({ id, name }) => (
+                    post.topics.map(({ id, name }) => (
                       <Pill key={`${id}${post.id}`} name={name} />
                     ))}
                 </div>

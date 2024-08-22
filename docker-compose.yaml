@@ -1,0 +1,22 @@
+# create a docker image with mysql and a default password of admin
+version: '3'
+
+name: oghunt
+
+services:
+  db:
+    image: bitnami/postgresql:latest
+    container_name: oghunt-db
+    restart: always
+    environment:
+      POSTGRESQL_USERNAME: dev
+      POSTGRESQL_PASSWORD: dev
+      POSTGRESQL_DATABASE: oghunt
+    # create a volume for the docker container_name
+    volumes:
+      - oghunt-data:/bitnami/postgres/data
+    ports:
+      - 5432:5432
+volumes:
+  oghunt-data:
+    driver: local
