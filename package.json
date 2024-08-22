@@ -11,12 +11,13 @@
     "lint": "next lint",
     "upload-to-r2": "tsx scripts/upload-to-r2.ts",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate"
   },
   "dependencies": {
     "@libsql/client": "^0.9.0",
     "@prisma/adapter-libsql": "5.19.0-dev.13",
-    "@prisma/client": "5.4.0-dev.61",
+    "@prisma/client": "5.18.0",
     "@vercel/analytics": "^1.3.1",
     "date-fns": "^3.6.0",
     "next": "14.2.5",
@@ -33,7 +34,7 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
     "postcss": "^8",
-    "prisma": "^5.18.0",
+    "prisma": "5.4.0-dev.61",
     "tailwindcss": "^3.4.1",
     "tsx": "^4.17.0",
     "typescript": "^5"
