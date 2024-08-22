@@ -1,8 +1,5 @@
 import { ProductPost } from "../types";
 
-
-
-// NOTE: this only works on the API Post type and not the db type
 export const hasAi = (post: ProductPost, showOnlyAi = false): boolean => {
   const excludedTerms = [
     "ai",
@@ -35,7 +32,6 @@ export const hasAi = (post: ProductPost, showOnlyAi = false): boolean => {
   return !showOnlyAi;
 };
 
-// NOTE: git either the posts that have no api or the posts that are all ai
 export const filterPosts = (posts: ProductPost[], showOnlyAi = false): ProductPost[] => {
   return posts.filter((post) => hasAi(post, showOnlyAi));
 };
