@@ -11,12 +11,16 @@ datasource db {
 }
 
 model Post {
-  id          Int      @id @default(autoincrement())
+  id          String
   url         String
-  hasAi       Boolean  @default(false)
   createdAt   DateTime @default(now())
   name        String
-  tagline     String
   description String
   votesCount  Int      @default(0)
+
+  // here we add custom fields
+  hasAi       Boolean  @default(false)
+
+  @@unique([id])
+  @@index([id])
 }

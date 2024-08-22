@@ -1,6 +1,10 @@
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
-import { filterPosts, Post } from "./lib/data";
+import {
+  filterPosts,
+  getAllPost as getAllDailyPostRightNow,
+  hasAi,
+} from "./lib/data";
 import { Pill } from "./component/Pill";
 import db from "./db";
 
@@ -10,7 +14,7 @@ const META_INFO = {
   site: "https://oghunt.vercel.app",
 };
 
-export const revalidate = 10; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
+export const revalidate = 1; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const metadata: Metadata = {
   title: META_INFO.title,
@@ -30,22 +34,34 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const results: Post[] = await fetch(
-    "https://bigd.oghunt.com/latest.json"
-  ).then((res) => res.json());
+  const posts = await getAllDailyPostRightNow();
 
-  // save to the db
-  await db.post.createMany({
-    data: results.map((post) => ({
-      url: post.url,
-      hasAi: true
-    })),
-  })
-
-  const posts = filterPosts(results).sort(
-    (a, b) => b.votesCount - a.votesCount
+  // TODO : error handle
+  await Promise.allSettled(
+    posts.map((post) =>
+      db.post.upsert({
+        where: {
+          id: post.id,
+        },
+        update: {
+          votesCount: post.votesCount,
+          name: post.name,
+          description: post.description,
+          url: post.url,
+        },
+        create: {
+          id: post.id,
+          votesCount: post.votesCount,
+          name: post.name,
+          description: post.description,
+          url: post.url,
+          hasAi: hasAi(post),
+        },
+      })
+    ),
   );
-  const aiPosts = filterPosts(results, true);
+
+  const aiPosts: any = filterPosts(posts, true);
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">

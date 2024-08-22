@@ -140,7 +140,7 @@ export async function getAllPost(): Promise<Post[]> {
   return allPosts;
 }
 
-export const filterPosts = (posts: Post[], showAi = false): Post[] => {
+export const hasAi = (post: Post, showAi = false): boolean => {
   const excludedTerms = [
     "ai",
     "gpt",
@@ -151,7 +151,6 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
   const containsExcludedTerm = (text: string): boolean =>
     excludedTerms.some((term) => text.toLowerCase().includes(term));
 
-  return posts.filter((post) => {
     if (
       containsExcludedTerm(post.name) ||
       containsExcludedTerm(post.tagline) ||
@@ -171,5 +170,8 @@ export const filterPosts = (posts: Post[], showAi = false): Post[] => {
     }
 
     return !showAi;
-  });
+}
+
+export const filterPosts = (posts: Post[], showAi = false): Post[] => {
+  return posts.filter((post) => hasAi(post, showAi));
 };
