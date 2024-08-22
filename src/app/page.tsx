@@ -59,10 +59,16 @@ export default async function Page() {
               target="_blank"
               className="flex items-center gap-8 p-8 w-full group hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
             >
-              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo"/>}
+              <div className="flex flex-row items-center justify-center pb-2 gap-4">
+                <div className="border rounded-2xl p-4  border-[#434343]  text-xl">
+                  #{index + 1}.
+                </div>
+              </div>
+
+              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo" />}
               <div className="flex flex-col items-start">
                 <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
-                  {index + 1}. {post.name} - ⇧{post.votesCount}
+                  {post.name} - ⇧{post.votesCount}
                 </h2>
                 <p className="text-lg max-w-[69ch] mb-2 opacity-60">
                   {post.tagline}
