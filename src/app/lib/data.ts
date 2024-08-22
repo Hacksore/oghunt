@@ -22,6 +22,9 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
           name
         }
       }
+      thumbnail {
+        url
+      }
     }
   }
 }`;
@@ -45,10 +48,15 @@ export interface Post {
   createdAt: string;
   topics: Topic;
   votesCount: number;
+  thumbnail: Thumbnail;
 }
 
 export interface Topic {
   nodes: Node[];
+}
+
+export interface Thumbnail {
+  url: string;
 }
 
 export interface Node {

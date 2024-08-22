@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { filterPosts, Post } from "./lib/data";
 import { Pill } from "./component/Pill";
+import Image from "next/image";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -56,23 +57,26 @@ export default async function Page() {
               href={post.url}
               key={post.id}
               target="_blank"
-              className="flex flex-col items-start p-8 w-full group hover:bg-stone-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
+              className="flex items-center gap-8 p-8 w-full group hover:bg-stone-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
             >
-              <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
-                {index + 1}. {post.name} - ⇧{post.votesCount}
-              </h2>
-              <p className="text-lg max-w-[69ch] mb-2 opacity-60">
-                {post.tagline}
-              </p>
-              <div className="flex gap-2">
-                {post.topics &&
-                  post.topics.nodes.map(({ id, name }) => (
-                    <Pill key={`${id}${post.id}`} name={name} />
-                  ))}
+              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo"/>}
+              <div className="flex flex-col items-start">
+                <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
+                  {index + 1}. {post.name} - ⇧{post.votesCount}
+                </h2>
+                <p className="text-lg max-w-[69ch] mb-2 opacity-60">
+                  {post.tagline}
+                </p>
+                <div className="flex gap-2">
+                  {post.topics &&
+                    post.topics.nodes.map(({ id, name }) => (
+                      <Pill key={`${id}${post.id}`} name={name} />
+                    ))}
+                </div>
+                <p className="line-clamp-3 text-lg max-w-[69ch]">
+                  {post.description}
+                </p>
               </div>
-              <p className="line-clamp-3 text-lg max-w-[69ch]">
-                {post.description}
-              </p>
             </a>
           );
         })}
