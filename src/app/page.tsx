@@ -37,7 +37,7 @@ export default async function Page() {
   const posts = await getAllDailyPostRightNow();
 
   // TODO : error handle
-  await Promise.all(
+  await Promise.allSettled(
     posts.map((post) =>
       db.post.upsert({
         where: {
