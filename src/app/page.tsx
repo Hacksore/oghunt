@@ -65,10 +65,10 @@ export default async function Page() {
                 </div>
               </div>
 
-              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo"/>}
+              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo" />}
               <div className="flex flex-col items-start">
                 <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
-                  {index + 1}. {post.name} - ⇧{post.votesCount}
+                  {post.name} - ⇧{post.votesCount}
                 </h2>
                 <p className="text-lg max-w-[69ch] mb-2 opacity-60">
                   {post.tagline}
