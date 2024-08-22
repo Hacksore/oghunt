@@ -1,5 +1,6 @@
 import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { Post, PostResponse } from "../types";
+import { Post, PostResponse, ProductPost } from "../types";
+import { hasAi } from "../utils/string";
 
 // NOTE: use the graph explorer to build new queries
 const GET_ALL_POSTS = `
@@ -67,3 +68,25 @@ export async function getAllPost(): Promise<Post[]> {
 
   return allPosts;
 }
+
+export const convertPostToProductPost = (post: Post): ProductPost => {
+  return {
+    id: post.id,
+    createdAt: new Date(post.createdAt),
+    url: post.url,
+    hasAi: false,
+    name: post.name,
+    tagline: post.tagline,
+    description: post.description,
+    votesCount: post.votesCount,
+    topics: post.topics.nodes.map((node) => {
+      return {
+        id: node.id,
+        name: node.name,
+        description: node.description,
+        postId: post.id,
+      };
+    }),
+    thumbnailUrl: post.thumbnail.url,
+  };
+};

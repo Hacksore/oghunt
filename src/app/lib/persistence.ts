@@ -1,5 +1,9 @@
-import { getAllPost as getAllDailyPostRightNow } from "./data";
+import {
+  convertPostToProductPost,
+  getAllPost as getAllDailyPostRightNow,
+} from "./data";
 import db from "../db";
+import { hasAi } from "../utils/string";
 
 export async function getTodaysLaunches() {
   const posts = await db.post.findMany({
@@ -12,12 +16,11 @@ export async function getTodaysLaunches() {
     },
     include: {
       topics: true,
-    }
+    },
   });
 
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
-
 
 // NOTE: this will get all the posts and persist the data to the database
 export async function fetchAndUpdateDatabase() {
@@ -61,7 +64,7 @@ export async function fetchAndUpdateDatabase() {
           description: post.description,
           tagline: post.tagline,
           url: post.url,
-          hasAi: false, // hasAi(post)
+          hasAi: hasAi(convertPostToProductPost(post)),
           thumbnailUrl: post.thumbnail.url,
           topics: {
             connectOrCreate: post.topics.nodes.map(

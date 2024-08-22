@@ -31,8 +31,9 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const posts = await getTodaysLaunches();
-  const aiPosts = filterPosts(posts, true);
+  const allPosts = await getTodaysLaunches();
+  const posts = filterPosts(allPosts);
+  const aiPosts = filterPosts(allPosts, true);
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">

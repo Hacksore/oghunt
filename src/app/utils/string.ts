@@ -1,7 +1,9 @@
 import { ProductPost } from "../types";
 
-// NOTE: this only works on the Post type and not the db type
-export const hasAi = (post: ProductPost, showAi = false): boolean => {
+
+
+// NOTE: this only works on the API Post type and not the db type
+export const hasAi = (post: ProductPost, showOnlyAi: boolean): boolean => {
   const excludedTerms = [
     "ai",
     "gpt",
@@ -17,7 +19,7 @@ export const hasAi = (post: ProductPost, showAi = false): boolean => {
     containsExcludedTerm(post.tagline) ||
     containsExcludedTerm(post.description)
   ) {
-    return showAi;
+    return showOnlyAi;
   }
 
   if (
@@ -27,13 +29,13 @@ export const hasAi = (post: ProductPost, showAi = false): boolean => {
         containsExcludedTerm(t.description),
     )
   ) {
-    return showAi;
+    return showOnlyAi;
   }
 
-  return !showAi;
+  return !showOnlyAi;
 };
 
-// NOTE: this only works on the Post type and not the db type
-export const filterPosts = (posts: ProductPost[], showAi = false): ProductPost[] => {
-  return posts.filter((post) => hasAi(post, showAi));
+// NOTE: git either the posts that have no api or the posts that are all ai
+export const filterPosts = (posts: ProductPost[], showOnlyAi = false): ProductPost[] => {
+  return posts.filter((post) => hasAi(post, showOnlyAi));
 };
