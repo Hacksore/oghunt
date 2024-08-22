@@ -15,8 +15,6 @@
     "db:generate": "prisma generate"
   },
   "dependencies": {
-    "@libsql/client": "^0.9.0",
-    "@prisma/adapter-libsql": "5.19.0-dev.13",
     "@prisma/client": "5.18.0",
     "@vercel/analytics": "^1.3.1",
     "date-fns": "^3.6.0",
