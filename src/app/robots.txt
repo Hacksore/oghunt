@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.oghunt.com/sitemap.xml
+Sitemap: https://oghunt.com/sitemap.xml
