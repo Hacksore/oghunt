@@ -25,7 +25,8 @@ export async function fetchAndUpdateDatabase() {
 
   // TODO: we can use lodash to make this more efficient and only get changed/new items
 
-  await Promise.all(
+  // TODO: handle errors?
+  await Promise.allSettled(
     posts.map((post) =>
       db.post.upsert({
         where: {
