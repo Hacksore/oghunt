@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { fetchAndUpdateDatabase } from "../../lib/persistence";
+import { NextRequest, NextResponse } from "next/server";
 
 export const dynamic = "force-dynamic";
 
 // NOTE: this is called on cron job
-export async function GET(request: NextApiRequest, response: NextApiResponse) {
+export async function GET(request: NextRequest, response: NextResponse) {
   // const authHeader = request.headers.authorization;
   // // TODO: disable in dev?
   // if (
