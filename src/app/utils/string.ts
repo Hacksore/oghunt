@@ -3,7 +3,7 @@ import { ProductPost } from "../types";
 
 
 // NOTE: this only works on the API Post type and not the db type
-export const hasAi = (post: ProductPost, showOnlyAi: boolean): boolean => {
+export const hasAi = (post: ProductPost, showOnlyAi = false): boolean => {
   const excludedTerms = [
     "ai",
     "gpt",
