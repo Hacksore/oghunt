@@ -17,6 +17,9 @@ export interface Post {
   tagline: string;
   description: string;
   createdAt: string;
+  thumbnail: {
+    url: string;
+  };
   topics: Topic;
   votesCount: number;
 }

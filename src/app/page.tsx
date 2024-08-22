@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { Analytics } from "@vercel/analytics/react";
 import { filterPosts } from "./utils/string";
 import { Pill } from "./component/Pill";
@@ -59,7 +60,15 @@ export default async function Page() {
                 </div>
               </div>
 
-              {post.thumbnail?.url && <Image src={post.thumbnail.url} height={124} width={124} className="rounded-lg" alt="logo" />}
+              {post.thumbnailUrl && (
+                <Image
+                  src={post.thumbnailUrl}
+                  height={124}
+                  width={124}
+                  className="rounded-lg"
+                  alt="logo"
+                />
+              )}
               <div className="flex flex-col items-start">
                 <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
                   {post.name} - ⇧{post.votesCount}
@@ -69,7 +78,7 @@ export default async function Page() {
                 </p>
                 <div className="flex gap-2">
                   {post.topics &&
-                    post.topics.nodes.map(({ id, name }) => (
+                    post.topics.map(({ id, name }) => (
                       <Pill key={`${id}${post.id}`} name={name} />
                     ))}
                 </div>

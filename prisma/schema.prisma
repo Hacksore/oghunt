@@ -23,13 +23,14 @@ model Topic {
 }
 
 model Post {
-  id          String
-  url         String
-  createdAt   DateTime @default(now())
-  name        String
-  tagline     String
-  description String
-  votesCount  Int      @default(0)
+  id           String
+  url          String
+  createdAt    DateTime @default(now())
+  name         String
+  tagline      String
+  description  String
+  thumbnailUrl String
+  votesCount   Int      @default(0)
 
   // here we add custom fields
   hasAi Boolean @default(false)

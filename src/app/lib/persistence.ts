@@ -38,6 +38,7 @@ export async function fetchAndUpdateDatabase() {
           description: post.description,
           tagline: post.tagline,
           url: post.url,
+          thumbnailUrl: post.thumbnail.url,
           topics: {
             connectOrCreate: post.topics.nodes.map(
               ({ id, description, name }) => ({
@@ -61,6 +62,7 @@ export async function fetchAndUpdateDatabase() {
           tagline: post.tagline,
           url: post.url,
           hasAi: false, // hasAi(post)
+          thumbnailUrl: post.thumbnail.url,
           topics: {
             connectOrCreate: post.topics.nodes.map(
               ({ id, description, name }) => ({
