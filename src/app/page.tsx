@@ -41,7 +41,7 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-screen flex-col p-4 md:p-24">
-      <h1 className="text-4xl md:text-5xl font-bold pb-6 md:pb-20 px-8 bg-gradient-to-r from-pink-300 to-orange-300 bg-clip-text text-transparent">
+      <h1 className="text-4xl md:text-5xl font-bold pb-6 md:pb-20 px-8 bg-gradient-to-r from-pink-400 to-orange-400 dark:from-pink-300 dark:to-orange-300 bg-clip-text text-transparent">
         Product Hunt with ZERO AI Slop™
       </h1>
       <div className="flex flex-col items-center">
@@ -57,7 +57,7 @@ export default async function Page() {
               href={post.url}
               key={post.id}
               target="_blank"
-              className="flex items-center gap-8 p-8 w-full group hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
+              className="flex items-center gap-8 p-8 w-full group hover:bg-stone-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
             >
               <div className="flex flex-row items-center justify-center pb-2 gap-4">
                 <div className="border rounded-2xl p-4  border-[#434343]  text-xl">
