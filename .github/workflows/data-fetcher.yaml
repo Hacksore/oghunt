@@ -32,6 +32,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install
         run: pnpm install
+      - name: Generate Prisma
+        run: pnpm db:generate
       - name: Build
         run: pnpm build
         env:
