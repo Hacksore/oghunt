@@ -61,7 +61,7 @@ export default async function Page() {
             >
               <div className="flex flex-row items-center justify-center pb-2 gap-4">
                 <div className="border rounded-2xl p-4  border-[#434343]  text-xl">
-                  #{index + 1}.
+                  #{index + 1}
                 </div>
               </div>
 
