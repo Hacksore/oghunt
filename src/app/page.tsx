@@ -37,7 +37,7 @@ export default async function Page() {
   const posts = await getAllDailyPostRightNow();
 
   // TODO : error handle
-  await Promise.allSettled(
+  await Promise.all(
     posts.map((post) =>
       db.post.upsert({
         where: {
@@ -47,17 +47,47 @@ export default async function Page() {
           votesCount: post.votesCount,
           name: post.name,
           description: post.description,
+          tagline: post.tagline,
           url: post.url,
+          topics: {
+            connectOrCreate: post.topics.nodes.map(
+              ({ id, description, name }) => ({
+                where: {
+                  id,
+                },
+                create: {
+                  id,
+                  description,
+                  name,
+                },
+              }),
+            ),
+          },
         },
         create: {
           id: post.id,
           votesCount: post.votesCount,
           name: post.name,
           description: post.description,
+          tagline: post.tagline,
           url: post.url,
           hasAi: hasAi(post),
+          topics: {
+            connectOrCreate: post.topics.nodes.map(
+              ({ id, description, name }) => ({
+                where: {
+                  id,
+                },
+                create: {
+                  id,
+                  description,
+                  name,
+                },
+              }),
+            ),
+          },
         },
-      })
+      }),
     ),
   );
 

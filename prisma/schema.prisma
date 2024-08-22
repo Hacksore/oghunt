@@ -10,16 +10,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Topic {
+  id String
+
+  description String
+  name        String
+  Post        Post?   @relation(fields: [postId], references: [id])
+  postId      String?
+
+  @@unique([id])
+  @@index([id])
+}
+
 model Post {
   id          String
   url         String
   createdAt   DateTime @default(now())
   name        String
+  tagline     String
   description String
   votesCount  Int      @default(0)
 
   // here we add custom fields
-  hasAi       Boolean  @default(false)
+  hasAi Boolean @default(false)
+
+  topics Topic[]
 
   @@unique([id])
   @@index([id])
