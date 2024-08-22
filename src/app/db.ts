@@ -1,20 +1,17 @@
-import { PrismaClient } from "@prisma/client";
-import { PrismaLibSQL } from "@prisma/adapter-libsql";
-import { createClient } from "@libsql/client";
+import { PrismaClient } from '@prisma/client'
+import { PrismaLibSQL } from '@prisma/adapter-libsql'
+import { createClient } from '@libsql/client'
 
-const { DATABASE_URL, DATABASE_TOKEN } = process.env;
+// Setup
+const connectionString = `${process.env.TURSO_DATABASE_URL}`
+const authToken = `${process.env.TURSO_AUTH_TOKEN}`
 
-if (!DATABASE_URL || !DATABASE_TOKEN) {
-  throw new Error("DATABASE_URL and DATABASE_TOKEN must be set");
-}
-
+// Init prisma client
 const libsql = createClient({
-  url: DATABASE_URL,
-  authToken: DATABASE_TOKEN,
-});
-
-const adapter = new PrismaLibSQL(libsql);
-
-const prisma = new PrismaClient({ adapter });
+  url: connectionString,
+  authToken,
+})
+const adapter = new PrismaLibSQL(libsql)
+const prisma = new PrismaClient({ adapter })
 
 export default prisma;
