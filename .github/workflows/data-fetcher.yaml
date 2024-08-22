@@ -1,11 +1,8 @@
 name: Fetch Data
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 * * * *"
-  push:
-    branches:
-      - yippe
+  pull_request:
+
 env:
   NODE_VERSION: "20"
 
@@ -35,10 +32,8 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Install
         run: pnpm install
-      - name: Upload to R2
-        run: pnpm upload-to-r2
+      - name: Build
+        run: pnpm build
         env:
           PH_API_KEY: ${{ secrets.PH_API_KEY }}
-          R2_ACCOUNT_ID: ${{ secrets.R2_ACCOUNT_ID }}
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
