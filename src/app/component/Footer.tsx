@@ -1,6 +1,6 @@
 export const Footer = () => {
   return (
-    <footer className="py-24 w-full mx-auto dark:text-gray-400 text-center">
+    <footer className="py-8 md:py-20 w-full mx-auto dark:text-gray-400 text-center">
       <div className="flex items-center flex-col">
         <a
           aria-label="github"
