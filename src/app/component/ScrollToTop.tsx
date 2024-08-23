@@ -29,7 +29,7 @@ export default function ScrollToTop() {
 
   return (
     <button
-      className={`fixed bottom-6 right-6 z-50 flex h-10 w-10 border border-[#434343]/75 rounded-lg cursor-pointer items-center justify-center hover:bg-stone-300/10 transition-opacity duration-500 rounded-full shadow-lg transition-all hover:bg-primary/90 ${showScrollToTop ? "opacity-100" : "opacity-0"}`}
+      className={`fixed bottom-6 right-6 z-50 flex h-10 w-10 border border-[#434343]/75 rounded-lg cursor-pointer items-center justify-center hover:bg-stone-300/10 transition-opacity duration-500 rounded-full shadow-lg transition-all ${showScrollToTop ? "opacity-100" : "opacity-0"}`}
       onClick={scrollToTop}
     >
       <ChevronUp className="h-5 w-5 opacity-80" />
