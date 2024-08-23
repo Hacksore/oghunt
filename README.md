@@ -15,7 +15,7 @@ Start the local database:
 docker compose up -d
 ```
 
-With the docker container running in the background:
+With the docker container running in the background: install dependencies, execute prisma commands, and run the app.
 
 1. `pnpm i`
 2. `pnpm db:generate` (only needed once or when you change schema)
