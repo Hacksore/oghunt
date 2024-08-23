@@ -8,7 +8,7 @@ import { Post as PostType } from "../types";
 import { Prisma } from "@prisma/client";
 
 export async function getTodaysLaunches() {
-  const posts = await db.post.findMany({
+  const posts = (await db.post.findMany({
     where: {
       // only get the posts that are the same day as today
       createdAt: {
@@ -17,9 +17,16 @@ export async function getTodaysLaunches() {
       },
     },
     include: {
-      topics: true,
+      topics: {
+        select: {
+          Topic: true
+        }
+      }
     },
-  });
+  })).map(post=>({
+    ...post,
+    topics: post.topics.map(topic=>topic.Topic)
+  }));
 
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
