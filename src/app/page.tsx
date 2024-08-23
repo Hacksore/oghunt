@@ -58,7 +58,7 @@ export default async function Page() {
                 href={post.url}
                 key={post.id}
                 target="_blank"
-                className="flex flex-col md:flex-row items-center justify-between gap-8 p-4 md:p-8 group hover:bg-neutral-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
+                className="flex flex-col md:flex-row items-center gap-8 p-4 md:p-8 group hover:bg-neutral-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
               >
                 <div className="hidden md:flex flex-row items-center justify-center pb-2 gap-4">
                   <div className="border rounded-lg p-4 border-neutral-700 text-xl">
@@ -93,7 +93,7 @@ export default async function Page() {
                   </p>
                 </div>
 
-                <div className="hidden md:flex flex-col items-center border border-neutral-700 rounded-lg px-4 py-2">
+                <div className="hidden md:flex ml-auto flex-col items-center border border-neutral-700 rounded-lg px-4 py-2">
                   <UpArrow className="stroke-0 h-12 w-12" gradient />
                   <p className="font-bold">{post.votesCount}</p>
                 </div>
