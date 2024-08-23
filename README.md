@@ -24,6 +24,7 @@ Then, we need to seed the DB. With the app and the docker container running, we'
 We'll send a GET request to `http://localhost:3000/api/update-posts` with a header with a key of `Authorization` and a value of `Bearer CRON_SECRET` where `CRON_SECRET` is equal to the secret you put for `CRON_SECRET` in your `.env` file.
 
 To quickly seed the db we can run this curl command: 
+
 `curl -H "Authorization: Bearer <CRON_SECRET>" http://localhost:3000/api/update-posts`
 
 Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
