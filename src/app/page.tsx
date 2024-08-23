@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { filterPosts } from "./utils/string";
 import { Pill } from "./component/Pill";
 import { getTodaysLaunches } from "./lib/persistence";
+import { UpArrow } from "./component/icons/UpArrow";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -72,7 +73,7 @@ export default async function Page() {
               )}
               <div className="flex flex-col items-start">
                 <h2 className="text-4xl font-bold mb-2 group-hover:underline duration-300 group-hover:translate-x-2">
-                  {post.name} - ⇧{post.votesCount}
+                  {post.name}
                 </h2>
                 <p className="text-lg max-w-[69ch] mb-2 opacity-60">
                   {post.tagline}
@@ -86,6 +87,11 @@ export default async function Page() {
                 <p className="line-clamp-3 text-lg max-w-[69ch]">
                   {post.description}
                 </p>
+              </div>
+
+              <div className="flex flex-col items-center ml-auto border border-[#434343] rounded-lg px-4 py-2">
+                <UpArrow className="stroke-0 h-12 w-12" gradient />
+                <p className="font-bold">{post.votesCount}</p>
               </div>
             </a>
           );
