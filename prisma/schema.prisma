@@ -8,26 +8,31 @@ datasource db {
 }
 
 model Topic {
-  id          String  @unique
+  id          String      @id
   description String
   name        String
   postId      String?
-  post        Post?   @relation(fields: [postId], references: [id])
-
-  @@index([id])
+  posts       TopicPost[]
 }
 
 model Post {
-  id           String   @unique
+  id           String      @id
   url          String
-  createdAt    DateTime @default(now())
+  createdAt    DateTime    @default(now())
   name         String
   tagline      String
   description  String
   thumbnailUrl String
-  votesCount   Int      @default(0)
-  hasAi        Boolean  @default(false)
-  topics       Topic[]
+  votesCount   Int         @default(0)
+  hasAi        Boolean     @default(false)
+  topics       TopicPost[]
+}
 
-  @@index([id])
+model TopicPost {
+  topicId String
+  postId  String
+  Topic   Topic  @relation(fields: [topicId], references: [id])
+  Post    Post   @relation(fields: [postId], references: [id])
+
+  @@id([topicId, postId])
 }
