@@ -5,6 +5,7 @@ import { filterPosts } from "./utils/string";
 import { Pill } from "./component/Pill";
 import { getTodaysLaunches } from "./lib/persistence";
 import { UpArrow } from "./component/icons/UpArrow";
+import ScrollToTop from "./component/ScrollToTop";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -102,7 +103,7 @@ export default async function Page() {
           })}
         </div>
       </div>
-
+      <ScrollToTop />
       <Analytics />
     </main>
   );
