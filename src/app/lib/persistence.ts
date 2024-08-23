@@ -23,9 +23,9 @@ export async function getTodaysLaunches() {
         }
       }
     },
-  })).map(post=>({
+  })).map(post => ({
     ...post,
-    topics: post.topics.map(topic=>topic.Topic)
+    topics: post.topics.map(topic => topic.Topic)
   }));
 
   return posts.sort((a, b) => b.votesCount - a.votesCount);
@@ -93,6 +93,7 @@ export async function fetchAndUpdateDatabase() {
     if (!toAdd) break;
     await db.post.createMany({
       data: toAdd.map(generateDBPost),
+      skipDuplicates: true
     })
   }
 
@@ -100,12 +101,12 @@ export async function fetchAndUpdateDatabase() {
 
 
   await db.topic.createMany({
-
     data: allTopics,
     skipDuplicates: true,
   })
 
 
+  const promises = [];
 
   async function runPostUpdateQueue() {
     while (postsToUpdate.length) {
@@ -122,7 +123,10 @@ export async function fetchAndUpdateDatabase() {
   }
 
 
-  for (let i = 0; i < MAX_CONCURRENCY; ++i) runPostUpdateQueue();
+  for (let i = 0; i < MAX_CONCURRENCY; ++i) promises.push(runPostUpdateQueue());
+
+
+  await Promise.all(promises);
 
 
   const topicPosts = posts.flatMap(post => post.topics.nodes.map(topic => ({
