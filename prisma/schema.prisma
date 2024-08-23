@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,19 +8,17 @@ datasource db {
 }
 
 model Topic {
-  id String
-
+  id          String  @unique
   description String
   name        String
-  post        Post?   @relation(fields: [postId], references: [id])
   postId      String?
+  post        Post?   @relation(fields: [postId], references: [id])
 
-  @@unique([id])
   @@index([id])
 }
 
 model Post {
-  id           String
+  id           String   @unique
   url          String
   createdAt    DateTime @default(now())
   name         String
@@ -31,12 +26,8 @@ model Post {
   description  String
   thumbnailUrl String
   votesCount   Int      @default(0)
+  hasAi        Boolean  @default(false)
+  topics       Topic[]
 
-  // here we add custom fields
-  hasAi Boolean @default(false)
-
-  topics Topic[]
-
-  @@unique([id])
   @@index([id])
 }
