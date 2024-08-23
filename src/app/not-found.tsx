@@ -24,7 +24,7 @@ export default function Component() {
 				/>
 			</div>
 			<p className="text-xl mb-8 max-w-md">
-				Don't worry, our team of highly trained sandwich artist are on it!
+				Don't worry, our team of highly trained sandwich artists are on it!
 			</p>
 		</div>
 	);
