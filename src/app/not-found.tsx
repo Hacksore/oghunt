@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unescaped-entities */
 import Link from "next/link";
 import Image from "next/image";
 
@@ -8,7 +7,7 @@ export default function Component() {
       <h1 className="text-primary text-9xl font-extrabold">404</h1>
       <button
         type="button"
-        className="2 animate-pulse rounded bg-gradient-to-r from-pink-400 to-orange-400 px-2 py-3 text-gray-900 text-white"
+        className="2 animate-pulse rounded bg-gradient-to-r from-pink-400 to-orange-400 px-2 py-3 text-gray-900 dark:text-white"
       >
         <Link href="/">Escape to Safety (Homepage)</Link>
       </button>

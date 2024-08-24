@@ -75,7 +75,7 @@ export async function getAllPost(): Promise<Post[]> {
     const result: PostResponse = await response.json();
 
     const data = result.data?.posts;
-    allPosts.push(...data?.nodes);
+    allPosts.push(...(data?.nodes || []));
     after = data.pageInfo.endCursor;
     hasNextPage = data.pageInfo.hasNextPage;
   }

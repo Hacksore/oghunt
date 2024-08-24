@@ -79,7 +79,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
         true,
       );
 
-    const showTooltip = (event: any, content: string) => {
+    const showTooltip = (event: MouseEvent, content: string) => {
       tooltip
         .html(content)
         .style("left", `${event.pageX + 10}px`)
@@ -99,10 +99,10 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("width", containerWidth * ratioA)
       .attr("height", height)
       .attr("fill", "url(#gradientA)")
-      .on("mouseover", (event) =>
+      .on("mouseover", (event: MouseEvent) =>
         showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
       )
-      .on("mousemove", (event) =>
+      .on("mousemove", (event: MouseEvent) =>
         showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
       )
       .on("mouseout", hideTooltip);
