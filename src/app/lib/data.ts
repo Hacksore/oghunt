@@ -1,6 +1,19 @@
 import { getStartAndEndOfDayInUTC } from "../utils/date";
 import { Post, PostResponse, ProductPost } from "../types";
-import { hasAi } from "../utils/string";
+
+const buildGetAllPostsVotes = (keys: string[]) => `
+query {
+  ${keys
+    .map(
+      (key) => `
+    post${key}: post(id: ${key}) {
+      votesCount
+    }
+  `,
+    )
+    .join("")}
+}
+`;
 
 // NOTE: use the graph explorer to build new queries
 const GET_ALL_POSTS = `
@@ -36,6 +49,7 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
 export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
   const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
+  console.log({ postedAfter, postedBefore });
   let hasNextPage = true;
   let after = null;
   const allPosts: Post[] = [];
@@ -61,7 +75,7 @@ export async function getAllPost(): Promise<Post[]> {
     const result: PostResponse = await response.json();
 
     const data = result.data?.posts;
-    allPosts.push(...data?.nodes);
+    allPosts.push(...(data?.nodes || []));
     after = data.pageInfo.endCursor;
     hasNextPage = data.pageInfo.hasNextPage;
   }
@@ -69,8 +83,27 @@ export async function getAllPost(): Promise<Post[]> {
   return allPosts;
 }
 
+export async function getAllPostsVotesMoarBetter(
+  ids: string[],
+): Promise<Record<string, { votesCount: number }>> {
+  const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.PH_API_KEY}`,
+    },
+    method: "POST",
+    body: JSON.stringify({
+      query: buildGetAllPostsVotes(ids),
+    }),
+  }).then((res) => res.json());
+
+  return response.data;
+}
+
 export const convertPostToProductPost = (post: Post): ProductPost => {
   return {
+    deleted: false,
     id: post.id,
     createdAt: new Date(post.createdAt),
     url: post.url,

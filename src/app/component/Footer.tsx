@@ -1,7 +1,7 @@
 export const Footer = () => {
   return (
-    <footer className="py-8 md:py-20 w-full mx-auto dark:text-gray-400 text-center">
-      <div className="flex items-center flex-col">
+    <footer className="mx-auto w-full py-8 text-center md:py-20 dark:text-gray-400">
+      <div className="flex flex-col items-center">
         <a
           aria-label="github"
           target="_blank"
@@ -20,14 +20,13 @@ export const Footer = () => {
           </svg>
         </a>
         <p className="mt-8 p-4">
-          oghunt is an independent application and is not affiliated with or
-          endorsed by{" "}
+          oghunt is an independent application and is not affiliated with or endorsed by{" "}
           <a
             aria-label="product-hunt"
             target="_blank"
             rel="noreferrer"
             href="https://www.producthunt.com"
-            className="hover:opacity-60 duration-300"
+            className="duration-300 hover:opacity-60"
           >
             Product Hunt
           </a>

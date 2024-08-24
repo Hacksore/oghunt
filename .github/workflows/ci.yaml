@@ -8,7 +8,7 @@ env:
 
 jobs:
   ingest:
-    name: Build 
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
@@ -34,8 +34,7 @@ jobs:
         run: pnpm install
       - name: Generate Prisma
         run: pnpm db:generate
-      - name: Build
-        run: pnpm build
-        env:
-          PH_API_KEY: ${{ secrets.PH_API_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Lint
+        run: pnpm lint
+      - name: Check Format
+        run: pnpm check:format

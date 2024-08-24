@@ -7,9 +7,7 @@ Product Hunt with ZERO AI Slop™
 
 This is what you need to get up and running
 
-Create a ProductHunt account. Then, go to your [API Dashboard](https://www.producthunt.com/v2/oauth/applications). Afterwards, create an application. Set the redirect URI to `https://localhost:3000` for local development purposes. Then, generate a `Developer Token`, copy that, create a `.env` file similar to [.env.example](/.env.example). Set `CRON_SECRET` to whatever you'd like locally.
-
-Start the local database:
+Create a ProductHunt account. Then, go to your [API Dashboard](https://www.producthunt.com/v2/oauth/applications). Afterwards, create an application. Set the redirect URI to `https://localhost:3000` for local development purposes. Then, generate a `Developer Token`, copy that, create a `.env` file similar to [.env.example](/.env.example). Set `CRON_SECRET` to whatever you'd like locally. Set `DATABASE_URL` to `"postgresql://dev:dev@localhost:5432/oghunt"` and make sure you already don't have PostgreSQL running on your machine otherwise Docker won't know what to do the port already being in use.
 
 ```
 docker compose up -d

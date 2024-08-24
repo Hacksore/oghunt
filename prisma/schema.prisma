@@ -25,14 +25,24 @@ model Post {
   thumbnailUrl String
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
+  deleted      Boolean     @default(false)
   topics       TopicPost[]
 }
 
 model TopicPost {
   topicId String
   postId  String
-  Topic   Topic  @relation(fields: [topicId], references: [id])
-  Post    Post   @relation(fields: [postId], references: [id])
+  Topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  Post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@id([topicId, postId])
+}
+
+model Metric {
+  id                   Int      @id @default(autoincrement())
+  timestamp            DateTime @default(dbgenerated("timezone('utc', now())")) @db.Timestamp(6)
+  totalProjects        Int
+  totalVotes           Int
+  aiProjectsPercentage Float
+  aiVotesPercentage    Float
 }
