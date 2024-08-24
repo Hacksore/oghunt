@@ -71,6 +71,7 @@ export async function getAllPost(): Promise<Post[]> {
           postedBefore: postedBefore,
         },
       }),
+      cache: "no-cache",
     });
     const result: PostResponse = await response.json();
 
@@ -96,6 +97,7 @@ export async function getAllPostsVotesMoarBetter(
     body: JSON.stringify({
       query: buildGetAllPostsVotes(ids),
     }),
+    cache: "no-cache",
   }).then((res) => res.json());
 
   return response.data;
