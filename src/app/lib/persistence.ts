@@ -1,7 +1,4 @@
-import {
-  convertPostToProductPost,
-  getAllPost as getAllDailyPostRightNow,
-} from "./data";
+import { convertPostToProductPost, getAllPost as getAllDailyPostRightNow } from "./data";
 import db from "../db";
 import { hasAi } from "../utils/string";
 import { Post as PostType } from "../types";
@@ -16,6 +13,7 @@ export async function getTodaysLaunches() {
           gte: new Date(new Date().setHours(0, 0, 0, 0)),
           lt: new Date(new Date().setHours(23, 59, 59, 999)),
         },
+        deleted: false
       },
       include: {
         topics: {
@@ -43,6 +41,7 @@ function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
     url: post.url,
     hasAi: hasAi(convertPostToProductPost(post)),
     thumbnailUrl: post.thumbnail.url,
+    deleted: false
   };
 }
 
@@ -57,13 +56,15 @@ export async function fetchAndUpdateDatabase() {
 
   const posts = await getAllDailyPostRightNow();
 
-  const existingPosts = (
-    await db.post.findMany({
-      select: {
-        id: true,
-      },
-    })
-  ).reduce(
+  console.log(`The Producthunt returns ${posts.length} posts!`);
+
+  const existingPostsList = await db.post.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  const existingPosts = existingPostsList.reduce(
     (acc, post) => {
       acc[post.id] = true;
       return acc;
@@ -81,6 +82,8 @@ export async function fetchAndUpdateDatabase() {
     else postsToCreate.push(post);
   }
 
+  const createdPostsCount = postsToCreate.length;
+
   while (postsToCreate.length) {
     partitioned_create_posts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
   }
@@ -94,12 +97,17 @@ export async function fetchAndUpdateDatabase() {
     });
   }
 
+
+  console.log(`Created ${postsToCreate} posts!`);
+
   await db.topic.createMany({
     data: allTopics,
     skipDuplicates: true,
   });
 
   const promises = [];
+
+  const updatedPostsCount = postsToUpdate.length;
 
   async function runPostUpdateQueue() {
     while (postsToUpdate.length) {
@@ -113,6 +121,9 @@ export async function fetchAndUpdateDatabase() {
       });
     }
   }
+
+
+  console.log(`Updated ${updatedPostsCount} posts!`);
 
   for (let i = 0; i < MAX_CONCURRENCY; ++i) promises.push(runPostUpdateQueue());
 
@@ -128,6 +139,19 @@ export async function fetchAndUpdateDatabase() {
   await db.topicPost.createMany({
     data: topicPosts,
     skipDuplicates: true,
+  });
+
+
+  await db.post.updateMany({
+    where: {
+      id: {
+        notIn: posts.map(post => post.id),
+      },
+      deleted: false
+    },
+    data: {
+      deleted: true
+    }
   });
 
   return posts;
