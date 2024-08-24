@@ -14,6 +14,7 @@ const META_INFO = {
   site: "https://oghunt.vercel.app",
 };
 
+export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const metadata: Metadata = {

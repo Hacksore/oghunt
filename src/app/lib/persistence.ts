@@ -80,7 +80,7 @@ export async function fetchAndUpdateDatabase() {
     else postsToCreate.push(post);
   }
 
-  const postsToCreateCount = postsToCreate.length;
+  const newPosts = postsToCreate.length;
 
   while (postsToCreate.length) {
     partitioned_create_posts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
@@ -147,8 +147,8 @@ export async function fetchAndUpdateDatabase() {
 
   return {
     productHuntApiPostsCount: posts.length,
-    updatedPostsCount,
-    postsToCreateCount,
+    updatedPostsCount, 
+    postsToCreateCount: newPosts,
     topicPostsCount: topicPosts.length,
   };
 }
