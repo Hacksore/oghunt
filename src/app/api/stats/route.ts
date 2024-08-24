@@ -4,9 +4,8 @@ import { filterPosts } from "@/app/utils/string";
 
 export const dynamic = "force-dynamic";
 
-
 const getTodaysLaunchesCached = unstable_cache(() => getTodaysLaunches(), ["todaylaunches"], {
-  revalidate: 900 // 15 minutes
+  revalidate: 900, // 15 minutes
 });
 
 export async function GET() {
