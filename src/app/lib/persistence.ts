@@ -160,24 +160,28 @@ export async function fetchAndUpdateDatabase() {
     },
   });
 
-
   const totalProjects = posts.length;
   let totalVotes = 0;
 
   let aiProjects = 0;
   let aiVotes = 0;
 
-  posts.forEach(post => {
+  posts.forEach((post) => {
     totalVotes += post.votesCount;
-    if (hasAi({
-      ...post,
-      topics: post.topics.nodes.map(topic => ({
-        id: topic.id,
-        description: topic.description,
-        name: topic.name,
-        postId: post.id
-      }))
-    }, true)) {
+    if (
+      hasAi(
+        {
+          ...post,
+          topics: post.topics.nodes.map((topic) => ({
+            id: topic.id,
+            description: topic.description,
+            name: topic.name,
+            postId: post.id,
+          })),
+        },
+        true,
+      )
+    ) {
       ++aiProjects;
       aiVotes += post.votesCount;
     }
@@ -191,10 +195,9 @@ export async function fetchAndUpdateDatabase() {
       totalProjects,
       totalVotes,
       aiVotesPercentage,
-      aiProjectsPercentage
-    }
-  })
-
+      aiProjectsPercentage,
+    },
+  });
 
   return {
     productHuntApiPostsCount: posts.length,

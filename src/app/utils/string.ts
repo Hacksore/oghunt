@@ -1,11 +1,14 @@
 import { ProductPost } from "../types";
 
-export const hasAi = (post: {
-  name: ProductPost["name"],
-  tagline: ProductPost["tagline"],
-description: ProductPost["description"],
-  topics: ProductPost["topics"]
-}, showOnlyAi = false): boolean => {
+export const hasAi = (
+  post: {
+    name: ProductPost["name"];
+    tagline: ProductPost["tagline"];
+    description: ProductPost["description"];
+    topics: ProductPost["topics"];
+  },
+  showOnlyAi = false,
+): boolean => {
   const excludedTerms = ["ai", "gpt", "artificial intelligence", "machine learning"];
 
   const containsExcludedTerm = (text: string): boolean =>
