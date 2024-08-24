@@ -83,7 +83,9 @@ export async function getAllPost(): Promise<Post[]> {
   return allPosts;
 }
 
-export async function getAllPostsVotesMoarBetter(ids: string[]): Promise<Record<string, { votesCount: number}>> {
+export async function getAllPostsVotesMoarBetter(
+  ids: string[],
+): Promise<Record<string, { votesCount: number }>> {
   const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
     headers: {
       Accept: "application/json",
