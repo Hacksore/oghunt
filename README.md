@@ -29,11 +29,13 @@ Please feel free to check out our [architecture diagram](./public/og-hunt-diagra
 
 ## Team
 
-- Lead Developer: [Pizza](link)
-- Product Owner: [Pati](link)
-- Project Manager: [Hacksore](link)
-- Tech Consultant: [Trash](link)
-- System Architect: [Max](link)
-- Data Scientist: [TypeSafe](link)
-- Data Visualization: [Nathan](link)
-- Scrum Leader: [Aodhan](link)
+- Lead Developer: [Pizza](https://github.com/RossLitzenberger)
+- Product Owner: [Pati]()
+- Project Manager: [Hacksore](https://github.com/Hacksore)
+- Lead Developer: [Jim](https://github.com/JoshHyde9)
+- Tech Consultant: [Trash](https://github.com/bautistaaa)
+- System Architect: [Max](https://github.com/maxdemaio)
+- Data Scientist: [TypeSafe](https://github.com/typesafeui)
+- Data Visualization: [Nathan](https://github.com/nathanroark)
+- Scrum Leader: [Aodhan](https://github.com/MVAodhan)
+- Civil Engineering Lead: [Mark](https://github.com/markkhoo)
