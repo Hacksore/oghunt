@@ -154,7 +154,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({
       .attr("text-anchor", "start")
       .attr("fill", "black")
       .style("font-weight", "bold")
-      .text(nameA + " | " + propA);
+      .text(nameA + " • " + propA);
 
     // Text B (Label on the right side)
     svg
@@ -164,7 +164,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({
       .attr("text-anchor", "end")
       .attr("fill", "white")
       .style("font-weight", "bold")
-      .text(propB + " | " + nameB);
+      .text(propB + " • " + nameB);
 
     // Clean up the tooltip on component unmount
     return () => {
