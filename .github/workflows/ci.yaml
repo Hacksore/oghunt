@@ -34,7 +34,8 @@ jobs:
         run: pnpm install
       - name: Generate Prisma
         run: pnpm db:generate
-      - name: Lint
-        run: pnpm lint 
+      # TODO: fix this https://github.com/vercel/next.js/issues/64409
+      # - name: Lint
+      #   run: pnpm lint 
       - name: Check Format
         run: pnpm check:format
