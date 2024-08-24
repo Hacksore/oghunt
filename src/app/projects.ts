@@ -4,7 +4,14 @@ export const PROJECTS: ProductPost[] = [
   {
     id: "1",
     hasAi: false,
-    topics: [],
+    topics: [
+      {
+        name: "React",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+    ],
     deleted: false,
     tagline: "The best way to find and share new music",
     createdAt: new Date(),
@@ -19,7 +26,14 @@ export const PROJECTS: ProductPost[] = [
   {
     id: "1",
     hasAi: false,
-    topics: [],
+    topics: [
+      {
+        name: "React",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+    ],
     deleted: false,
     tagline: "Get a job bro",
     createdAt: new Date(),
@@ -33,7 +47,14 @@ export const PROJECTS: ProductPost[] = [
   {
     id: "1",
     hasAi: false,
-    topics: [],
+    topics: [
+      {
+        name: "React",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+    ],
     deleted: false,
     tagline: "Get your food and not poo poo",
     createdAt: new Date(),
@@ -48,14 +69,22 @@ export const PROJECTS: ProductPost[] = [
   {
     id: "1",
     hasAi: false,
-    topics: [],
+    topics: [
+      {
+        name: "React",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+    ],
     deleted: false,
     tagline: "share your spotify",
     createdAt: new Date(),
     votesCount: 1337,
     thumbnailUrl: "https://splist.fm/android-chrome-192x192.png",
-    name: "Seattle Safe Eats",
+    name: "Splist.fm",
     url: "https://splist.fm/",
-    description: "share your spotify playlists with friends and family",
+    description:
+      "share your spotify playlists with friends and family so that they know you listen to good music",
   },
 ];
