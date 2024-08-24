@@ -61,6 +61,8 @@ export default async function Page() {
               height={32}
             />
           </div>
+          <div className="pt-2 opacity-60">Out of projects launched today</div>
+
         </div>
       </header>
 
