@@ -1,11 +1,16 @@
+import { unstable_cache } from "next/cache";
 import { getTodaysLaunches } from "../../lib/persistence";
 import { filterPosts } from "@/app/utils/string";
 
 export const dynamic = "force-dynamic";
 
-// TODO : needs caching
+
+const getTodaysLaunchesCached = unstable_cache(()=>getTodaysLaunches(), ["todaylaunches"], {
+  revalidate: 20
+});
+
 export async function GET() {
-  const allPosts = await getTodaysLaunches();
+  const allPosts = await getTodaysLaunchesCached();
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
 
