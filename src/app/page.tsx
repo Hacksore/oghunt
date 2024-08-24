@@ -39,7 +39,7 @@ export default async function Page() {
   const aiPosts = filterPosts(allPosts, true);
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-8 pt-8 md:pt-20 w-full">
+    <main className="flex min-h-screen flex-col items-center px-8 pt-10 w-full">
       <header className="flex flex-col gap-8 pb-10">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 dark:from-pink-300 dark:to-orange-300 bg-clip-text text-transparent">
           Product Hunt with ZERO AI Slop™

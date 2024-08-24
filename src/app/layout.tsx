@@ -25,6 +25,27 @@ export default function RootLayout({
             We're live on Product Hunt today! Click to show your support!
           </div>
         </a>
+        <a
+          deez="🥜"
+          href="https://www.linkedin.com/in/rosslitzenberger/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="duration-300 items-center hover:font-bold underline p-4 flex gap-4 justify-center text-white"
+        >
+          <img
+            width="50"
+            height="50"
+            src="/pizza2.jpeg"
+            alt="pizza"
+            className="rounded-full"
+          />
+
+          <span>
+            🚨 Our lead developer, Ross, is looking for a job. Please hire him!
+            🚨
+          </span>
+        </a>
+
         {children}
         <Footer />
       </body>
