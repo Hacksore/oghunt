@@ -1,14 +1,10 @@
-import { getAllPost } from "@/app/lib/data";
-import { getTodaysLaunches } from "@/app/lib/persistence";
 import { fetchFont } from "@/app/utils/fetch-font";
-import { filterPosts } from "@/app/utils/string";
 import { ImageResponse } from "next/og";
 
 // Route segment config
 export const runtime = "edge";
 
 // Image metadata
-export const alt = "oghunt";
 export const size = {
   width: 1200,
   height: 630,
