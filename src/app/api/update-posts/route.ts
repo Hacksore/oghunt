@@ -1,4 +1,3 @@
-import { revalidatePath } from "next/cache";
 import { fetchAndUpdateDatabase } from "../../lib/persistence";
 import { NextRequest } from "next/server";
 
@@ -14,9 +13,7 @@ export async function GET(request: NextRequest) {
   }
 
   const response = await fetchAndUpdateDatabase();
-
   console.log(response);
-  revalidatePath("/");
 
   return Response.json({ success: true });
 }

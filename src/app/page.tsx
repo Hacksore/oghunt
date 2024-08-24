@@ -79,6 +79,12 @@ export default async function Page() {
             <Card post={post} index={index} />
           ))}
         </div>
+        <div className="flex flex-col items-center pt-8">
+          <p className="text-2xl">Now that you viewed all the non AI projects</p>
+          <a className="pt-2 text-xl text-blue-400" href="/homies" rel="noopener noreferrer">
+            Click here to view the Homies Projects
+          </a>
+        </div>
       </div>
       <ScrollToTop />
       <Analytics />
