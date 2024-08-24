@@ -20,9 +20,20 @@ With the docker container running in the background: install dependencies, execu
 1. `pnpm i`
 2. `pnpm db:generate` (only needed once or when you change schema)
 3. `pnpm db:push` (only needed once to push these changes to the local DB)
-3. `pnpm dev`
+4. `pnpm dev`
 
 Then, we need to seed the DB. With the app and the docker container running, we'll do it via an API request to our backend to run our DB seed script.
 We'll send a GET request to `http://localhost:3000/api/update-posts` with a header with a key of `Authorization` and a value of `Bearer CRON_SECRET` where `CRON_SECRET` is equal to the secret you put for `CRON_SECRET` in your `.env` file.
 
 Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
+
+## Team
+
+- Lead Developer: [Pizza](link)
+- Product Owner: [Pati](link)
+- Project Manager: [Hacksore](link)
+- Tech Consultant: [Trash](link)
+- System Architect: [Max](link)
+- Data Scientist: [TypeSafe](link)
+- Data Visualization: [Nathan](link)
+- Scrum Leader: [Aodhan](link)
