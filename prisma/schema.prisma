@@ -37,3 +37,12 @@ model TopicPost {
 
   @@id([topicId, postId])
 }
+
+model Metric {
+  id                   Int      @id @default(autoincrement())
+  timestamp            DateTime @default(dbgenerated("timezone('utc', now())")) @db.Timestamp(6)
+  totalProjects        Int
+  totalVotes           Int
+  aiProjectsPercentage Float
+  aiVotesPercentage    Float
+}
