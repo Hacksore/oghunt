@@ -26,7 +26,6 @@ export default function RootLayout({
           </div>
         </a>
         <a
-          deez="🥜"
           href="https://www.linkedin.com/in/rosslitzenberger/"
           target="_blank"
           rel="noopener noreferrer"
