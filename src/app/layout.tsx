@@ -29,7 +29,7 @@ export default function RootLayout({
           href="https://www.linkedin.com/in/rosslitzenberger/"
           target="_blank"
           rel="noopener noreferrer"
-          className="duration-300 items-center hover:font-bold underline p-4 flex gap-4 justify-center text-white"
+          className="duration-300 items-center hover:font-bold underline p-4 flex gap-4 justify-center dark:text-white"
         >
           <img
             width="50"
