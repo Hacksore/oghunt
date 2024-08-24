@@ -147,7 +147,7 @@ export async function fetchAndUpdateDatabase() {
 
   return {
     productHuntApiPostsCount: posts.length,
-    updatedPostsCount, 
+    updatedPostsCount,
     postsToCreateCount: newPosts,
     topicPostsCount: topicPosts.length,
   };
