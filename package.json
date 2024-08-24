@@ -14,7 +14,7 @@
     "db:studio": "prisma studio",
     "db:generate": "prisma generate",
     "format": "prettier --write .",
-    "check:format": "prettier ."
+    "check:format": "prettier --check \"**/*.{ts,js,mjs}\""
   },
   "dependencies": {
     "@prisma/client": "5.18.0",
