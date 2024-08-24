@@ -13,6 +13,7 @@ export async function getTodaysLaunches() {
           gte: new Date(new Date().setHours(0, 0, 0, 0)),
           lt: new Date(new Date().setHours(23, 59, 59, 999)),
         },
+        deleted: false
       },
       include: {
         topics: {
@@ -79,6 +80,8 @@ export async function fetchAndUpdateDatabase() {
     else postsToCreate.push(post);
   }
 
+  const createdPostsCount = postsToCreate.length;
+
   while (postsToCreate.length) {
     partitioned_create_posts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
   }
@@ -92,12 +95,17 @@ export async function fetchAndUpdateDatabase() {
     });
   }
 
+
+  if (createdPostsCount) console.log(`Created ${postsToCreate} posts!`);
+
   await db.topic.createMany({
     data: allTopics,
     skipDuplicates: true,
   });
 
   const promises = [];
+
+  const updatedPostsCount = postsToUpdate.length;
 
   async function runPostUpdateQueue() {
     while (postsToUpdate.length) {
@@ -111,6 +119,9 @@ export async function fetchAndUpdateDatabase() {
       });
     }
   }
+
+
+  console.log(`Updated ${updatedPostsCount} posts!`);
 
   for (let i = 0; i < MAX_CONCURRENCY; ++i) promises.push(runPostUpdateQueue());
 
@@ -132,7 +143,7 @@ export async function fetchAndUpdateDatabase() {
   await db.post.updateMany({
     where: {
       id: {
-        in: posts.map(post=>post.id),
+        notIn: posts.map(post => post.id),
       },
       deleted: false
     },
