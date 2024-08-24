@@ -1,7 +1,4 @@
-import {
-  convertPostToProductPost,
-  getAllPost as getAllDailyPostRightNow,
-} from "./data";
+import { convertPostToProductPost, getAllPost as getAllDailyPostRightNow } from "./data";
 import db from "../db";
 import { hasAi } from "../utils/string";
 import { Post as PostType } from "../types";
@@ -43,6 +40,7 @@ function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
     url: post.url,
     hasAi: hasAi(convertPostToProductPost(post)),
     thumbnailUrl: post.thumbnail.url,
+    deleted: false
   };
 }
 
@@ -57,13 +55,13 @@ export async function fetchAndUpdateDatabase() {
 
   const posts = await getAllDailyPostRightNow();
 
-  const existingPosts = (
-    await db.post.findMany({
-      select: {
-        id: true,
-      },
-    })
-  ).reduce(
+  const existingPostsList = await db.post.findMany({
+    select: {
+      id: true,
+    },
+  });
+
+  const existingPosts = existingPostsList.reduce(
     (acc, post) => {
       acc[post.id] = true;
       return acc;
@@ -128,6 +126,19 @@ export async function fetchAndUpdateDatabase() {
   await db.topicPost.createMany({
     data: topicPosts,
     skipDuplicates: true,
+  });
+
+
+  await db.post.updateMany({
+    where: {
+      id: {
+        in: posts.map(post=>post.id),
+      },
+      deleted: false
+    },
+    data: {
+      deleted: true
+    }
   });
 
   return posts;
