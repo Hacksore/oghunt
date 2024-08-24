@@ -6,6 +6,7 @@ import { Pill } from "./component/Pill";
 import { getTodaysLaunches } from "./lib/persistence";
 import { UpArrow } from "./component/icons/UpArrow";
 import ScrollToTop from "./component/ScrollToTop";
+import { SlopMeter } from "./component/SlopMeter";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -39,14 +40,26 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-screen flex-col items-center px-8 pt-8 md:pt-20 w-full">
-      <header className="flex flex-col gap-8 pb-20">
+      <header className="flex flex-col gap-8 pb-10">
         <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 dark:from-pink-300 dark:to-orange-300 bg-clip-text text-transparent">
           Product Hunt with ZERO AI Slop™
         </h1>
-        <div className="flex flex-col gap-2">
-          <div className="text-3xl font-bold">{`${posts.length} products without AI launched today`}</div>
-          <div className="text-xl">
-            {aiPosts.length} AI Slop™ projects launched today
+        {/* <div className="flex flex-col gap-2"> */}
+        {/*   <div className="text-3xl font-bold">{`${posts.length} products without AI launched today`}</div> */}
+        {/*   <div className="text-xl"> */}
+        {/*     {aiPosts.length} AI Slop™ projects launched today */}
+        {/*   </div> */}
+        {/* </div> */}
+        <div className="w-full">
+          <h2 className="text-mg md:text-lg font-bold pb-2">SlopMeter™</h2>
+          <div className="mx-auto rounded-lg overflow-hidden w-full">
+            <SlopMeter
+              propA={aiPosts.length}
+              propB={posts.length}
+              nameA="AI"
+              nameB="No AI"
+              height={32}
+            />
           </div>
         </div>
       </header>
