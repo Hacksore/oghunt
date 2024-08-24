@@ -58,7 +58,7 @@ export async function fetchAndUpdateDatabase() {
   const allVotes = await getAllPostsVotesMoarBetter(posts.map((post) => post.id));
   // NOTE : fix the fucking graphql api
   posts.forEach((post) => {
-    post.votesCount = allVotes["post" + post.id].votesCount;
+    post.votesCount = allVotes["post" + post.id]?.votesCount || post.votesCount;
   });
 
   const existingPostsList = await db.post.findMany({
