@@ -9,6 +9,10 @@ export const hasAi = (
   },
   showOnlyAi = false,
 ): boolean => {
+  if (post.name === "OGHUNT") {
+    return false;
+  }
+
   const excludedTerms = ["ai", "gpt", "artificial intelligence", "machine learning"];
 
   const containsExcludedTerm = (text: string): boolean =>
