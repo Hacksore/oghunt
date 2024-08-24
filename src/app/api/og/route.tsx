@@ -25,15 +25,13 @@ export async function GET() {
     res.arrayBuffer(),
   );
 
-  console.log("baseImageRawData", baseImageRawData);
-
   const imageData = `data:image/png;base64,${Buffer.from(baseImageRawData).toString("base64")}`;
   // TODO: make sure prod
-  const { allPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`).then((res) =>
-    res.json(),
+  const { allPostCount, noAiPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`).then(
+    (res) => res.json(),
   );
 
-  const barWidth = Math.floor((aiPostCount / allPostCount) * 100);
+  const aiPercentage = Math.floor((aiPostCount / allPostCount) * 100);
 
   return new ImageResponse(
     (
@@ -45,16 +43,19 @@ export async function GET() {
         }}
         tw="flex flex-col items-center pb-12 justify-end"
       >
-        <div tw="flex w-[80%] h-20 bg-[#111111] rounded-3xl z-40">
+        <p style={{ fontWeight: 700 }} tw="flex text-gray-400 w-[90%] items-start pl-2 text-2xl">
+          SlopMeter™
+        </p>
+        <div tw="flex w-[90%] h-20 bg-[#111111] rounded-3xl z-40">
           <div
             style={{
-              width: `${barWidth}%`,
+              width: `${aiPercentage}%`,
               backgroundImage: "linear-gradient(90deg, #fda4af 20%, #fb923c 100%)",
             }}
             tw="flex h-full rounded-3xl"
           >
             <p style={{ fontWeight: 800 }} tw="flex items-center pl-4 text-4xl">
-              AI • {barWidth}
+              AI • {aiPostCount}
             </p>
           </div>
 
@@ -62,7 +63,7 @@ export async function GET() {
             style={{ fontWeight: 800 }}
             tw="flex text-white justify-end items-center pl-4 text-4xl"
           >
-            No AI • {barWidth}
+            No AI • {noAiPostCount}
           </p>
         </div>
       </div>
