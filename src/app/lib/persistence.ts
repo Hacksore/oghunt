@@ -13,7 +13,7 @@ export async function getTodaysLaunches() {
           gte: new Date(new Date().setHours(0, 0, 0, 0)),
           lt: new Date(new Date().setHours(23, 59, 59, 999)),
         },
-        deleted: false
+        deleted: false,
       },
       include: {
         topics: {
@@ -41,7 +41,7 @@ function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
     url: post.url,
     hasAi: hasAi(convertPostToProductPost(post)),
     thumbnailUrl: post.thumbnail.url,
-    deleted: false
+    deleted: false,
   };
 }
 
@@ -97,7 +97,6 @@ export async function fetchAndUpdateDatabase() {
     });
   }
 
-
   console.log(`Created ${postsToCreate} posts!`);
 
   await db.topic.createMany({
@@ -122,7 +121,6 @@ export async function fetchAndUpdateDatabase() {
     }
   }
 
-
   console.log(`Updated ${updatedPostsCount} posts!`);
 
   for (let i = 0; i < MAX_CONCURRENCY; ++i) promises.push(runPostUpdateQueue());
@@ -141,17 +139,16 @@ export async function fetchAndUpdateDatabase() {
     skipDuplicates: true,
   });
 
-
   await db.post.updateMany({
     where: {
       id: {
-        notIn: posts.map(post => post.id),
+        notIn: posts.map((post) => post.id),
       },
-      deleted: false
+      deleted: false,
     },
     data: {
-      deleted: true
-    }
+      deleted: true,
+    },
   });
 
   return posts;

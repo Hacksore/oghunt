@@ -3,12 +3,12 @@ import { PostSkeleton } from "./component/PostSkeleton";
 export default function Loading() {
   return (
     <div className="flex min-h-screen flex-col p-4 md:p-24">
-      <div className="h-10 animate-pulse bg-neutral-700 rounded-full dark:bg-gray-700 ml-8 mb-6 md:mb-20 w-4/5"></div>
-      <div className="flex flex-col items-center animate-pulse">
-        <div className="flex flex-col justify-start gap-2 w-full mt-4 mb-8">
-          <div className="flex flex-col justify-start gap-2 w-full mb-8 ml-8">
-            <div className="h-6 bg-neutral-700 rounded-full dark:bg-gray-700 w-3/5 mb-4"></div>
-            <div className="h-3 bg-neutral-700 rounded-full dark:bg-gray-700 w-2/5 mb-4"></div>
+      <div className="mb-6 ml-8 h-10 w-4/5 animate-pulse rounded-full bg-neutral-700 md:mb-20 dark:bg-gray-700"></div>
+      <div className="flex animate-pulse flex-col items-center">
+        <div className="mb-8 mt-4 flex w-full flex-col justify-start gap-2">
+          <div className="mb-8 ml-8 flex w-full flex-col justify-start gap-2">
+            <div className="mb-4 h-6 w-3/5 rounded-full bg-neutral-700 dark:bg-gray-700"></div>
+            <div className="mb-4 h-3 w-2/5 rounded-full bg-neutral-700 dark:bg-gray-700"></div>
           </div>
 
           {new Array(5).fill("").map((_, i) => (

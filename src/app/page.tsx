@@ -39,9 +39,9 @@ export default async function Page() {
   const aiPosts = filterPosts(allPosts, true);
 
   return (
-    <main className="flex min-h-screen flex-col items-center px-8 pt-10 w-full">
+    <main className="flex min-h-screen w-full flex-col items-center px-8 pt-10">
       <header className="flex flex-col gap-8 pb-10">
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-pink-400 to-orange-400 dark:from-pink-300 dark:to-orange-300 bg-clip-text text-transparent">
+        <h1 className="bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
         </h1>
         {/* <div className="flex flex-col gap-2"> */}
@@ -51,8 +51,8 @@ export default async function Page() {
         {/*   </div> */}
         {/* </div> */}
         <div className="w-full">
-          <h2 className="text-mg md:text-lg font-bold pb-2">SlopMeter™</h2>
-          <div className="mx-auto rounded-lg overflow-hidden w-full">
+          <h2 className="text-mg pb-2 font-bold md:text-lg">SlopMeter™</h2>
+          <div className="mx-auto w-full overflow-hidden rounded-lg">
             <SlopMeter
               propA={aiPosts.length}
               propB={posts.length}
@@ -62,7 +62,6 @@ export default async function Page() {
             />
           </div>
           <div className="pt-2 opacity-60">Out of projects launched today</div>
-
         </div>
       </header>
 
@@ -74,10 +73,10 @@ export default async function Page() {
                 href={post.url}
                 key={post.id}
                 target="_blank"
-                className="flex flex-col md:flex-row items-center gap-8 p-4 md:p-8 group hover:bg-neutral-300/50 dark:hover:bg-neutral-900 rounded-2xl duration-300 cursor-pointer"
+                className="group flex cursor-pointer flex-col items-center gap-8 rounded-2xl p-4 duration-300 hover:bg-neutral-300/50 md:flex-row md:p-8 dark:hover:bg-neutral-900"
               >
-                <div className="hidden md:flex flex-row items-center justify-center pb-2 gap-4">
-                  <div className="border rounded-lg p-4 border-neutral-700 text-xl">
+                <div className="hidden flex-row items-center justify-center gap-4 pb-2 md:flex">
+                  <div className="rounded-lg border border-neutral-700 p-4 text-xl">
                     #{index + 1}
                   </div>
                 </div>
@@ -92,25 +91,23 @@ export default async function Page() {
                   />
                 )}
                 <div className="flex flex-col items-start gap-2">
-                  <h2 className="text-2xl line-clamp-3 max-w-[69ch] md:text-4xl font-bold group-hover:underline duration-300 group-hover:translate-x-2">
+                  <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-4xl">
                     {post.name}
                   </h2>
-                  <p className="text-base md:text-lg max-w-[69ch] opacity-60">
-                    {post.tagline}
-                  </p>
+                  <p className="max-w-[69ch] text-base opacity-60 md:text-lg">{post.tagline}</p>
                   <div className="flex flex-wrap gap-2">
                     {post.topics &&
                       post.topics.map(({ id, name }) => (
                         <Pill key={`${id}${post.id}`} name={name} />
                       ))}
                   </div>
-                  <p className="line-clamp-3 text-base md:text-lg max-w-[69ch]">
+                  <p className="line-clamp-3 max-w-[69ch] text-base md:text-lg">
                     {post.description}
                   </p>
                 </div>
 
-                <div className="hidden md:flex ml-auto flex-col items-center border border-neutral-700 rounded-lg px-4 py-2">
-                  <UpArrow className="stroke-0 h-12 w-12" gradient />
+                <div className="ml-auto hidden flex-col items-center rounded-lg border border-neutral-700 px-4 py-2 md:flex">
+                  <UpArrow className="h-12 w-12 stroke-0" gradient />
                   <p className="font-bold">{post.votesCount}</p>
                 </div>
               </a>

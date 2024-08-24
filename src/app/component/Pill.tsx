@@ -23,8 +23,7 @@ function stringToHexColorAndFont(str: string): {
   const b = parseInt(color.slice(5, 7), 16);
 
   // Calculate a lighter version of the background color for the font
-  const lighten = (value: number, amount: number) =>
-    Math.min(255, value + amount);
+  const lighten = (value: number, amount: number) => Math.min(255, value + amount);
   const fontColor = `#${lighten(r, 200).toString(16).padStart(2, "0")}${lighten(g, 200).toString(16).padStart(2, "0")}${lighten(b, 200).toString(16).padStart(2, "0")}`;
 
   // Calculate a border color that is between the background and font color
@@ -50,7 +49,7 @@ export const Pill = ({ name }: Props) => {
         color,
         borderColor,
       }}
-      className="border rounded-2xl px-2 py-1 text-sm"
+      className="rounded-2xl border px-2 py-1 text-sm"
     >
       {name}
     </span>

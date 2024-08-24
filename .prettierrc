@@ -1,7 +1,7 @@
 {
-    "semi": true,
-    "printWidth": 100,
-    "tabWidth": 2,
-    "trailingComma": "all",
-    "plugins": ["prettier-plugin-tailwindcss"]
+  "semi": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "plugins": ["prettier-plugin-tailwindcss"]
 }

@@ -8,7 +8,7 @@ env:
 
 jobs:
   ingest:
-    name: Build 
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo

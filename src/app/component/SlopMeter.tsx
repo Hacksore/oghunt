@@ -37,13 +37,7 @@ interface RatioBarProps {
   height: number;
 }
 
-export const SlopMeter: React.FC<RatioBarProps> = ({
-  propA,
-  propB,
-  nameA,
-  nameB,
-  height = 20,
-}) => {
+export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB, height = 20 }) => {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerWidth = useResizeObserver(svgRef);
 
@@ -72,10 +66,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({
 
     gradient.append("stop").attr("offset", "20%").attr("stop-color", "#fda4af"); // Start color
 
-    gradient
-      .append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", "#fb923c"); // End color
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fb923c"); // End color
 
     const barGroup = svg.append("g").attr("transform", `translate(0, 0)`);
 
@@ -111,16 +102,10 @@ export const SlopMeter: React.FC<RatioBarProps> = ({
       .attr("height", height)
       .attr("fill", "url(#gradientA)")
       .on("mouseover", (event) =>
-        showTooltip(
-          event,
-          `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`,
-        ),
+        showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
       )
       .on("mousemove", (event) =>
-        showTooltip(
-          event,
-          `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`,
-        ),
+        showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
       )
       .on("mouseout", hideTooltip);
 
@@ -133,16 +118,10 @@ export const SlopMeter: React.FC<RatioBarProps> = ({
       .attr("height", height)
       .attr("fill", "#171717")
       .on("mouseover", (event) =>
-        showTooltip(
-          event,
-          `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`,
-        ),
+        showTooltip(event, `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`),
       )
       .on("mousemove", (event) =>
-        showTooltip(
-          event,
-          `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`,
-        ),
+        showTooltip(event, `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`),
       )
       .on("mouseout", hideTooltip);
 

@@ -16,7 +16,7 @@ const config = tseslint.config(
       sourceType: "module",
       globals: {
         ...globals.browser,
-        process: true
+        process: true,
       },
     },
     rules: {
@@ -24,7 +24,7 @@ const config = tseslint.config(
       "no-unused-vars": "off",
       "@typescript-eslint/no-unused-vars": "off",
     },
-  }
+  },
 );
 
 export default config;
