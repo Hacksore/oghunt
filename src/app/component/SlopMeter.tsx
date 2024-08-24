@@ -99,7 +99,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("width", containerWidth * ratioA)
       .attr("height", height)
       .attr("fill", "url(#gradientA)")
-      .attr("rx", 10)
       .on("mouseover", (event) =>
         showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
       )
