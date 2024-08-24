@@ -13,8 +13,9 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  await fetchAndUpdateDatabase();
+  const response = await fetchAndUpdateDatabase();
 
+  console.log(response);
   revalidatePath("/");
 
   return Response.json({ success: true });

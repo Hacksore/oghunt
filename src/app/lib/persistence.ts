@@ -56,8 +56,6 @@ export async function fetchAndUpdateDatabase() {
 
   const posts = await getAllDailyPostRightNow();
 
-  console.log(`The Producthunt returns ${posts.length} posts!`);
-
   const existingPostsList = await db.post.findMany({
     select: {
       id: true,
@@ -82,7 +80,7 @@ export async function fetchAndUpdateDatabase() {
     else postsToCreate.push(post);
   }
 
-  const createdPostsCount = postsToCreate.length;
+  const postsToCreateCount = postsToCreate.length;
 
   while (postsToCreate.length) {
     partitioned_create_posts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
@@ -96,8 +94,6 @@ export async function fetchAndUpdateDatabase() {
       skipDuplicates: true,
     });
   }
-
-  console.log(`Created ${postsToCreate} posts!`);
 
   await db.topic.createMany({
     data: allTopics,
@@ -120,8 +116,6 @@ export async function fetchAndUpdateDatabase() {
       });
     }
   }
-
-  console.log(`Updated ${updatedPostsCount} posts!`);
 
   for (let i = 0; i < MAX_CONCURRENCY; ++i) promises.push(runPostUpdateQueue());
 
@@ -151,5 +145,10 @@ export async function fetchAndUpdateDatabase() {
     },
   });
 
-  return posts;
+  return {
+    productHuntApiPostsCount: posts.length,
+    updatedPostsCount,
+    postsToCreateCount,
+    topicPostsCount: topicPosts.length,
+  };
 }
