@@ -52,7 +52,7 @@ export async function fetchAndUpdateDatabase() {
 
   const postsToCreate = [];
   const postsToUpdate: PostType[] = [];
-  const partitioned_create_posts = [];
+  const partitionedCreatePosts = [];
 
   const posts = await getAllDailyPostRightNow();
   const allVotes = await getAllPostsVotesMoarBetter(posts.map((post) => post.id));
@@ -88,11 +88,11 @@ export async function fetchAndUpdateDatabase() {
   const newPosts = postsToCreate.length;
 
   while (postsToCreate.length) {
-    partitioned_create_posts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
+    partitionedCreatePosts.push(postsToCreate.splice(0, MAX_PARTITION_SIZE));
   }
 
-  while (partitioned_create_posts.length) {
-    const toAdd = partitioned_create_posts.pop();
+  while (partitionedCreatePosts.length) {
+    const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
       data: toAdd.map(generateDBPost),
