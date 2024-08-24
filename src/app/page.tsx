@@ -38,19 +38,15 @@ export default async function Page() {
   const allPosts = await getTodaysLaunches();
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
+  const aiVotes = aiPosts.reduce((acc, post) => acc + post.votesCount, 0);
+  const nonAIVotes = posts.reduce((acc, post) => acc + post.votesCount, 0);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-8 pt-10">
-      <header className="flex flex-col gap-8 pb-10">
-        <h1 className="bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
+      <header className="flex flex-col gap-4 pb-10">
+        <h1 className="bg-gradient-to-r mb-4 from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
         </h1>
-        {/* <div className="flex flex-col gap-2"> */}
-        {/*   <div className="text-3xl font-bold">{`${posts.length} products without AI launched today`}</div> */}
-        {/*   <div className="text-xl"> */}
-        {/*     {aiPosts.length} AI Slop™ projects launched today */}
-        {/*   </div> */}
-        {/* </div> */}
         <div className="w-full">
           <h2 className="text-mg pb-2 font-bold md:text-lg">SlopMeter™</h2>
           <div className="mx-auto w-full overflow-hidden rounded-lg">
@@ -62,6 +58,19 @@ export default async function Page() {
               height={32}
             />
           </div>
+        </div>
+
+        <div className="w-full">
+          <h2 className="text-mg pb-2 font-bold md:text-lg">AI HypeMeter™</h2>
+          <div className="mx-auto w-full overflow-hidden rounded-lg">
+            <SlopMeter
+              propA={aiVotes}
+              propB={nonAIVotes}
+              nameA="AI Votes"
+              nameB="No AI Votes"
+              height={32}
+            />
+          </div>
           <div className="pt-2 opacity-60">Out of projects launched today</div>
         </div>
       </header>
@@ -69,9 +78,10 @@ export default async function Page() {
       <div>
         <div className="flex flex-col gap-8 overflow-hidden">
           {posts.map((post, index) => {
+            const link = new URL(post.url);
             return (
               <a
-                href={post.url}
+                href={`${link.origin}${link.pathname}?utm=oghunt`}
                 key={post.id}
                 target="_blank"
                 className="group flex cursor-pointer flex-col items-center gap-8 rounded-2xl p-4 duration-300 hover:bg-neutral-300/50 md:flex-row md:p-8 dark:hover:bg-neutral-900"

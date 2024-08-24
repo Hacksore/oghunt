@@ -26,7 +26,7 @@ export default function RootLayout({
           </div>
         </a>
         <a
-          href="https://www.linkedin.com/in/rosslitzenberger/"
+          href="https://www.linkedin.com/in/rosslitzenberger?utm=oghunt"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-4 p-4 underline duration-300 hover:font-bold dark:text-white"
