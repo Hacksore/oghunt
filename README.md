@@ -24,3 +24,21 @@ Then, we need to seed the DB. With the app and the docker container running, we'
 We'll send a GET request to `http://localhost:3000/api/update-posts` with a header with a key of `Authorization` and a value of `Bearer CRON_SECRET` where `CRON_SECRET` is equal to the secret you put for `CRON_SECRET` in your `.env` file.
 
 Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
+
+## Team
+
+- Lead Developer: [Pizza](https://github.com/RossLitzenberger)
+- Product Owner: [Pati](https://typehero.dev/)
+- Project Manager: [Hacksore](https://github.com/Hacksore)
+- Senior Lead Developer: [Jim](https://github.com/JoshHyde9)
+- Tech Consultant: [Trash](https://github.com/bautistaaa)
+- Algorithm Specialist: [🐝](https://github.com/ArcherScript)
+- Database Engineer: [Overclock](https://github.com/LucFauvel)
+- Knows HTML: [Chad](https://github.com/chadstewart)
+- Lead 404 Engineer: [Shane](https://github.com/swalker326)
+- Lead UI/UX Engineer: [Boston](https://github.com/BostonRohan)
+- System Architect: [Max](https://github.com/maxdemaio)
+- Data Scientist: [TypeSafe](https://github.com/typesafeui)
+- Data Visualization: [Nathan](https://github.com/nathanroark)
+- Scrum Leader: [Aodhan](https://github.com/MVAodhan)
+- Civil Engineering Lead: [Mark](https://github.com/markkhoo)
