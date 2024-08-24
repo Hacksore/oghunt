@@ -56,6 +56,8 @@ export async function fetchAndUpdateDatabase() {
 
   const posts = await getAllDailyPostRightNow();
 
+  console.log(`The Producthunt returns ${posts.length} posts!`);
+
   const existingPostsList = await db.post.findMany({
     select: {
       id: true,
@@ -96,7 +98,7 @@ export async function fetchAndUpdateDatabase() {
   }
 
 
-  if (createdPostsCount) console.log(`Created ${postsToCreate} posts!`);
+  console.log(`Created ${postsToCreate} posts!`);
 
   await db.topic.createMany({
     data: allTopics,
