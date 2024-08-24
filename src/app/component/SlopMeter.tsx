@@ -68,7 +68,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
 
     gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fb923c"); // End color
 
-    const barGroup = svg.append("g").attr("transform", `translate(0, 0)`);
+    const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
 
     const tooltip = d3
       .select("body")

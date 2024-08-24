@@ -11,7 +11,7 @@ import { SlopMeter } from "./component/SlopMeter";
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
   description: "Sites on Product Hunt with ZERO AI Slop™",
-  site: "https://oghunt.vercel.app",
+  site: "https://oghunt.com",
 };
 
 export const dynamic = "force-dynamic";
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: [`${META_INFO.site}/no-slop-og.png`],
+    images: [`${META_INFO.site}/api/og`],
     type: "website",
   },
   twitter: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: [`${META_INFO.site}/no-slop-og.png`],
+    images: [`${META_INFO.site}/api/og`],
     card: "summary_large_image",
   },
 };
@@ -44,7 +44,7 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-8 pt-10">
       <header className="flex flex-col gap-4 pb-10">
-        <h1 className="bg-gradient-to-r mb-4 from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
+        <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
         </h1>
         <div className="w-full">
