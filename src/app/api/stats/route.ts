@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 
 const getTodaysLaunchesCached = unstable_cache(()=>getTodaysLaunches(), ["todaylaunches"], {
-  revalidate: 20
+  revalidate: 900
 });
 
 export async function GET() {
