@@ -52,7 +52,7 @@ export async function GET() {
               width: `${aiPercentage}%`,
               backgroundImage: "linear-gradient(90deg, #fda4af 20%, #fb923c 100%)",
             }}
-            tw="flex h-full rounded-3xl"
+            tw="flex h-full rounded-l-3xl"
           >
             <p style={{ fontWeight: 800 }} tw="flex items-center pl-4 text-4xl">
               AI • {aiPostCount}
