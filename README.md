@@ -30,7 +30,7 @@ Please feel free to check out our [architecture diagram](./public/og-hunt-diagra
 ## Team
 
 - Lead Developer: [Pizza](https://github.com/RossLitzenberger)
-- Product Owner: [Pati]()
+- Product Owner: [Pati](https://typehero.dev/)
 - Project Manager: [Hacksore](https://github.com/Hacksore)
 - Lead Developer: [Jim](https://github.com/JoshHyde9)
 - Tech Consultant: [Trash](https://github.com/bautistaaa)
