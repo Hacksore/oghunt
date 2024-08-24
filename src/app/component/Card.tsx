@@ -13,7 +13,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
   const link = new URL(post.url);
   return (
     <a
-      href={`${link.origin}${link.pathname}?utm=oghunt`}
+      href={`${link.origin}${link.pathname}?utm_source=oghunt.com`}
       key={post.id}
       target="_blank"
       className="group flex cursor-pointer flex-col items-center gap-8 rounded-2xl p-4 duration-300 hover:bg-neutral-300/50 md:flex-row md:p-8 dark:hover:bg-neutral-900"
