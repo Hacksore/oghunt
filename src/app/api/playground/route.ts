@@ -1,3 +1,4 @@
+import { getAllPost } from "@/app/lib/data";
 import { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
@@ -23,5 +24,7 @@ export async function GET(request: NextRequest) {
     }),
   }).then((res) => res.json());
 
-  return Response.json({ success: true, response });
+  const allPosts = await getAllPost();
+
+  return Response.json({ success: true, post: response, allPosts });
 }
