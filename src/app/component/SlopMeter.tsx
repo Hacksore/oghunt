@@ -73,13 +73,8 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
     const tooltip = d3
       .select("body")
       .append("div")
-      .style("position", "absolute")
-      .style("background", "#111")
-      .style("border", "1px solid #ccc")
-      .style("padding", "5px")
-      .style("border-radius", "3px")
       .style("pointer-events", "none")
-      .style("opacity", 0);
+      .classed("absolute border border-[#434343] rounded p-1.5 bg-neutral-200 dark:border-neutral-200 dark:bg-[#111111]", true);
 
     const showTooltip = (event: any, content: string) => {
       tooltip
@@ -116,7 +111,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("y", 0)
       .attr("width", containerWidth * ratioB)
       .attr("height", height)
-      .attr("fill", "#171717")
+      .classed("dark:fill-[#171717] fill-neutral-200", true)
       .on("mouseover", (event) =>
         showTooltip(event, `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`),
       )
@@ -141,8 +136,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("x", containerWidth - 8)
       .attr("y", height / 2 + 5)
       .attr("text-anchor", "end")
-      .attr("fill", "white")
-      .style("font-weight", "bold")
+      .classed("font-bold dark:fill-neutral-200 fill-black", true)
       .text(propB + " • " + nameB);
 
     // Clean up the tooltip on component unmount

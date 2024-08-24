@@ -29,7 +29,7 @@ export default function RootLayout({
           href="https://www.linkedin.com/in/rosslitzenberger/"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-4 p-4 text-white underline duration-300 hover:font-bold"
+          className="duration-300 items-center hover:font-bold underline p-4 flex gap-4 justify-center dark:text-white"
         >
           <img width="50" height="50" src="/pizza2.jpeg" alt="pizza" className="rounded-full" />
 
