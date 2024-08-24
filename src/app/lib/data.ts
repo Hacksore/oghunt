@@ -1,6 +1,19 @@
 import { getStartAndEndOfDayInUTC } from "../utils/date";
 import { Post, PostResponse, ProductPost } from "../types";
-import { hasAi } from "../utils/string";
+
+const buildGetAllPostsVotes = (keys: string[]) => `
+query {
+  ${keys
+    .map(
+      (key) => `
+    post${key}: post(id: ${key}) {
+      votesCount
+    }
+  `,
+    )
+    .join("")}
+}
+`;
 
 // NOTE: use the graph explorer to build new queries
 const GET_ALL_POSTS = `
@@ -68,6 +81,22 @@ export async function getAllPost(): Promise<Post[]> {
   }
 
   return allPosts;
+}
+
+export async function getAllPostsVotesMoarBetter(ids: string[]): Promise<Record<string, { votesCount: number}>> {
+  const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.PH_API_KEY}`,
+    },
+    method: "POST",
+    body: JSON.stringify({
+      query: buildGetAllPostsVotes(ids),
+    }),
+  }).then((res) => res.json());
+
+  return response.data;
 }
 
 export const convertPostToProductPost = (post: Post): ProductPost => {

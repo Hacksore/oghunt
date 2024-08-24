@@ -1,30 +1,15 @@
-import { getAllPost } from "@/app/lib/data";
-import { NextRequest } from "next/server";
+import { getAllPost, getAllPostsVotesMoarBetter } from "@/app/lib/data";
 
 export const dynamic = "force-dynamic";
 
-const GET_POST = `query {
-  post(id:482982) {
-    name,
-    votesCount
-  }
-}`;
-
 // NOTE: this is called on cron job
-export async function GET(request: NextRequest) {
-  const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PH_API_KEY}`,
-    },
-    method: "POST",
-    body: JSON.stringify({
-      query: GET_POST,
-    }),
-  }).then((res) => res.json());
-
+export async function GET() {
   const allPosts = await getAllPost();
+  const allVotes = await getAllPostsVotesMoarBetter(allPosts.map((post) => post.id));
 
-  return Response.json({ success: true, post: response, allPosts });
+  allPosts.forEach((post) => {
+    post.votesCount = allVotes["post" + post.id].votesCount;
+  });
+
+  return Response.json({ success: true, allPosts });
 }

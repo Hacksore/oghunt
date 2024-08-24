@@ -1,4 +1,4 @@
-import { convertPostToProductPost, getAllPost as getAllDailyPostRightNow } from "./data";
+import { convertPostToProductPost, getAllPost as getAllDailyPostRightNow, getAllPostsVotesMoarBetter } from "./data";
 import db from "../db";
 import { hasAi } from "../utils/string";
 import { Post as PostType } from "../types";
@@ -55,6 +55,11 @@ export async function fetchAndUpdateDatabase() {
   const partitioned_create_posts = [];
 
   const posts = await getAllDailyPostRightNow();
+  const allVotes = await getAllPostsVotesMoarBetter(posts.map((post) => post.id));
+  // NOTE : fix the fucking graphql api
+  posts.forEach((post) => {
+    post.votesCount = allVotes["post" + post.id].votesCount;
+  });
 
   const existingPostsList = await db.post.findMany({
     select: {
