@@ -46,6 +46,18 @@ export const PROJECTS: ProductPost[] = [
     hasAi: false,
     topics: [
       {
+        name: "Job Hunt",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Productivity",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
         name: "React",
         description: "",
         id: "1",
@@ -53,14 +65,14 @@ export const PROJECTS: ProductPost[] = [
       },
     ],
     deleted: false,
-    tagline: "Get a job bro",
+    tagline: "Easiliy track job applications",
     createdAt: new Date(),
     votesCount: 1337,
     thumbnailUrl: "https://my.flosa.app/img/logo-ball.png",
     name: "Flosa",
     url: "https://flosa.app",
     description:
-      "Flosa is a tool that helps you organize your job search and share the progress with your friends and family.",
+      "Flosa is a website designed to help users organize their job search process. It allows users to track applications, update statuses, visualize progress with a Sankey diagram, manage contacts and use a browser extension to save jobs from over 1,000 supported websites.",
   },
   {
     id: "1",
