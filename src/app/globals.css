@@ -18,12 +18,74 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+}
+/* TODO: someone cook this in tailwind */
+.fancy {
+  --offset: 2px;
+  background: #000;
+  border-radius: 50px;
+  position: relative;
+  height: 50px;
+  color: #fff;
+  text-align: center;
+  width: 300px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.fancy div {
+  background: transparent;
+  color: white;
+  font-size: 1.25rem;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* Conic gradient */
+.fancy::before {
+  content: "";
+  background: conic-gradient(
+    #fda4af 0% 25%,
+    #fb923c 75% 100%
+  );
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1;
+  width: 100%;
+  animation: rotate 2s linear infinite;
+}
+
+/* Overlay */
+.fancy::after {
+  content: "";
+  background: inherit;
+  border-radius: inherit;
+  position: absolute;
+  inset: var(--offset);
+  height: calc(100% - 2 * var(--offset));
+  width: calc(100% - 2 * var(--offset));
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
+  }
+
+  to {
+    transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
   }
 }

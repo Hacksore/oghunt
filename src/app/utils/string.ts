@@ -38,3 +38,8 @@ export const hasAi = (
 export const filterPosts = (posts: ProductPost[], showOnlyAi = false): ProductPost[] => {
   return posts.filter((post) => hasAi(post, showOnlyAi));
 };
+
+export const formatNumber = (num: number): string => {
+  const formatter = Intl.NumberFormat("en", { notation: "compact" });
+  return formatter.format(num);
+};

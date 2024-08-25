@@ -41,10 +41,18 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-8 pt-10">
-      <header className="flex flex-col gap-4 pb-10">
+      <header className="flex flex-col items-center gap-4 pb-10">
         <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
         </h1>
+        <a
+          className="fancy"
+          href="https://github.com/Hacksore/oghunt"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <div>✨ Star on Github</div>
+        </a>
         <div className="w-full">
           <h2 className="text-mg pb-2 font-bold md:text-lg">SlopMeter™</h2>
           <div className="mx-auto w-full overflow-hidden rounded-lg">
@@ -76,7 +84,7 @@ export default async function Page() {
       <div>
         <div className="flex flex-col gap-8 overflow-hidden">
           {posts.map((post, index) => (
-            <Card post={post} index={index} />
+            <Card key={post.id} post={post} index={index} />
           ))}
         </div>
         <div className="flex flex-col items-center pt-8">
