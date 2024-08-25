@@ -52,7 +52,7 @@ export default async function Page() {
           href="https://github.com/Hacksore/oghunt"
           target="_blank"
           rel="noopener noreferrer"
-          className="relative mx-auto h-[50px] w-[300px] max-w-full overflow-hidden rounded-[50px] bg-current text-center text-white dark:bg-black"
+          className="relative mx-auto h-[50px] w-[300px] max-w-full overflow-hidden rounded-[50px] bg-neutral-100 text-center text-white dark:bg-black"
         >
           <div className="absolute inset-0 z-10 flex items-center justify-center text-[1.25rem] font-bold text-black dark:text-white">
             ✨ Star on Github
@@ -72,20 +72,7 @@ export default async function Page() {
               height={32}
             />
           </div>
-        </div>
-
-        <div className="w-full">
-          <h2 className="text-mg pb-2 font-bold md:text-lg">AI HypeMeter™</h2>
-          <div className="mx-auto w-full">
-            <SlopMeter
-              propA={aiVotes}
-              propB={nonAIVotes}
-              nameA="AI Votes"
-              nameB="No AI Votes"
-              height={32}
-            />
-          </div>
-          <div className="pt-2 opacity-60">Out of projects launched today</div>
+          <div className="pt-2 opacity-60">projects launched today</div>
         </div>
       </header>
 
