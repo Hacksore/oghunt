@@ -31,7 +31,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
               src={post.thumbnailUrl}
               fill
               className="rounded-lg"
-              sizes="(max-width: 768px) 40px, (max-width: 1024px) 95px"
+              sizes="(max-width: 768px) 40px, 96px"
               alt={`${post.name} logo`}
             />
           )}
