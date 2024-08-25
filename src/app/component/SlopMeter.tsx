@@ -74,6 +74,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .select("body")
       .append("div")
       .style("pointer-events", "none")
+      .style("opacity", 0)
       .classed(
         "absolute border border-[#434343] rounded p-1.5 bg-neutral-200 dark:border-neutral-200 dark:bg-[#111111]",
         true,
