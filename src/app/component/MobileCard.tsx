@@ -14,7 +14,11 @@ export const MobileCard = ({ post, homie = false }: { post: ProductPost; homie?:
         <div className="flex items-center gap-2">
           <div className="transition-transform duration-300 group-hover:translate-x-2">
             {post.thumbnailUrl && (
-              <img src={post.thumbnailUrl} className="size-9 rounded-lg object-cover" alt="logo" />
+              <img
+                src={post.thumbnailUrl}
+                className="size-9 rounded-lg object-contain"
+                alt="logo"
+              />
             )}
           </div>
           <h2 className="max-w-[69ch] truncate text-lg font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-2xl">
