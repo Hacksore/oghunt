@@ -18,7 +18,8 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
+    rgb(var(--background-start-rgb));
 }
 
 @layer utilities {
@@ -56,10 +57,7 @@ body {
 /* Conic gradient */
 .fancy::before {
   content: "";
-  background: conic-gradient(
-    #fda4af 0% 25%,
-    #fb923c 75% 100%
-  );
+  background: conic-gradient(#fda4af 0% 25%, #fb923c 75% 100%);
   position: absolute;
   top: 50%;
   left: 50%;
