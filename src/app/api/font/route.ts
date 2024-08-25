@@ -3,7 +3,7 @@
  * @link https://github.com/vercel/satori/blob/main/playground/pages/api/font.ts
  */
 import { fontParams } from "@/app/utils/fetch-font";
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 export const runtime = "edge";
 

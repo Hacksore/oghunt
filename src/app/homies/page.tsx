@@ -20,7 +20,7 @@ export default function Component() {
               <Card key={`card-${item.name}`} homie index={idx} post={item} />
             </div>
             <div className="md:hidden">
-              <MobileCard key={`card-${item.name}`} homie post={item} />
+              <MobileCard key={`card-${item.name}`} post={item} />
             </div>
           </>
         ))}

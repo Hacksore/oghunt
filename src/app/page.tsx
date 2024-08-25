@@ -38,8 +38,6 @@ export default async function Page() {
   const allPosts = await getTodaysLaunches();
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
-  const aiVotes = aiPosts.reduce((acc, post) => acc + post.votesCount, 0);
-  const nonAIVotes = posts.reduce((acc, post) => acc + post.votesCount, 0);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
@@ -77,12 +75,9 @@ export default async function Page() {
       </header>
 
       <div>
-        <div className="flex flex-col gap-4 overflow-hidden md:gap-8">
+        <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
           {posts.map((post, index) => (
             <>
-              {index !== 0 && (
-                <div className="flex h-0.5 w-full bg-neutral-200 md:hidden dark:bg-neutral-800" />
-              )}
               <div className="hidden md:flex">
                 <Card post={post} index={index} />
               </div>

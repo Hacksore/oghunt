@@ -11,6 +11,7 @@ const jsonStr = z.string().transform((str, ctx) => {
   try {
     return JSON.parse(str) as JsonValue;
   } catch (error) {
+    console.log(error);
     ctx.addIssue({ code: "custom", message: "Needs to be JSON" });
   }
 });

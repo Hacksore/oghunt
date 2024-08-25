@@ -1,7 +1,7 @@
 import { ProductPost } from "../types";
 import { Pill } from "./Pill";
 
-export const MobileCard = ({ post, homie = false }: { post: ProductPost; homie?: boolean }) => {
+export const MobileCard = ({ post }: { post: ProductPost }) => {
   const link = new URL(post.url);
   return (
     <a
@@ -16,7 +16,7 @@ export const MobileCard = ({ post, homie = false }: { post: ProductPost; homie?:
             {post.thumbnailUrl && (
               <img
                 src={post.thumbnailUrl}
-                className="size-9 rounded-lg object-contain"
+                className="size-10 rounded-lg object-contain"
                 alt="logo"
               />
             )}

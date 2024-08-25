@@ -21,7 +21,7 @@ const config = tseslint.config(
     },
     rules: {
       quotes: ["error", "double"],
-      "no-unused-vars": "off",
+      "no-unused-vars": "warn",
       "@typescript-eslint/no-unused-vars": "off",
     },
   },
