@@ -16,19 +16,20 @@ const META_INFO = {
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
+const OG_CACHE_KEY = "v2";
 export const metadata: Metadata = {
   title: META_INFO.title,
   description: META_INFO.description,
   openGraph: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: [`${META_INFO.site}/api/og`],
+    images: [`${META_INFO.site}/api/og?c=${OG_CACHE_KEY}`],
     type: "website",
   },
   twitter: {
     title: META_INFO.title,
     description: META_INFO.description,
-    images: [`${META_INFO.site}/api/og`],
+    images: [`${META_INFO.site}/api/og?c=${OG_CACHE_KEY}`],
     card: "summary_large_image",
   },
 };
