@@ -26,7 +26,12 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       <div className="flex">
         <div className="transition-transform duration-300 group-hover:translate-x-2 md:group-hover:translate-x-0">
           {post.thumbnailUrl && (
-            <img src={post.thumbnailUrl} className="size-24 rounded-lg" alt="logo" />
+            <img
+              style={{ width: 82, height: 82 }}
+              src={post.thumbnailUrl}
+              className="rounded-lg"
+              alt="logo"
+            />
           )}
         </div>
       </div>
