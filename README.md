@@ -19,6 +19,7 @@ With the docker container running in the background: install dependencies, execu
 2. `pnpm db:generate` (only needed once or when you change schema)
 3. `pnpm db:push` (only needed once to push these changes to the local DB)
 4. `pnpm dev`
+5. `curl http://localhost:3000/api/update-posts` (to seed the DB)
 
 Then, we need to seed the DB. With the app and the docker container running, we'll do it via an API request to our backend to run our DB seed script.
 We'll send a GET request to `http://localhost:3000/api/update-posts` with a header with a key of `Authorization` and a value of `Bearer CRON_SECRET` where `CRON_SECRET` is equal to the secret you put for `CRON_SECRET` in your `.env` file.
