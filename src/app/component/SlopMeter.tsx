@@ -115,7 +115,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       )
       .classed("font-bold dark:fill-neutral-200 fill-black", true)
       .text(formatNumber(propB) + " • " + nameB);
-
   }, [containerWidth, propA, propB, nameA, nameB, height]);
 
   return (
