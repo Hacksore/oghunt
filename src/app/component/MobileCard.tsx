@@ -8,26 +8,26 @@ export const MobileCard = ({ post }: { post: ProductPost }) => {
       href={`${link.origin}${link.pathname}?utm_source=oghunt.com`}
       key={post.id}
       target="_blank"
-      className="group cursor-pointer flex-col items-center gap-8 rounded-2xl p-4 duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
+      className="items-cener group w-full cursor-pointer flex-col gap-8 rounded-2xl duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
     >
       <div className="flex flex-col items-start gap-2">
-        <div className="flex gap-2">
+        <div className="flex items-center gap-2">
           <div className="transition-transform duration-300 group-hover:translate-x-2">
             {post.thumbnailUrl && (
-              <img src={post.thumbnailUrl} className="size-8 rounded-lg" alt="logo" />
+              <img src={post.thumbnailUrl} className="size-9 rounded-lg object-cover" alt="logo" />
             )}
           </div>
-          <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold duration-300 group-hover:translate-x-2 group-hover:underline">
+          <h2 className="max-w-[69ch] truncate text-lg font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-2xl">
             {post.name}
           </h2>
         </div>
 
-        <p className="max-w-[69ch] text-base opacity-60">{post.tagline}</p>
+        <p className="max-w-[69ch] text-sm opacity-60 md:text-base">{post.tagline}</p>
         <div className="flex flex-wrap gap-2">
           {post.topics &&
             post.topics.map(({ id, name }) => <Pill key={`${id}${post.id}`} name={name} />)}
         </div>
-        <p className="line-clamp-3 max-w-[69ch] text-base">{post.description}</p>
+        <p className="line-clamp-3 max-w-[69ch] text-sm md:text-base">{post.description}</p>
       </div>
     </a>
   );

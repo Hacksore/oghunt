@@ -15,7 +15,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       href={`${link.origin}${link.pathname}?utm_source=oghunt.com`}
       key={post.id}
       target="_blank"
-      className="group flex cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
+      className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
     >
       {!homie && (
         <div className="flex flex-row items-center justify-center gap-4 pb-2">
