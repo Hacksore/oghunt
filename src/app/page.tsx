@@ -79,7 +79,7 @@ export default async function Page() {
           {posts.map((post, index) => (
             <>
               {index !== 0 && (
-                <div className="flex h-0.5 w-full bg-neutral-300 md:hidden dark:bg-neutral-700" />
+                <div className="flex h-0.5 w-full bg-neutral-200 md:hidden dark:bg-neutral-800" />
               )}
               <div className="hidden md:flex">
                 <Card post={post} index={index} />
