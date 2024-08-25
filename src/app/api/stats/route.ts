@@ -15,7 +15,7 @@ async function getTodaysLaunchesCached() {
 }
 
 export async function GET() {
-  const allPosts = await getTodaysLaunchesCached();
+  const allPosts = await getTodaysLaunches();
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
 
@@ -28,5 +28,7 @@ export async function GET() {
       gte: postedAfter,
       lt: postedBefore,
     },
+    currentTimeUtc: new Date().toUTCString(),
+    currentTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   });
 }
