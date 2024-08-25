@@ -1,4 +1,5 @@
 import { Card } from "../component/Card";
+import { MobileCard } from "../component/MobileCard";
 import { PROJECTS } from "../projects";
 
 export default function Component() {
@@ -9,9 +10,21 @@ export default function Component() {
       </a>
       <h1 className="text-primary pb-8 text-6xl font-extrabold">The Homies Projects</h1>
 
-      {PROJECTS.map((item, idx) => (
-        <Card key={`card-${item.name}`} homie index={idx} post={item} />
-      ))}
+      <div className="flex flex-col gap-4 overflow-hidden px-2 md:gap-8">
+        {PROJECTS.map((item, idx) => (
+          <>
+            {idx !== 0 && (
+              <div className="flex h-0.5 w-full bg-neutral-200 md:hidden dark:bg-neutral-800" />
+            )}
+            <div className="hidden md:flex">
+              <Card key={`card-${item.name}`} homie index={idx} post={item} />
+            </div>
+            <div className="md:hidden">
+              <MobileCard key={`card-${item.name}`} homie post={item} />
+            </div>
+          </>
+        ))}
+      </div>
     </div>
   );
 }

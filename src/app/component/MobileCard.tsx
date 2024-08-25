@@ -1,7 +1,7 @@
 import { ProductPost } from "../types";
 import { Pill } from "./Pill";
 
-export const MobileCard = ({ post }: { post: ProductPost }) => {
+export const MobileCard = ({ post, homie = false }: { post: ProductPost; homie?: boolean }) => {
   const link = new URL(post.url);
   return (
     <a
@@ -22,12 +22,14 @@ export const MobileCard = ({ post }: { post: ProductPost }) => {
           </h2>
         </div>
 
-        <p className="max-w-[69ch] text-sm opacity-60 md:text-base">{post.tagline}</p>
+        <p className="line-clamp-2 max-w-[69ch] text-sm opacity-60 md:text-base">{post.tagline}</p>
         <div className="flex flex-wrap gap-2">
           {post.topics &&
             post.topics.map(({ id, name }) => <Pill key={`${id}${post.id}`} name={name} />)}
         </div>
-        <p className="line-clamp-3 max-w-[69ch] text-sm md:text-base">{post.description}</p>
+        <p className="line-clamp-3 max-w-[69ch] text-left text-sm md:text-base">
+          {post.description}
+        </p>
       </div>
     </a>
   );
