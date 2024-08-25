@@ -25,13 +25,13 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       )}
 
       <div className="flex self-start lg:self-center">
-        <div className="relative size-12 object-contain lg:size-24">
+        <div className="relative size-10 object-contain lg:size-24">
           {post.thumbnailUrl && (
             <Image
               src={post.thumbnailUrl}
               fill
               className="rounded-lg"
-              sizes="(max-width: 768px) 192px, (max-width: 1024px) 384px"
+              sizes="(max-width: 768px) 40px, (max-width: 1024px) 95px"
               alt={`${post.name} logo`}
             />
           )}
