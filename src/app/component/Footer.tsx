@@ -20,7 +20,7 @@ export const Footer = () => {
           </svg>
         </a>
         <p className="mt-8 p-4">
-          oghunt is an independent application and is not affiliated with or endorsed by{" "}
+          OGHUNT is an independent application and is not affiliated with or endorsed by{" "}
           <a
             aria-label="product-hunt"
             target="_blank"
@@ -31,6 +31,48 @@ export const Footer = () => {
             Product Hunt
           </a>
         </p>
+      </div>
+
+      <div className="group flex flex-col items-center justify-center gap-2">
+        <span className="flex items-center gap-2 dark:text-gray-400">
+          <a
+            target="_blank"
+            className="text-sm duration-300 hover:underline"
+            href="https://github.com/sponsors/Hacksore"
+          >
+            Sponsor on the Hub
+          </a>
+          <div className="text-xs">|</div>
+          <a
+            target="_blank"
+            className="text-sm duration-300 hover:underline"
+            href="https://buymeacoffee.com/hacksore"
+          >
+            Buy me a Coffee
+          </a>
+        </span>
+        <span className="flex items-center gap-1 whitespace-nowrap text-sm">
+          Made with
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="lucide lucide-heart h-3.5 w-3.5 fill-current duration-300 ease-[cubic-bezier(0.175,0.885,0.32,2.275)] group-hover:scale-110 group-hover:text-red-500"
+          >
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+          </svg>
+          by the
+          <a
+            target="_blank"
+            className="text-sm duration-300 hover:underline"
+            href="https://discord.com/servers/trash-devs-796594544980000808"
+          >
+            Trash Devs Community
+          </a>
+        </span>
       </div>
     </footer>
   );
