@@ -47,7 +47,7 @@ export default async function Page() {
           Product Hunt with ZERO AI Slop™
         </h1>
         <a
-          className="fancy"
+          className="fancy mx-auto"
           href="https://github.com/Hacksore/oghunt"
           target="_blank"
           rel="noopener noreferrer"
