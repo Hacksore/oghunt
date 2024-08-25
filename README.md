@@ -41,5 +41,7 @@ Please feel free to check out our [architecture diagram](./public/og-hunt-diagra
 - System Architect: [Max](https://github.com/maxdemaio)
 - Data Scientist: [TypeSafe](https://github.com/typesafeui)
 - Data Visualization: [Nathan](https://github.com/nathanroark)
+- Senior Lead Frontend Developer: [Jean](https://github.com/Kampouse)
+- Human Resources: [Metalface](https://github.com/metal-face)
 - Scrum Leader: [Aodhan](https://github.com/MVAodhan)
 - Civil Engineering Lead: [Mark](https://github.com/markkhoo)

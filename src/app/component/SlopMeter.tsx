@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { formatNumber } from "../utils/string";
 
 const useResizeObserver = (ref: React.RefObject<SVGSVGElement>) => {
   const [width, setWidth] = useState<number | null>(null);
@@ -74,6 +75,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .select("body")
       .append("div")
       .style("pointer-events", "none")
+      .style("opacity", 0)
       .classed(
         "absolute border border-[#434343] rounded p-1.5 bg-neutral-200 dark:border-neutral-200 dark:bg-[#111111]",
         true,
@@ -131,12 +133,11 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("text-anchor", "start")
       .attr("fill", "black")
       .style("font-weight", "bold")
-      // add shadow to the text so it is visible on any background
       .style(
         "text-shadow",
         "1px 1px 0px #fda4af, -1px -1px 0px #fda4af, 1px -1px 0px #fda4af, -1px 1px 0px #fda4af",
       )
-      .text(nameA + " • " + propA);
+      .text(nameA + " • " + formatNumber(propA));
 
     // Text B (Label on the right side)
     svg
@@ -149,7 +150,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
         "1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black",
       )
       .classed("font-bold dark:fill-neutral-200 fill-black", true)
-      .text(propB + " • " + nameB);
+      .text(formatNumber(propB) + " • " + nameB);
 
     // Clean up the tooltip on component unmount
     return () => {
