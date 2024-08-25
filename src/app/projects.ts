@@ -6,14 +6,32 @@ export const PROJECTS: ProductPost[] = [
     hasAi: false,
     topics: [
       {
+        name: "Discord",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Tauri",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
         name: "React",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Rust",
         description: "",
         id: "1",
         postId: "1",
       },
     ],
     deleted: false,
-    tagline: "The best way to find and share new music",
+    tagline: "Something about discord? idk",
     createdAt: new Date(),
     votesCount: 1337,
     thumbnailUrl:
@@ -49,16 +67,28 @@ export const PROJECTS: ProductPost[] = [
     hasAi: false,
     topics: [
       {
-        name: "React",
+        name: "Seattle",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Food",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Svelte",
         description: "",
         id: "1",
         postId: "1",
       },
     ],
     deleted: false,
-    tagline: "Get your food and not poo poo",
+    tagline: "See the health inspection results of Seattle restaurants",
     createdAt: new Date(),
-    votesCount: 1337,
+    votesCount: 42069,
     thumbnailUrl:
       "https://www.seattlesafeeats.com/_app/immutable/assets/needstoimprove.Cr0daC_v.png",
     name: "Seattle Safe Eats",
@@ -71,6 +101,18 @@ export const PROJECTS: ProductPost[] = [
     hasAi: false,
     topics: [
       {
+        name: "Spotify",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Music",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
         name: "React",
         description: "",
         id: "1",
@@ -78,9 +120,9 @@ export const PROJECTS: ProductPost[] = [
       },
     ],
     deleted: false,
-    tagline: "share your spotify",
+    tagline: "A clean and simple way to share your Spotify stats",
     createdAt: new Date(),
-    votesCount: 1337,
+    votesCount: 69420,
     thumbnailUrl: "https://splist.fm/android-chrome-192x192.png",
     name: "Splist.fm",
     url: "https://splist.fm/",
