@@ -25,6 +25,14 @@ We'll send a GET request to `http://localhost:3000/api/update-posts` with a head
 
 Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
 
+## API
+
+```bash
+# Update posts for the local database (seed)
+# TODO: This should just be `pnpm db:seed`
+curl http://localhost:3000/api/update-posts
+```
+
 ## Team
 
 - Lead Developer: [Pizza](https://github.com/RossLitzenberger)

@@ -40,7 +40,7 @@ export default async function Page() {
   const nonAIVotes = posts.reduce((acc, post) => acc + post.votesCount, 0);
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center px-8 pt-10">
+    <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <header className="flex flex-col gap-4 pb-10">
         <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
@@ -74,9 +74,14 @@ export default async function Page() {
       </header>
 
       <div>
-        <div className="flex flex-col gap-8 overflow-hidden">
+        <div className="flex flex-col gap-4 space-y-2 overflow-hidden md:gap-8 md:space-y-8">
           {posts.map((post, index) => (
-            <Card post={post} index={index} />
+            <>
+              {index !== 0 && (
+                <div className="flex h-0.5 w-full bg-neutral-300 md:hidden dark:bg-neutral-700" />
+              )}
+              <Card post={post} index={index} />
+            </>
           ))}
         </div>
         <div className="flex flex-col items-center pt-8">
