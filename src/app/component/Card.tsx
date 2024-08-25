@@ -1,7 +1,7 @@
 import { UpArrow } from "./icons/UpArrow";
 import { ProductPost } from "../types";
 import { Pill } from "./Pill";
-import Image from 'next/image';
+import Image from "next/image";
 
 interface CardProps {
   post: ProductPost;
@@ -25,9 +25,15 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       )}
 
       <div className="flex self-start lg:self-center">
-        <div className="object-contain lg:size-24 size-12 relative">
+        <div className="relative size-12 object-contain lg:size-24">
           {post.thumbnailUrl && (
-            <Image src={post.thumbnailUrl} fill className="rounded-lg"  sizes="(max-width: 768px) 192px, (max-width: 1024px) 384px" alt={`${post.name} logo`} />
+            <Image
+              src={post.thumbnailUrl}
+              fill
+              className="rounded-lg"
+              sizes="(max-width: 768px) 192px, (max-width: 1024px) 384px"
+              alt={`${post.name} logo`}
+            />
           )}
         </div>
       </div>
