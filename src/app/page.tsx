@@ -47,7 +47,7 @@ export default async function Page() {
         </h1>
         <div className="w-full">
           <h2 className="text-mg pb-2 font-bold md:text-lg">SlopMeter™</h2>
-          <div className="mx-auto w-full overflow-hidden rounded-lg">
+          <div className="mx-auto w-full">
             <SlopMeter
               propA={aiPosts.length}
               propB={posts.length}
@@ -60,7 +60,7 @@ export default async function Page() {
 
         <div className="w-full">
           <h2 className="text-mg pb-2 font-bold md:text-lg">AI HypeMeter™</h2>
-          <div className="mx-auto w-full overflow-hidden rounded-lg">
+          <div className="mx-auto w-full">
             <SlopMeter
               propA={aiVotes}
               propB={nonAIVotes}

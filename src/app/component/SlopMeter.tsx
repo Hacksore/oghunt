@@ -70,27 +70,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
 
     const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
 
-    const tooltip = d3
-      .select("body")
-      .append("div")
-      .style("pointer-events", "none")
-      .classed(
-        "absolute border border-[#434343] rounded p-1.5 bg-neutral-200 dark:border-neutral-200 dark:bg-[#111111]",
-        true,
-      );
-
-    const showTooltip = (event: MouseEvent, content: string) => {
-      tooltip
-        .html(content)
-        .style("left", `${event.pageX + 10}px`)
-        .style("top", `${event.pageY + 10}px`)
-        .style("opacity", 1);
-    };
-
-    const hideTooltip = () => {
-      tooltip.style("opacity", 0);
-    };
-
     // Bar A (Bar on the left side)
     barGroup
       .append("rect")
@@ -98,14 +77,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("y", 0)
       .attr("width", containerWidth * ratioA)
       .attr("height", height)
-      .attr("fill", "url(#gradientA)")
-      .on("mouseover", (event: MouseEvent) =>
-        showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
-      )
-      .on("mousemove", (event: MouseEvent) =>
-        showTooltip(event, `${nameA}: ${propA} (${(ratioA * 100).toFixed(2)}%)`),
-      )
-      .on("mouseout", hideTooltip);
+      .attr("fill", "url(#gradientA)");
 
     // Bar B (Bar on the right side)
     barGroup
@@ -114,14 +86,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("y", 0)
       .attr("width", containerWidth * ratioB)
       .attr("height", height)
-      .classed("dark:fill-[#171717] fill-neutral-200", true)
-      .on("mouseover", (event) =>
-        showTooltip(event, `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`),
-      )
-      .on("mousemove", (event) =>
-        showTooltip(event, `${nameB}: ${propB} (${(ratioB * 100).toFixed(2)}%)`),
-      )
-      .on("mouseout", hideTooltip);
+      .classed("dark:fill-[#171717] fill-neutral-200", true);
 
     // Text A (Label on the left side)
     svg
@@ -141,12 +106,11 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("text-anchor", "end")
       .classed("font-bold dark:fill-neutral-200 fill-black", true)
       .text(propB + " • " + nameB);
-
-    // Clean up the tooltip on component unmount
-    return () => {
-      tooltip.remove();
-    };
   }, [containerWidth, propA, propB, nameA, nameB, height]);
 
-  return <svg ref={svgRef} style={{ width: "100%" }}></svg>;
+  return (
+    <div className="overflow-hidden rounded-lg">
+      <svg ref={svgRef} style={{ width: "100%" }} />
+    </div>
+  );
 };
