@@ -5,6 +5,7 @@ import { getTodaysLaunches } from "./lib/persistence";
 import ScrollToTop from "./component/ScrollToTop";
 import { SlopMeter } from "./component/SlopMeter";
 import { Card } from "./component/Card";
+import { MobileCard } from "./component/MobileCard";
 
 const META_INFO = {
   title: "OGHUNT - ZERO AI Slop™",
@@ -74,13 +75,18 @@ export default async function Page() {
       </header>
 
       <div>
-        <div className="flex flex-col gap-4 space-y-2 overflow-hidden md:gap-8 md:space-y-8">
+        <div className="flex flex-col gap-4 overflow-hidden md:gap-8">
           {posts.map((post, index) => (
             <>
               {index !== 0 && (
                 <div className="flex h-0.5 w-full bg-neutral-300 md:hidden dark:bg-neutral-700" />
               )}
-              <Card post={post} index={index} />
+              <div className="hidden md:flex">
+                <Card post={post} index={index} />
+              </div>
+              <div className="md:hidden">
+                <MobileCard post={post} />
+              </div>
             </>
           ))}
         </div>
