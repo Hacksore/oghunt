@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 async function getTodaysLaunchesCached() {
   const cachedVal = await unstable_cache(() => getTodaysLaunches(), ["todaylaunches"], {
-    revalidate: 900, // 15 minutes
+    revalidate: 300, // 5 mins to limit db queries
   })();
 
   if (!cachedVal) return await getTodaysLaunches();
@@ -15,7 +15,7 @@ async function getTodaysLaunchesCached() {
 }
 
 export async function GET() {
-  const allPosts = await getTodaysLaunches();
+  const allPosts = await getTodaysLaunchesCached();
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
 
