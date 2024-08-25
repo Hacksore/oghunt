@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import { formatNumber } from "../utils/string";
 
 const useResizeObserver = (ref: React.RefObject<SVGSVGElement>) => {
   const [width, setWidth] = useState<number | null>(null);
@@ -96,7 +97,11 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("text-anchor", "start")
       .attr("fill", "black")
       .style("font-weight", "bold")
-      .text(nameA + " • " + propA);
+      .style(
+        "text-shadow",
+        "1px 1px 0px #fda4af, -1px -1px 0px #fda4af, 1px -1px 0px #fda4af, -1px 1px 0px #fda4af",
+      )
+      .text(nameA + " • " + formatNumber(propA));
 
     // Text B (Label on the right side)
     svg
@@ -104,8 +109,13 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("x", containerWidth - 8)
       .attr("y", height / 2 + 5)
       .attr("text-anchor", "end")
+      .style(
+        "text-shadow",
+        "1px 1px 0px black, -1px -1px 0px black, 1px -1px 0px black, -1px 1px 0px black",
+      )
       .classed("font-bold dark:fill-neutral-200 fill-black", true)
-      .text(propB + " • " + nameB);
+      .text(formatNumber(propB) + " • " + nameB);
+
   }, [containerWidth, propA, propB, nameA, nameB, height]);
 
   return (

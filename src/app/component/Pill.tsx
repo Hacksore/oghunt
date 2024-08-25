@@ -49,7 +49,7 @@ export const Pill = ({ name }: Props) => {
         color,
         borderColor,
       }}
-      className="rounded-2xl border px-2 py-1 text-sm"
+      className="rounded-2xl border px-1 py-0.5 text-xs md:px-2 md:py-1 md:text-sm"
     >
       {name}
     </span>

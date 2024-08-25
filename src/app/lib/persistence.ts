@@ -7,15 +7,17 @@ import db from "../db";
 import { hasAi } from "../utils/string";
 import { Post as PostType } from "../types";
 import { Prisma } from "@prisma/client";
+import { getStartAndEndOfDayInUTC } from "../utils/date";
 
 export async function getTodaysLaunches() {
+  const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   const posts = (
     await db.post.findMany({
       where: {
         // only get the posts that are the same day as today
         createdAt: {
-          gte: new Date(new Date().setHours(0, 0, 0, 0)),
-          lt: new Date(new Date().setHours(23, 59, 59, 999)),
+          gte: postedAfter,
+          lt: postedBefore,
         },
         deleted: false,
       },
