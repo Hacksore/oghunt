@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { getTodaysLaunches } from "../../lib/persistence";
 import { filterPosts } from "@/app/utils/string";
+import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
 
 export const dynamic = "force-dynamic";
 
@@ -18,13 +19,14 @@ export async function GET() {
   const posts = filterPosts(allPosts);
   const aiPosts = filterPosts(allPosts, true);
 
+  const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   return Response.json({
     noAiPostCount: posts.length,
     aiPostCount: aiPosts.length,
     allPostCount: allPosts.length,
     timeRange: {
-      gte: new Date(new Date().setHours(0, 0, 0, 0)),
-      lt: new Date(new Date().setHours(23, 59, 59, 999)),
+      gte: postedAfter,
+      lt: postedBefore,
     },
   });
 }

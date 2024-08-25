@@ -15,5 +15,5 @@ export async function GET(request: NextRequest) {
   const response = await fetchAndUpdateDatabase();
   console.log(response);
 
-  return Response.json({ success: true });
+  return Response.json({ success: true, ...response });
 }
