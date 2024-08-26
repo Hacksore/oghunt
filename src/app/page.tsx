@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import { filterPosts } from "./utils/string";
 import { getTodaysLaunches } from "./lib/persistence";
@@ -6,33 +5,16 @@ import ScrollToTop from "./component/ScrollToTop";
 import { SlopMeter } from "./component/SlopMeter";
 import { Card } from "./component/Card";
 import { MobileCard } from "./component/MobileCard";
-
-const META_INFO = {
-  title: "OGHUNT - ZERO AI Slop™",
-  description: "Sites on Product Hunt with ZERO AI Slop™",
-  site: "https://oghunt.com",
-};
+import { createMeta } from "./metadata";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
-const OG_CACHE_KEY = "v2";
-export const metadata: Metadata = {
-  title: META_INFO.title,
-  description: META_INFO.description,
-  openGraph: {
-    title: META_INFO.title,
-    description: META_INFO.description,
-    images: [`${META_INFO.site}/api/og?c=${OG_CACHE_KEY}`],
-    type: "website",
-  },
-  twitter: {
-    title: META_INFO.title,
-    description: META_INFO.description,
-    images: [`${META_INFO.site}/api/og?c=${OG_CACHE_KEY}`],
-    card: "summary_large_image",
-  },
-};
+export const metadata = createMeta({
+  title: "OGHUNT | Product Hunt with ZERO AI Slop™",
+  description:
+    "Product Hunt with ZERO AI Slop™ is a collection of projects launched on Product Hunt that are not AI-generated.",
+});
 
 export default async function Page() {
   const allPosts = await getTodaysLaunches();

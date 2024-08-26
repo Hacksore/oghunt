@@ -1,6 +1,12 @@
 import { Card } from "../component/Card";
 import { MobileCard } from "../component/MobileCard";
+import { createMeta } from "../metadata";
 import { PROJECTS } from "../projects";
+
+export const metadata = createMeta({
+  title: "OGHUNT | The Homies Projects",
+  description: "Our homies cooked many diffrent side projects please give them a look 🙏",
+});
 
 export default function Component() {
   return (
