@@ -65,7 +65,7 @@ export const PROJECTS: ProductPost[] = [
       },
     ],
     deleted: false,
-    tagline: "Easiliy track job applications",
+    tagline: "Easily track job applications",
     createdAt: new Date(),
     votesCount: 1337,
     thumbnailUrl: "https://my.flosa.app/img/logo-ball.png",
