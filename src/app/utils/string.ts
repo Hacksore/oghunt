@@ -1,5 +1,7 @@
 import { ProductPost } from "../types";
 
+export const PRODUCT_HUNT_NAME = "OGHUNT";
+
 export const hasAi = (
   post: {
     name: ProductPost["name"];
@@ -9,8 +11,8 @@ export const hasAi = (
   },
   showOnlyAi = false,
 ): boolean => {
-  if (post.name === "OGHUNT") {
-    return !showOnlyAi;
+  if (post.name === PRODUCT_HUNT_NAME) {
+    return false;
   }
 
   const excludedTerms = ["ai", "gpt", "artificial intelligence", "machine learning"];
