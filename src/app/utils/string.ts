@@ -1,5 +1,7 @@
 import { ProductPost } from "../types";
 
+export const PRODUCT_HUNT_NAME = "OGHUNT";
+
 export const hasAi = (
   post: {
     name: ProductPost["name"];
@@ -9,7 +11,7 @@ export const hasAi = (
   },
   showOnlyAi = false,
 ): boolean => {
-  if (post.name === "OGHUNT") {
+  if (post.name === PRODUCT_HUNT_NAME) {
     return !showOnlyAi;
   }
 

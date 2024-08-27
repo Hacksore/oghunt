@@ -4,7 +4,7 @@ import {
   getAllPostsVotesMoarBetter,
 } from "./data";
 import db from "../db";
-import { hasAi } from "../utils/string";
+import { hasAi, PRODUCT_HUNT_NAME } from "../utils/string";
 import { Post as PostType } from "../types";
 import { Prisma } from "@prisma/client";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
@@ -153,7 +153,7 @@ export async function fetchAndUpdateDatabase() {
   await db.post.updateMany({
     where: {
       id: {
-        notIn: posts.map((post) => post.id),
+        notIn: posts.filter((product) => product.name !== PRODUCT_HUNT_NAME).map((post) => post.id),
       },
       deleted: false,
     },
