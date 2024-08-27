@@ -153,7 +153,7 @@ export async function fetchAndUpdateDatabase() {
   await db.post.updateMany({
     where: {
       name: {
-        not: PRODUCT_HUNT_NAME
+        not: PRODUCT_HUNT_NAME,
       },
       id: {
         notIn: posts.map((post) => post.id),
