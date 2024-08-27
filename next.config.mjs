@@ -35,6 +35,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "cook-around-find-out-v2.vercel.app",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };
