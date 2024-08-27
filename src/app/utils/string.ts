@@ -12,7 +12,7 @@ export const hasAi = (
   showOnlyAi = false,
 ): boolean => {
   if (post.name === PRODUCT_HUNT_NAME) {
-    return false;
+    return !showOnlyAi;
   }
 
   const excludedTerms = ["ai", "gpt", "artificial intelligence", "machine learning"];
