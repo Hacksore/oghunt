@@ -16,7 +16,7 @@ export default function Component() {
       </a>
       <h1 className="text-primary pb-8 text-6xl font-extrabold">The Homies Projects</h1>
 
-      <div className="flex flex-col gap-4 overflow-hidden px-2 md:gap-8">
+      <div className="flex flex-col gap-4 overflow-hidden px-2 text-left md:gap-8">
         {PROJECTS.map((item, idx) => (
           <>
             {idx !== 0 && (
