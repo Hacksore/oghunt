@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <a href="#">
+        <a href="https://www.producthunt.com/posts/oghunt">
           <div className="flex items-center justify-center bg-gradient-to-r from-pink-400 to-orange-400 p-2 text-center text-xs font-bold text-black md:text-sm dark:from-pink-300 dark:to-orange-300 dark:text-neutral-800">
             <div className="relative h-[24px] w-[24px] md:mr-2">
               <Image src="/logo-128.png" alt="logo" fill sizes="24px" />
