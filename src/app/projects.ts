@@ -141,4 +141,37 @@ export const PROJECTS: ProductPost[] = [
     description:
       "share your spotify playlists with friends and family so that they know you listen to good music",
   },
+  {
+    id: "1",
+    hasAi: false,
+    topics: [
+      {
+        name: "Astro",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Markdown",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+      {
+        name: "Food",
+        description: "",
+        id: "1",
+        postId: "1",
+      },
+    ],
+    deleted: false,
+    tagline: "Recipes made by an Australian chef",
+    createdAt: new Date(),
+    votesCount: 420,
+    thumbnailUrl: "https://cook-around-find-out-v2.vercel.app/logo-1000.jpg",
+    name: "Cook Around and Find Out",
+    url: "https://cook-around-find-out-v2.vercel.app/",
+    description:
+      "Published recipes that I have piss-farted around with or found online and changed to my liking",
+  },
 ];
