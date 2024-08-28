@@ -29,9 +29,7 @@ export async function GET() {
   // TODO: make sure prod
   const { allPostCount, noAiPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`, {
     cache: "no-cache",
-  }).then(
-    (res) => res.json(),
-  );
+  }).then((res) => res.json());
 
   const aiPercentage = Math.floor((aiPostCount / allPostCount) * 100);
 
