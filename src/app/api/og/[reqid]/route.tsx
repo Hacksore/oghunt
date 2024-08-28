@@ -27,7 +27,9 @@ export async function GET() {
 
   const imageData = `data:image/png;base64,${Buffer.from(baseImageRawData).toString("base64")}`;
   // TODO: make sure prod
-  const { allPostCount, noAiPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`).then(
+  const { allPostCount, noAiPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`, {
+    cache: "no-cache",
+  }).then(
     (res) => res.json(),
   );
 
