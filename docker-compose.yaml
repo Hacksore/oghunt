@@ -5,7 +5,9 @@ name: oghunt
 
 services:
   db:
-    image: bitnami/postgresql:latest
+    # rolling tags fucked us, so downgrading for now
+    # https://github.com/bitnami/containers/issues/74788
+    image: bitnami/postgresql:13
     container_name: oghunt-db
     restart: always
     environment:
