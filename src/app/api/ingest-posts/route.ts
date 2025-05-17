@@ -32,15 +32,15 @@ export async function GET(request: NextRequest) {
   }
 
   // Analyze all posts in one batch
-  const postsToAnalyze = posts.map(post => ({
+  const postsToAnalyze = posts.map((post) => ({
     ...convertPostToProductPost(post),
-    id: post.id
+    id: post.id,
   }));
   const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
-  
+
   // Create a map of post IDs to their AI analysis results
   const postAiResults = new Map(
-    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false])
+    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false]),
   );
 
   const existingPostsList = await db.post.findMany({
@@ -76,17 +76,19 @@ export async function GET(request: NextRequest) {
     const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
-      data: await Promise.all(toAdd.map(post => ({
-        id: post.id,
-        votesCount: post.votesCount,
-        name: post.name,
-        description: post.description,
-        tagline: post.tagline,
-        url: post.url,
-        hasAi: postAiResults.get(post.id) ?? false,
-        thumbnailUrl: post.thumbnail.url,
-        deleted: false,
-      }))),
+      data: await Promise.all(
+        toAdd.map((post) => ({
+          id: post.id,
+          votesCount: post.votesCount,
+          name: post.name,
+          description: post.description,
+          tagline: post.tagline,
+          url: post.url,
+          hasAi: postAiResults.get(post.id) ?? false,
+          thumbnailUrl: post.thumbnail.url,
+          deleted: false,
+        })),
+      ),
       skipDuplicates: true,
     });
   }
@@ -101,7 +103,7 @@ export async function GET(request: NextRequest) {
   for (let i = 0; i < postsToUpdate.length; i += BATCH_SIZE) {
     const batch = postsToUpdate.slice(i, i + BATCH_SIZE);
     await db.$transaction(
-      batch.map(post => 
+      batch.map((post) =>
         db.post.update({
           where: { id: post.id },
           data: {
@@ -114,8 +116,8 @@ export async function GET(request: NextRequest) {
             thumbnailUrl: post.thumbnail.url,
             deleted: false,
           },
-        })
-      )
+        }),
+      ),
     );
   }
 
@@ -148,9 +150,9 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  return Response.json({ 
-    success: true, 
+  return Response.json({
+    success: true,
     newPosts,
     updatedPostsCount,
   });
-} 
+}

@@ -41,7 +41,10 @@ export async function getTodaysLaunches(hasAi?: boolean) {
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
 
-async function generateDBPost(post: PostType, isAiRelated: boolean): Promise<Prisma.PostCreateManyInput> {
+async function generateDBPost(
+  post: PostType,
+  isAiRelated: boolean,
+): Promise<Prisma.PostCreateManyInput> {
   return {
     id: post.id,
     votesCount: post.votesCount,
@@ -78,15 +81,15 @@ export async function fetchAndUpdateDatabase() {
   }
 
   // Analyze all posts in one batch
-  const postsToAnalyze = posts.map(post => ({
+  const postsToAnalyze = posts.map((post) => ({
     ...convertPostToProductPost(post),
-    id: post.id
+    id: post.id,
   }));
   const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
-  
+
   // Create a map of post IDs to their AI analysis results
   const postAiResults = new Map(
-    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false])
+    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false]),
   );
 
   const existingPostsList = await db.post.findMany({
@@ -123,7 +126,9 @@ export async function fetchAndUpdateDatabase() {
     const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
-      data: await Promise.all(toAdd.map(post => generateDBPost(post, postAiResults.get(post.id) ?? false))),
+      data: await Promise.all(
+        toAdd.map((post) => generateDBPost(post, postAiResults.get(post.id) ?? false)),
+      ),
       skipDuplicates: true,
     });
   }

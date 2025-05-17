@@ -37,8 +37,8 @@ export async function GET(request: NextRequest) {
     updatedCount++;
   }
 
-  return Response.json({ 
-    success: true, 
+  return Response.json({
+    success: true,
     updatedCount,
   });
-} 
+}

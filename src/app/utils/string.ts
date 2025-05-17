@@ -19,12 +19,15 @@ export const shouldIncludePost = async (
   return post.isAiRelated === showOnlyAi;
 };
 
-export const filterPosts = async (posts: ProductPost[], showOnlyAi = false): Promise<ProductPost[]> => {
+export const filterPosts = async (
+  posts: ProductPost[],
+  showOnlyAi = false,
+): Promise<ProductPost[]> => {
   const results = await Promise.all(
     posts.map(async (post) => {
       const shouldInclude = await shouldIncludePost(post, showOnlyAi);
       return shouldInclude ? post : null;
-    })
+    }),
   );
   return results.filter((post): post is ProductPost => post !== null);
 };
