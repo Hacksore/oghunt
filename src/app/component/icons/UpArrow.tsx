@@ -17,6 +17,7 @@ export const UpArrow = ({ className, gradient = true }: UpArrowProps) => {
       strokeLinejoin="round"
       className={className}
     >
+      <title>Up Arrow</title>
       <defs>
         <linearGradient id="gradient" x1="0%" x2="100%" y1="0%" y2="0%">
           <stop offset="0%" stopColor="#f472b6" />

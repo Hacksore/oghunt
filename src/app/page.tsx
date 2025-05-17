@@ -17,9 +17,8 @@ export const generateMetadata = generateOGHuntMetadata({
 });
 
 export default async function Page() {
-  const allPosts = await getTodaysLaunches();
-  const posts = filterPosts(allPosts);
-  const aiPosts = filterPosts(allPosts, true);
+  const posts = await getTodaysLaunches(false);
+  const aiPosts = await getTodaysLaunches(true);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
@@ -37,8 +36,8 @@ export default async function Page() {
           <div className="absolute inset-0 z-10 flex items-center justify-center text-[1.25rem] font-bold text-black dark:text-white">
             ✨ Star on Github
           </div>
-          <div className="absolute left-1/2 top-1/2 aspect-square w-full -translate-x-1/2 -translate-y-1/2 animate-[rotate_2s_linear_infinite] bg-[conic-gradient(at_top,#fda4af_0%_25%,#fb923c_75%_100%)]"></div>
-          <div className="absolute inset-[2px] h-[calc(100%-4px)] w-[calc(100%-4px)] rounded-[inherit] bg-[inherit]"></div>
+          <div className="absolute left-1/2 top-1/2 aspect-square w-full -translate-x-1/2 -translate-y-1/2 animate-[rotate_2s_linear_infinite] bg-[conic-gradient(at_top,#fda4af_0%_25%,#fb923c_75%_100%)]" />
+          <div className="absolute inset-[2px] h-[calc(100%-4px)] w-[calc(100%-4px)] rounded-[inherit] bg-[inherit]" />
         </a>
 
         <div className="w-full">
@@ -59,14 +58,14 @@ export default async function Page() {
       <div>
         <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
           {posts.map((post, index) => (
-            <>
+            <div key={post.id}>
               <div className="hidden md:flex">
                 <Card post={post} index={index} />
               </div>
               <div className="md:hidden">
                 <MobileCard post={post} />
               </div>
-            </>
+            </div>
           ))}
         </div>
         <div className="flex flex-col items-center pt-8 text-center">

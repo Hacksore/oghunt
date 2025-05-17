@@ -14,7 +14,7 @@ function stringToHexColorAndFont(str: string): {
   for (let i = 0; i < 3; i++) {
     // Generate a dark but vivid color by limiting the RGB value to a middle range and adding a base value
     const value = (((hash >> (i * 8)) & 0xff) % 128) + 64; // Limit to [64, 191] range for richer colors
-    color += ("00" + value.toString(16)).slice(-2);
+    color += `00${value.toString(16)}`.slice(-2);
   }
 
   // Convert the hex color to RGB for manipulation

@@ -8,11 +8,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome lint src",
-    "format": "biome format --write .",
-    "check:format": "biome format --check src",
-    "check": "biome check --write src",
-    "upload-to-r2": "tsx scripts/upload-to-r2.ts",
+    "lint": "biome lint src --write",
+    "check": "biome check src --write",
+    "format": "biome format src --write",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"
@@ -24,6 +22,7 @@
     "d3": "^7.9.0",
     "date-fns": "^3.6.0",
     "next": "15.3.2",
+    "openai": "^4.100.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "zod": "^3.23.8"

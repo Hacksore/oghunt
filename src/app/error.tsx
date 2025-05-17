@@ -1,5 +1,5 @@
 "use client";
-export default function Error() {
+export default function ErrorPage() {
   return (
     <div className="mx-auto flex flex-col items-center gap-4 text-2xl font-bold">
       <h1>We ran out of money for the DB, please join the discord and fund us 🙏</h1>
@@ -9,7 +9,10 @@ export default function Error() {
       >
         Trash Devs Discord
       </a>
-      <img src="https://media1.tenor.com/m/dHVat9e2S38AAAAC/rat-cry-mouse-cutie.gif" />
+      <img
+        src="https://media1.tenor.com/m/dHVat9e2S38AAAAC/rat-cry-mouse-cutie.gif"
+        alt="Crying rat animation"
+      />
     </div>
   );
 }

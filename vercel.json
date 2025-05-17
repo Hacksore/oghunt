@@ -1,8 +1,17 @@
 {
   "crons": [
     {
-      "path": "/api/update-posts",
+      "path": "/api/ingest-posts",
+      "schedule": "0 */4 * * *"
+    },
+    {
+      "path": "/api/update-vote-count",
       "schedule": "*/15 * * * *"
     }
-  ]
+  ],
+  "functions": {
+    "app/api/**/*": {
+      "maxDuration": 300
+    }
+  }
 }

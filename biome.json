@@ -4,12 +4,14 @@
     "enabled": true
   },
   "linter": {
+    "ignore": [".next/**/*"],
     "enabled": true,
     "rules": {
       "recommended": true
     }
   },
   "formatter": {
+    "ignore": [".next/**/*"],
     "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space",

@@ -31,8 +31,8 @@ async function getTodaysLaunchesCached(): Promise<AllCachedPosts> {
 
 export async function GET() {
   const { cache, allPosts } = await getTodaysLaunchesCached();
-  const posts = filterPosts(allPosts);
-  const aiPosts = filterPosts(allPosts, true);
+  const posts = await filterPosts(allPosts);
+  const aiPosts = await filterPosts(allPosts, true);
 
   const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   return Response.json({

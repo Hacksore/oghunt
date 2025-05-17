@@ -1,15 +1,18 @@
+"use server";
+
 import type { Prisma } from "@prisma/client";
 import db from "../db";
+import { batchAnalyzePosts } from "../services/ai-analyzer";
 import type { Post as PostType } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { PRODUCT_HUNT_NAME, hasAi } from "../utils/string";
+import { PRODUCT_HUNT_NAME } from "../utils/string";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
   getAllPostsVotesMoarBetter,
 } from "./data";
 
-export async function getTodaysLaunches() {
+export async function getTodaysLaunches(hasAi?: boolean) {
   const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   const posts = (
     await db.post.findMany({
@@ -20,6 +23,7 @@ export async function getTodaysLaunches() {
           lt: postedBefore,
         },
         deleted: false,
+        ...(hasAi !== undefined && { hasAi }),
       },
       include: {
         topics: {
@@ -37,7 +41,10 @@ export async function getTodaysLaunches() {
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
 
-function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
+async function generateDBPost(
+  post: PostType,
+  isAiRelated: boolean,
+): Promise<Prisma.PostCreateManyInput> {
   return {
     id: post.id,
     votesCount: post.votesCount,
@@ -45,7 +52,7 @@ function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
     description: post.description,
     tagline: post.tagline,
     url: post.url,
-    hasAi: hasAi(convertPostToProductPost(post)),
+    hasAi: isAiRelated,
     thumbnailUrl: post.thumbnail.url,
     deleted: false,
   };
@@ -65,13 +72,25 @@ export async function fetchAndUpdateDatabase() {
 
   const posts: PostType[] = [];
   // NOTE : fix the fucking graphql api
-  rawPots.forEach((post) => {
-    const maybePost = allVotes["post" + post.id];
+  for (const post of rawPots) {
+    const maybePost = allVotes[`post${post.id}`];
     if (maybePost) {
-      post.votesCount = allVotes["post" + post.id].votesCount;
+      post.votesCount = allVotes[`post${post.id}`].votesCount;
       posts.push(post);
     }
-  });
+  }
+
+  // Analyze all posts in one batch
+  const postsToAnalyze = posts.map((post) => ({
+    ...convertPostToProductPost(post),
+    id: post.id,
+  }));
+  const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
+
+  // Create a map of post IDs to their AI analysis results
+  const postAiResults = new Map(
+    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false]),
+  );
 
   const existingPostsList = await db.post.findMany({
     select: {
@@ -107,7 +126,9 @@ export async function fetchAndUpdateDatabase() {
     const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
-      data: toAdd.map(generateDBPost),
+      data: await Promise.all(
+        toAdd.map((post) => generateDBPost(post, postAiResults.get(post.id) ?? false)),
+      ),
       skipDuplicates: true,
     });
   }
@@ -129,7 +150,7 @@ export async function fetchAndUpdateDatabase() {
         where: {
           id: post.id,
         },
-        data: generateDBPost(post),
+        data: await generateDBPost(post, postAiResults.get(post.id) ?? false),
       });
     }
   }
@@ -171,26 +192,13 @@ export async function fetchAndUpdateDatabase() {
   let aiProjects = 0;
   let aiVotes = 0;
 
-  posts.forEach((post) => {
+  for (const post of posts) {
     totalVotes += post.votesCount;
-    if (
-      hasAi(
-        {
-          ...post,
-          topics: post.topics.nodes.map((topic) => ({
-            id: topic.id,
-            description: topic.description,
-            name: topic.name,
-            postId: post.id,
-          })),
-        },
-        true,
-      )
-    ) {
+    if (postAiResults.get(post.id)) {
       ++aiProjects;
       aiVotes += post.votesCount;
     }
-  });
+  }
 
   const aiVotesPercentage = aiVotes / totalVotes;
   const aiProjectsPercentage = aiProjects / totalProjects;
@@ -205,9 +213,13 @@ export async function fetchAndUpdateDatabase() {
   });
 
   return {
-    productHuntApiPostsCount: posts.length,
+    newPosts,
     updatedPostsCount,
-    postsToCreateCount: newPosts,
-    topicPostsCount: topicPosts.length,
+    totalProjects,
+    totalVotes,
+    aiProjects,
+    aiVotes,
+    aiVotesPercentage,
+    aiProjectsPercentage,
   };
 }
