@@ -1,7 +1,7 @@
 "use server";
 
-import OpenAI from "openai";
 import { track } from "@vercel/analytics/server";
+import OpenAI from "openai";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not set in environment variables");

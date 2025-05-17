@@ -8,9 +8,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "biome lint src",
-    "check": "biome check src",
-    "format": "biome format --write .",
+    "lint": "biome lint src --write",
+    "check": "biome check src --write",
+    "format": "biome format src --write",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"
