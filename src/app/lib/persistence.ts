@@ -78,15 +78,15 @@ export async function fetchAndUpdateDatabase() {
   }
 
   // Analyze all posts in one batch
-  const postsToAnalyze = posts.map(post => convertPostToProductPost(post));
+  const postsToAnalyze = posts.map(post => ({
+    ...convertPostToProductPost(post),
+    id: post.id
+  }));
   const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
   
   // Create a map of post IDs to their AI analysis results
   const postAiResults = new Map(
-    posts.map((post, index) => [
-      post.id, 
-      aiAnalysisResults.get(`${postsToAnalyze[index].name}:${postsToAnalyze[index].tagline}:${postsToAnalyze[index].description}:${postsToAnalyze[index].topics.map(t => t.name).join(',')}`)
-    ])
+    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false])
   );
 
   const existingPostsList = await db.post.findMany({

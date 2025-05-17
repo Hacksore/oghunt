@@ -14,7 +14,9 @@ const BATCH_ANALYSIS_PROMPT = `Analyze if these product descriptions are related
 - Direct mentions of AI technologies
 - Implied AI functionality
 - AI-related buzzwords
+- AI Models (e.g. GPT-4, Claude, Gemini, and including "Custom Trained Modules", etc.)
 - Machine learning capabilities
+- Any developer tooling that that mentions AI
 
 For each product, respond with a JSON object containing:
 {
@@ -30,6 +32,7 @@ Respond with a JSON array of results in the same order as the products.`;
 
 // Batch analyze posts - only called from /api/update-posts
 export const batchAnalyzePosts = async (posts: {
+  id: string;
   name: string;
   tagline: string;
   description: string;
@@ -98,11 +101,12 @@ Topics: ${topicsText}
     const result = analysisResults[i];
     console.log('Processing result for post:', post.name, 'Raw result:', result);
     
-    const isAiRelated = result?.confidence > 0.7 ? result.isAiRelated : false;
-    console.log({ post: post.name, isAiRelated, confidence: result?.confidence, rawResult: result });
+    // Lower confidence threshold to 0.5 and handle undefined results
+    const isAiRelated = result?.confidence > 0.5 ? result.isAiRelated : false;
+    console.log({ post: post.name, isAiRelated, confidence: result?.confidence  });
     
-    const cacheKey = `${post.name}:${post.tagline}:${post.description}:${post.topics.map((t: { name: string; description: string }) => t.name).join(',')}`;
-    results.set(cacheKey, isAiRelated);
+    // Use post ID as the cache key
+    results.set(post.id, isAiRelated);
   }
 
   return results;
@@ -110,6 +114,7 @@ Topics: ${topicsText}
 
 // This function should only be called from /api/update-posts
 export const analyzePost = async (post: {
+  id: string;
   name: string;
   tagline: string;
   description: string;
