@@ -37,69 +37,43 @@ export const batchAnalyzePosts = async (posts: {
 }[]) => {
   const results = new Map<string, boolean>();
 
-  try {
-    // Format all posts into a single prompt
-    const productsText = posts.map((post, index) => {
-      const topicsText = post.topics.map(t => `${t.name}: ${t.description}`).join(", ");
-      return `Product ${index + 1}:
+  // Format all posts into a single prompt
+  const productsText = posts.map((post, index) => {
+    const topicsText = post.topics.map(t => `${t.name}: ${t.description}`).join(", ");
+    return `Product ${index + 1}:
 Name: ${post.name}
 Tagline: ${post.tagline}
 Description: ${post.description}
 Topics: ${topicsText}
 ---`;
-    }).join("\n\n");
+  }).join("\n\n");
 
-    const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
+  const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "system",
-          content: "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results."
-        },
-        {
-          role: "user",
-          content: prompt
-        }
-      ],
-      response_format: { type: "json_object" }
-    }) as OpenAI.Chat.Completions.ChatCompletion;
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4.1-mini",
+    messages: [
+      {
+        role: "system",
+        content: "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results."
+      },
+      {
+        role: "user",
+        content: prompt
+      }
+    ],
+    response_format: { type: "json_object" }
+  });
 
-    const analysisResults = JSON.parse(completion.choices[0].message.content ?? "[]");
-    
-    // Map results back to posts
-    for (let i = 0; i < posts.length; i++) {
-      const post = posts[i];
-      const result = analysisResults[i];
-      const isAiRelated = result?.confidence > 0.7 ? result.isAiRelated : false;
-      const cacheKey = `${post.name}:${post.tagline}:${post.description}:${post.topics.map((t: { name: string; description: string }) => t.name).join(',')}`;
-      results.set(cacheKey, isAiRelated);
-    }
-
-  } catch (error) {
-    console.error("Error analyzing posts with AI:", error);
-    // Fallback to keyword matching for all posts
-    const excludedTerms = [
-      "ai", "gpt", "artificial intelligence", "machine learning",
-      "neural network", "deep learning", "nlp", "natural language",
-      "ml", "llm", "large language model"
-    ];
-    const containsExcludedTerm = (text: string): boolean =>
-      excludedTerms.some((term) => text.toLowerCase().includes(term));
-
-    for (const post of posts) {
-      const isAiRelated = 
-        containsExcludedTerm(post.name) ||
-        containsExcludedTerm(post.tagline) ||
-        containsExcludedTerm(post.description) ||
-        post.topics.some((t: { name: string; description: string }) => 
-          containsExcludedTerm(t.name) || containsExcludedTerm(t.description)
-        );
-
-      const cacheKey = `${post.name}:${post.tagline}:${post.description}:${post.topics.map((t: { name: string; description: string }) => t.name).join(',')}`;
-      results.set(cacheKey, isAiRelated);
-    }
+  const analysisResults = JSON.parse(completion.choices[0].message.content ?? "[]");
+  
+  // Map results back to posts
+  for (let i = 0; i < posts.length; i++) {
+    const post = posts[i];
+    const result = analysisResults[i];
+    const isAiRelated = result?.confidence > 0.7 ? result.isAiRelated : false;
+    const cacheKey = `${post.name}:${post.tagline}:${post.description}:${post.topics.map((t: { name: string; description: string }) => t.name).join(',')}`;
+    results.set(cacheKey, isAiRelated);
   }
 
   return results;
