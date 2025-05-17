@@ -1,5 +1,4 @@
 import type { ProductPost } from "../types";
-import { analyzePost } from "../services/ai-analyzer";
 
 export const PRODUCT_HUNT_NAME = "OGHUNT";
 
@@ -9,6 +8,7 @@ export const shouldIncludePost = async (
     tagline: ProductPost["tagline"];
     description: ProductPost["description"];
     topics: ProductPost["topics"];
+    isAiRelated?: boolean;
   },
   showOnlyAi = false,
 ): Promise<boolean> => {
@@ -16,8 +16,7 @@ export const shouldIncludePost = async (
     return !showOnlyAi;
   }
 
-  const isAiRelated = await analyzePost(post);
-  return isAiRelated === showOnlyAi;
+  return post.isAiRelated === showOnlyAi;
 };
 
 export const filterPosts = async (posts: ProductPost[], showOnlyAi = false): Promise<ProductPost[]> => {

@@ -4,14 +4,15 @@ import type { Prisma } from "@prisma/client";
 import db from "../db";
 import type { Post as PostType } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { PRODUCT_HUNT_NAME, shouldIncludePost } from "../utils/string";
+import { PRODUCT_HUNT_NAME } from "../utils/string";
+import { batchAnalyzePosts } from "../services/ai-analyzer";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
   getAllPostsVotesMoarBetter,
 } from "./data";
 
-export async function getTodaysLaunches() {
+export async function getTodaysLaunches(hasAi?: boolean) {
   const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
   const posts = (
     await db.post.findMany({
@@ -22,6 +23,7 @@ export async function getTodaysLaunches() {
           lt: postedBefore,
         },
         deleted: false,
+        ...(hasAi !== undefined && { hasAi }),
       },
       include: {
         topics: {
@@ -39,7 +41,7 @@ export async function getTodaysLaunches() {
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
 
-async function generateDBPost(post: PostType): Promise<Prisma.PostCreateManyInput> {
+async function generateDBPost(post: PostType, isAiRelated: boolean): Promise<Prisma.PostCreateManyInput> {
   return {
     id: post.id,
     votesCount: post.votesCount,
@@ -47,7 +49,7 @@ async function generateDBPost(post: PostType): Promise<Prisma.PostCreateManyInpu
     description: post.description,
     tagline: post.tagline,
     url: post.url,
-    hasAi: await shouldIncludePost(convertPostToProductPost(post)),
+    hasAi: isAiRelated,
     thumbnailUrl: post.thumbnail.url,
     deleted: false,
   };
@@ -74,6 +76,18 @@ export async function fetchAndUpdateDatabase() {
       posts.push(post);
     }
   }
+
+  // Analyze all posts in one batch
+  const postsToAnalyze = posts.map(post => convertPostToProductPost(post));
+  const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
+  
+  // Create a map of post IDs to their AI analysis results
+  const postAiResults = new Map(
+    posts.map((post, index) => [
+      post.id, 
+      aiAnalysisResults.get(`${postsToAnalyze[index].name}:${postsToAnalyze[index].tagline}:${postsToAnalyze[index].description}:${postsToAnalyze[index].topics.map(t => t.name).join(',')}`)
+    ])
+  );
 
   const existingPostsList = await db.post.findMany({
     select: {
@@ -109,7 +123,7 @@ export async function fetchAndUpdateDatabase() {
     const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
-      data: await Promise.all(toAdd.map(generateDBPost)),
+      data: await Promise.all(toAdd.map(post => generateDBPost(post, postAiResults.get(post.id) ?? false))),
       skipDuplicates: true,
     });
   }
@@ -131,7 +145,7 @@ export async function fetchAndUpdateDatabase() {
         where: {
           id: post.id,
         },
-        data: await generateDBPost(post),
+        data: await generateDBPost(post, postAiResults.get(post.id) ?? false),
       });
     }
   }
@@ -175,20 +189,7 @@ export async function fetchAndUpdateDatabase() {
 
   for (const post of posts) {
     totalVotes += post.votesCount;
-    if (
-      await shouldIncludePost(
-        {
-          ...post,
-          topics: post.topics.nodes.map((topic) => ({
-            id: topic.id,
-            description: topic.description,
-            name: topic.name,
-            postId: post.id,
-          })),
-        },
-        true,
-      )
-    ) {
+    if (postAiResults.get(post.id)) {
       ++aiProjects;
       aiVotes += post.votesCount;
     }
@@ -207,9 +208,13 @@ export async function fetchAndUpdateDatabase() {
   });
 
   return {
-    productHuntApiPostsCount: posts.length,
+    newPosts,
     updatedPostsCount,
-    postsToCreateCount: newPosts,
-    topicPostsCount: topicPosts.length,
+    totalProjects,
+    totalVotes,
+    aiProjects,
+    aiVotes,
+    aiVotesPercentage,
+    aiProjectsPercentage,
   };
 }

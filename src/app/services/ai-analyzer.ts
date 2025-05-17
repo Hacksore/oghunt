@@ -28,7 +28,7 @@ Products to analyze:
 
 Respond with a JSON array of results in the same order as the products.`;
 
-// Batch analyze posts
+// Batch analyze posts - only called from /api/update-posts
 export const batchAnalyzePosts = async (posts: {
   name: string;
   tagline: string;
@@ -65,13 +65,42 @@ Topics: ${topicsText}
     response_format: { type: "json_object" }
   });
 
-  const analysisResults = JSON.parse(completion.choices[0].message.content ?? "[]");
+  const responseContent = completion.choices[0].message.content;
+  console.log('Raw API response:', responseContent);
+
+  interface AnalysisResult {
+    isAiRelated: boolean;
+    confidence: number;
+    reasoning: string;
+  }
+
+  let analysisResults: AnalysisResult[];
+  try {
+    const parsed = JSON.parse(responseContent ?? "[]");
+    // If the response is an object with a results array, use that
+    if (parsed.results && Array.isArray(parsed.results)) {
+      analysisResults = parsed.results;
+    }
+    // If it's not an array, wrap it in an array
+    else if (!Array.isArray(parsed)) {
+      analysisResults = [parsed];
+    } else {
+      analysisResults = parsed;
+    }
+  } catch (error) {
+    console.error('Error parsing API response:', error);
+    analysisResults = [];
+  }
   
   // Map results back to posts
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
     const result = analysisResults[i];
+    console.log('Processing result for post:', post.name, 'Raw result:', result);
+    
     const isAiRelated = result?.confidence > 0.7 ? result.isAiRelated : false;
+    console.log({ post: post.name, isAiRelated, confidence: result?.confidence, rawResult: result });
+    
     const cacheKey = `${post.name}:${post.tagline}:${post.description}:${post.topics.map((t: { name: string; description: string }) => t.name).join(',')}`;
     results.set(cacheKey, isAiRelated);
   }
@@ -79,6 +108,7 @@ Topics: ${topicsText}
   return results;
 };
 
+// This function should only be called from /api/update-posts
 export const analyzePost = async (post: {
   name: string;
   tagline: string;
