@@ -1,7 +1,7 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const OG_URL =
-  process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://oghunt.com';
+  process.env.NODE_ENV !== "production" ? "http://localhost:3000" : "https://oghunt.com";
 
 type OpenGraphFunction = () => Promise<Metadata>;
 
@@ -29,7 +29,7 @@ export function generateOGHuntMetadata({
       openGraph: {
         title,
         description: description,
-        siteName: 'OGHUNT',
+        siteName: "OGHUNT",
         images: [
           {
             url: `${OG_URL}/api/og/${cacheKey}.png`,
@@ -37,12 +37,12 @@ export function generateOGHuntMetadata({
             height: 630,
           },
         ],
-        locale: 'en-US',
-        type: 'website',
+        locale: "en-US",
+        type: "website",
       },
       twitter: {
-        title: 'OGHUNT',
-        card: 'summary_large_image',
+        title: "OGHUNT",
+        card: "summary_large_image",
         images: [
           {
             url: `${OG_URL}/api/og/${cacheKey}.png`,
@@ -52,7 +52,7 @@ export function generateOGHuntMetadata({
         ],
       },
       icons: {
-        shortcut: '/favicon.ico',
+        shortcut: "/favicon.ico",
       },
     };
   };

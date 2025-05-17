@@ -1,4 +1,4 @@
-import { PostSkeleton } from './component/PostSkeleton';
+import { PostSkeleton } from "./component/PostSkeleton";
 
 export default function Loading() {
   return (
@@ -20,7 +20,7 @@ export default function Loading() {
 
       <div className="w-full md:w-11/12 2xl:w-[1129.65px]">
         <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
-          {new Array(5).fill('').map((_, i) => (
+          {new Array(5).fill("").map((_, i) => (
             <PostSkeleton key={i} />
           ))}
         </div>

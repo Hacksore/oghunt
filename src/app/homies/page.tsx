@@ -1,11 +1,11 @@
-import { Card } from '../component/Card';
-import { MobileCard } from '../component/MobileCard';
-import { generateOGHuntMetadata } from '../metadata';
-import { PROJECTS } from '../projects';
+import { Card } from "../component/Card";
+import { MobileCard } from "../component/MobileCard";
+import { generateOGHuntMetadata } from "../metadata";
+import { PROJECTS } from "../projects";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: 'OGHUNT | The Homies Projects',
-  description: 'Our homies cooked many diffrent side projects please give them a look 🙏',
+  title: "OGHUNT | The Homies Projects",
+  description: "Our homies cooked many diffrent side projects please give them a look 🙏",
 });
 
 export default function Component() {

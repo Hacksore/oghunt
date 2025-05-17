@@ -1,5 +1,5 @@
-import type { ProductPost } from '../types';
-import { Pill } from './Pill';
+import type { ProductPost } from "../types";
+import { Pill } from "./Pill";
 
 export const MobileCard = ({ post }: { post: ProductPost }) => {
   const link = new URL(post.url);

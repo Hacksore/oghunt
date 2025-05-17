@@ -20,7 +20,7 @@ export const Footer = () => {
           </svg>
         </a>
         <p className="mt-8 p-4">
-          OGHUNT is an independent application and is not affiliated with or endorsed by{' '}
+          OGHUNT is an independent application and is not affiliated with or endorsed by{" "}
           <a
             aria-label="product-hunt"
             target="_blank"

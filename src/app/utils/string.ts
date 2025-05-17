@@ -1,13 +1,13 @@
-import type { ProductPost } from '../types';
+import type { ProductPost } from "../types";
 
-export const PRODUCT_HUNT_NAME = 'OGHUNT';
+export const PRODUCT_HUNT_NAME = "OGHUNT";
 
 export const hasAi = (
   post: {
-    name: ProductPost['name'];
-    tagline: ProductPost['tagline'];
-    description: ProductPost['description'];
-    topics: ProductPost['topics'];
+    name: ProductPost["name"];
+    tagline: ProductPost["tagline"];
+    description: ProductPost["description"];
+    topics: ProductPost["topics"];
   },
   showOnlyAi = false,
 ): boolean => {
@@ -15,7 +15,7 @@ export const hasAi = (
     return !showOnlyAi;
   }
 
-  const excludedTerms = ['ai', 'gpt', 'artificial intelligence', 'machine learning'];
+  const excludedTerms = ["ai", "gpt", "artificial intelligence", "machine learning"];
 
   const containsExcludedTerm = (text: string): boolean =>
     excludedTerms.some((term) => text.toLowerCase().includes(term));
@@ -42,6 +42,6 @@ export const filterPosts = (posts: ProductPost[], showOnlyAi = false): ProductPo
 };
 
 export const formatNumber = (num: number): string => {
-  const formatter = Intl.NumberFormat('en', { notation: 'compact' });
+  const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return formatter.format(num);
 };

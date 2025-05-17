@@ -1,11 +1,11 @@
-import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics } from "@next/third-parties/google";
 
-import { Inter } from 'next/font/google';
-import './globals.css';
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-import { Footer } from './component/Footer';
+import { Footer } from "./component/Footer";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({
   children,

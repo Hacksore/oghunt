@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import type { ProductPost } from '../types';
-import { Pill } from './Pill';
-import { UpArrow } from './icons/UpArrow';
+import Image from "next/image";
+import type { ProductPost } from "../types";
+import { Pill } from "./Pill";
+import { UpArrow } from "./icons/UpArrow";
 
 interface CardProps {
   post: ProductPost;

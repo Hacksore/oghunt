@@ -2,13 +2,13 @@
  * Originally from Vercel's Satori project.
  * @link https://github.com/vercel/satori/blob/main/playground/pages/api/font.ts
  */
-import { fontParams } from '@/app/utils/fetch-font';
-import type { NextRequest } from 'next/server';
+import { fontParams } from "@/app/utils/fetch-font";
+import type { NextRequest } from "next/server";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
-  if (req.nextUrl.pathname !== '/api/font') return;
+  if (req.nextUrl.pathname !== "/api/font") return;
   const url = new URL(req.url);
 
   const parsed = fontParams.decodeRequest(req);
@@ -27,8 +27,8 @@ export async function GET(req: NextRequest) {
     await fetch(API, {
       headers: {
         // Make sure it returns TTF.
-        'User-Agent':
-          'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1',
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_8; de-at) AppleWebKit/533.21.1 (KHTML, like Gecko) Version/5.0.5 Safari/533.21.1",
       },
     })
   ).text();
@@ -40,9 +40,9 @@ export async function GET(req: NextRequest) {
   const res = await fetch(resource[1]);
 
   // Make sure not to mess it around with compression when developing it locally.
-  if (url.hostname === 'localhost') {
-    res.headers.delete('content-encoding');
-    res.headers.delete('content-length');
+  if (url.hostname === "localhost") {
+    res.headers.delete("content-encoding");
+    res.headers.delete("content-length");
   }
 
   return res;

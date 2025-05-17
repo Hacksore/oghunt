@@ -1,4 +1,4 @@
-'use client';
+"use client";
 export default function Error() {
   return (
     <div className="mx-auto flex flex-col items-center gap-4 text-2xl font-bold">

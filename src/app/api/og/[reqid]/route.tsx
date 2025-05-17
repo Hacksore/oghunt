@@ -1,8 +1,8 @@
-import { fetchFont } from '@/app/utils/fetch-font';
-import { ImageResponse } from 'next/og';
+import { fetchFont } from "@/app/utils/fetch-font";
+import { ImageResponse } from "next/og";
 
 // Route segment config
-export const runtime = 'edge';
+export const runtime = "edge";
 
 // Image metadata
 const size = {
@@ -11,24 +11,24 @@ const size = {
 };
 
 const API_URL =
-  process.env.NODE_ENV === 'production' ? 'https://oghunt.com' : 'http://localhost:3000';
+  process.env.NODE_ENV === "production" ? "https://oghunt.com" : "http://localhost:3000";
 
 // Image generation
 export async function GET() {
   const [inter900, inter700, inter400] = await Promise.all([
-    fetchFont('Inter', 900),
-    fetchFont('Inter', 700),
-    fetchFont('Inter', 400),
+    fetchFont("Inter", 900),
+    fetchFont("Inter", 700),
+    fetchFont("Inter", 400),
   ]);
 
-  const baseImageRawData = await fetch(new URL('./base-og.png', import.meta.url)).then((res) =>
+  const baseImageRawData = await fetch(new URL("./base-og.png", import.meta.url)).then((res) =>
     res.arrayBuffer(),
   );
 
-  const imageData = `data:image/png;base64,${Buffer.from(baseImageRawData).toString('base64')}`;
+  const imageData = `data:image/png;base64,${Buffer.from(baseImageRawData).toString("base64")}`;
   // TODO: make sure prod
   const { allPostCount, noAiPostCount, aiPostCount } = await fetch(`${API_URL}/api/stats`, {
-    cache: 'no-cache',
+    cache: "no-cache",
   }).then((res) => res.json());
 
   const aiPercentage = Math.floor((aiPostCount / allPostCount) * 100);
@@ -36,8 +36,8 @@ export async function GET() {
   return new ImageResponse(
     <div
       style={{
-        width: '100%',
-        height: '100%',
+        width: "100%",
+        height: "100%",
         backgroundImage: `url(${imageData})`,
       }}
       tw="flex flex-col items-center pb-12 justify-end"
@@ -49,7 +49,7 @@ export async function GET() {
         <div
           style={{
             width: `${aiPercentage}%`,
-            backgroundImage: 'linear-gradient(90deg, #fda4af 20%, #fb923c 100%)',
+            backgroundImage: "linear-gradient(90deg, #fda4af 20%, #fb923c 100%)",
           }}
           tw="flex h-full rounded-l-3xl"
         >
@@ -66,9 +66,9 @@ export async function GET() {
     {
       ...size,
       fonts: [
-        { name: 'Inter', data: inter900, weight: 900 },
-        { name: 'Inter', data: inter700, weight: 700 },
-        { name: 'Inter', data: inter400, weight: 400 },
+        { name: "Inter", data: inter900, weight: 900 },
+        { name: "Inter", data: inter700, weight: 700 },
+        { name: "Inter", data: inter400, weight: 400 },
       ],
     },
   );

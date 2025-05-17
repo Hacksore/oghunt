@@ -1,13 +1,13 @@
-import type { Prisma } from '@prisma/client';
-import db from '../db';
-import type { Post as PostType } from '../types';
-import { getStartAndEndOfDayInUTC } from '../utils/date';
-import { PRODUCT_HUNT_NAME, hasAi } from '../utils/string';
+import type { Prisma } from "@prisma/client";
+import db from "../db";
+import type { Post as PostType } from "../types";
+import { getStartAndEndOfDayInUTC } from "../utils/date";
+import { PRODUCT_HUNT_NAME, hasAi } from "../utils/string";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
   getAllPostsVotesMoarBetter,
-} from './data';
+} from "./data";
 
 export async function getTodaysLaunches() {
   const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
@@ -66,9 +66,9 @@ export async function fetchAndUpdateDatabase() {
   const posts: PostType[] = [];
   // NOTE : fix the fucking graphql api
   rawPots.forEach((post) => {
-    const maybePost = allVotes['post' + post.id];
+    const maybePost = allVotes["post" + post.id];
     if (maybePost) {
-      post.votesCount = allVotes['post' + post.id].votesCount;
+      post.votesCount = allVotes["post" + post.id].votesCount;
       posts.push(post);
     }
   });
