@@ -8,7 +8,7 @@ export const shouldIncludePost = async (
     tagline: ProductPost["tagline"];
     description: ProductPost["description"];
     topics: ProductPost["topics"];
-    isAiRelated?: boolean;
+    hasAi?: boolean;
   },
   showOnlyAi = false,
 ): Promise<boolean> => {
@@ -16,7 +16,7 @@ export const shouldIncludePost = async (
     return !showOnlyAi;
   }
 
-  return post.isAiRelated === showOnlyAi;
+  return post.hasAi === showOnlyAi;
 };
 
 export const filterPosts = async (

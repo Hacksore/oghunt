@@ -6,7 +6,7 @@ export async function GET() {
   const allPosts = await unstable_cache(() => getTodaysLaunches(), ["api-today-launches"], {
     revalidate: 3600,
   })();
-  const posts = filterPosts(allPosts);
+  const posts = await filterPosts(allPosts);
 
   return Response.json(posts);
 }
