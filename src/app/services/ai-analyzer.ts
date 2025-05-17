@@ -1,6 +1,5 @@
 "use server";
 
-import { track } from "@vercel/analytics/server";
 import OpenAI from "openai";
 
 if (!process.env.OPENAI_API_KEY) {
@@ -72,16 +71,6 @@ Topics: ${topicsText}
       },
     ],
     response_format: { type: "json_object" },
-  });
-
-  track("ai-input-token-usage", {
-    count: completion.usage?.prompt_tokens ?? 0,
-  });
-  track("ai-output-token-usage", {
-    count: completion.usage?.completion_tokens ?? 0,
-  });
-  track("ai-total-token-usage", {
-    totalTokens: completion.usage?.total_tokens ?? 0,
   });
 
   const responseContent = completion.choices[0].message.content;
