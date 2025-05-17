@@ -1,6 +1,7 @@
 "use server";
 
 import OpenAI from "openai";
+import { track } from "@vercel/analytics/server";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not set in environment variables");
@@ -71,6 +72,12 @@ Topics: ${topicsText}
       },
     ],
     response_format: { type: "json_object" },
+  });
+
+  track("token-usage", {
+    inputTokens: completion.usage?.prompt_tokens ?? 0,
+    outputTokens: completion.usage?.completion_tokens ?? 0,
+    totalTokens: completion.usage?.total_tokens ?? 0,
   });
 
   const responseContent = completion.choices[0].message.content;
