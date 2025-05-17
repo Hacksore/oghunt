@@ -74,7 +74,6 @@ Topics: ${topicsText}
   });
 
   const responseContent = completion.choices[0].message.content;
-  console.log("Raw API response:", responseContent);
 
   interface AnalysisResult {
     isAiRelated: boolean;
@@ -104,11 +103,15 @@ Topics: ${topicsText}
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
     const result = analysisResults[i];
-    console.log("Processing result for post:", post.name, "Raw result:", result);
 
     // Lower confidence threshold to 0.5 and handle undefined results
     const isAiRelated = result?.confidence > 0.5 ? result.isAiRelated : false;
-    console.log({ post: post.name, isAiRelated, confidence: result?.confidence });
+    console.log({
+      post: post.name,
+      isAiRelated,
+      confidence: result?.confidence,
+      reasoning: result?.reasoning,
+    });
 
     // Use post ID as the cache key
     results.set(post.id, isAiRelated);
