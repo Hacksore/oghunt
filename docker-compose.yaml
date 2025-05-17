@@ -1,6 +1,3 @@
-# create a docker image with mysql and a default password of admin
-version: "3"
-
 name: oghunt
 
 services:

@@ -1,8 +1,10 @@
+"use server";
+
 import type { Prisma } from "@prisma/client";
 import db from "../db";
 import type { Post as PostType } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { PRODUCT_HUNT_NAME, hasAi } from "../utils/string";
+import { PRODUCT_HUNT_NAME, shouldIncludePost } from "../utils/string";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
@@ -37,7 +39,7 @@ export async function getTodaysLaunches() {
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
 
-function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
+async function generateDBPost(post: PostType): Promise<Prisma.PostCreateManyInput> {
   return {
     id: post.id,
     votesCount: post.votesCount,
@@ -45,7 +47,7 @@ function generateDBPost(post: PostType): Prisma.PostCreateManyInput {
     description: post.description,
     tagline: post.tagline,
     url: post.url,
-    hasAi: hasAi(convertPostToProductPost(post)),
+    hasAi: await shouldIncludePost(convertPostToProductPost(post)),
     thumbnailUrl: post.thumbnail.url,
     deleted: false,
   };
@@ -65,13 +67,13 @@ export async function fetchAndUpdateDatabase() {
 
   const posts: PostType[] = [];
   // NOTE : fix the fucking graphql api
-  rawPots.forEach((post) => {
-    const maybePost = allVotes["post" + post.id];
+  for (const post of rawPots) {
+    const maybePost = allVotes[`post${post.id}`];
     if (maybePost) {
-      post.votesCount = allVotes["post" + post.id].votesCount;
+      post.votesCount = allVotes[`post${post.id}`].votesCount;
       posts.push(post);
     }
-  });
+  }
 
   const existingPostsList = await db.post.findMany({
     select: {
@@ -107,7 +109,7 @@ export async function fetchAndUpdateDatabase() {
     const toAdd = partitionedCreatePosts.pop();
     if (!toAdd) break;
     await db.post.createMany({
-      data: toAdd.map(generateDBPost),
+      data: await Promise.all(toAdd.map(generateDBPost)),
       skipDuplicates: true,
     });
   }
@@ -129,7 +131,7 @@ export async function fetchAndUpdateDatabase() {
         where: {
           id: post.id,
         },
-        data: generateDBPost(post),
+        data: await generateDBPost(post),
       });
     }
   }
@@ -171,10 +173,10 @@ export async function fetchAndUpdateDatabase() {
   let aiProjects = 0;
   let aiVotes = 0;
 
-  posts.forEach((post) => {
+  for (const post of posts) {
     totalVotes += post.votesCount;
     if (
-      hasAi(
+      await shouldIncludePost(
         {
           ...post,
           topics: post.topics.nodes.map((topic) => ({
@@ -190,7 +192,7 @@ export async function fetchAndUpdateDatabase() {
       ++aiProjects;
       aiVotes += post.votesCount;
     }
-  });
+  }
 
   const aiVotesPercentage = aiVotes / totalVotes;
   const aiProjectsPercentage = aiProjects / totalProjects;
