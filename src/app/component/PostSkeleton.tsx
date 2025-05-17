@@ -2,7 +2,7 @@ export const PostSkeleton = () => {
   return (
     <div className="group flex w-full cursor-pointer flex-row items-center rounded-2xl duration-300 hover:bg-neutral-300/50 md:gap-8 md:p-8 dark:hover:bg-neutral-900">
       <div className="hidden lg:flex lg:items-center lg:gap-x-8">
-        <div className="rounded-lg bg-neutral-700 lg:size-12 dark:bg-gray-700"></div>
+        <div className="rounded-lg bg-neutral-700 lg:size-12 dark:bg-gray-700" />
 
         <div className="relative object-contain lg:size-24">
           <svg
@@ -31,30 +31,30 @@ export const PostSkeleton = () => {
             </svg>
           </div>
           <div className="flex w-full gap-2">
-            <div className="mb-3 h-8 w-1/2 rounded-full bg-neutral-700 md:w-2/5 dark:bg-gray-700"></div>
+            <div className="mb-3 h-8 w-1/2 rounded-full bg-neutral-700 md:w-2/5 dark:bg-gray-700" />
           </div>
         </div>
 
-        <div className="mb-2 hidden h-10 w-2/5 rounded-full bg-neutral-700 lg:block dark:bg-gray-700"></div>
+        <div className="mb-2 hidden h-10 w-2/5 rounded-full bg-neutral-700 lg:block dark:bg-gray-700" />
 
-        <div className="mb-2 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 md:w-3/5 dark:bg-gray-700"></div>
+        <div className="mb-2 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 md:w-3/5 dark:bg-gray-700" />
 
         <div className="mb-2 flex w-full flex-wrap gap-x-2 md:mb-4">
-          {new Array(3).fill("").map((_, i) => (
+          {Array.from({ length: 3 }).map((_, i) => (
             <div
-              key={i}
+              key={`post-skeleton-pill-${crypto.randomUUID()}`}
               className="h-5 w-2/12 rounded-full bg-neutral-700 md:h-7 md:w-1/12 dark:bg-gray-700"
-            ></div>
+            />
           ))}
         </div>
 
-        <div className="mb-1 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700"></div>
-        <div className="mb-1 h-3 w-10/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700"></div>
-        <div className="mb-1 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700"></div>
+        <div className="mb-1 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700" />
+        <div className="mb-1 h-3 w-10/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700" />
+        <div className="mb-1 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 dark:bg-gray-700" />
       </div>
 
       <div className="ml-auto hidden rounded-lg bg-neutral-700 px-4 py-2 lg:block dark:bg-gray-700">
-        <div className="mb-6 h-10 w-10 rounded-full bg-neutral-700 dark:bg-gray-700"></div>
+        <div className="mb-6 h-10 w-10 rounded-full bg-neutral-700 dark:bg-gray-700" />
       </div>
     </div>
   );

@@ -12,7 +12,6 @@
     "format": "biome format --write .",
     "check:format": "biome format --check src",
     "check": "biome check --write src",
-    "upload-to-r2": "tsx scripts/upload-to-r2.ts",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"

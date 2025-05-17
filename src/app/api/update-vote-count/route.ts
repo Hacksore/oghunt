@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
-import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import db from "../../db";
+import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 
 export const dynamic = "force-dynamic";
 

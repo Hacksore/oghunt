@@ -25,10 +25,10 @@ export default function Component() {
             {idx !== 0 && (
               <div className="flex h-0.5 w-full bg-neutral-200 md:hidden dark:bg-neutral-800" />
             )}
-            <div className="hidden md:flex">
+            <div key={`desktop-${item.name}`} className="hidden md:flex">
               <Card key={`card-${item.name}`} homie index={idx} post={item} />
             </div>
-            <div className="md:hidden">
+            <div key={`mobile-${item.name}`} className="md:hidden">
               <MobileCard key={`card-${item.name}`} post={item} />
             </div>
           </>

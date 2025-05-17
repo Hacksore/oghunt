@@ -2,10 +2,10 @@
 
 import type { Prisma } from "@prisma/client";
 import db from "../db";
+import { batchAnalyzePosts } from "../services/ai-analyzer";
 import type { Post as PostType } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
 import { PRODUCT_HUNT_NAME } from "../utils/string";
-import { batchAnalyzePosts } from "../services/ai-analyzer";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
