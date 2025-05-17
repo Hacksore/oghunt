@@ -1,7 +1,8 @@
 import prisma from "@/app/db";
 import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
 
-export async function GET(_request: Request, { params }: { params: { slug: string } }) {
+export async function GET(_request: Request, props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
   const slug = decodeURIComponent(params.slug);
 
   const post = await prisma.post.findFirst({
