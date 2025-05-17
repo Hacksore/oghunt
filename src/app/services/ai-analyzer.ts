@@ -74,9 +74,13 @@ Topics: ${topicsText}
     response_format: { type: "json_object" },
   });
 
-  track("token-usage", {
-    inputTokens: completion.usage?.prompt_tokens ?? 0,
-    outputTokens: completion.usage?.completion_tokens ?? 0,
+  track("ai-input-token-usage", {
+    count: completion.usage?.prompt_tokens ?? 0,
+  });
+  track("ai-output-token-usage", {
+    count: completion.usage?.completion_tokens ?? 0,
+  });
+  track("ai-total-token-usage", {
     totalTokens: completion.usage?.total_tokens ?? 0,
   });
 
