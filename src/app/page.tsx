@@ -5,7 +5,6 @@ import ScrollToTop from "./component/ScrollToTop";
 import { SlopMeter } from "./component/SlopMeter";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
-import { filterPosts } from "./utils/string";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
