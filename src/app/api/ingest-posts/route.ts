@@ -96,26 +96,30 @@ export async function GET(request: NextRequest) {
     skipDuplicates: true,
   });
 
-  const updatedPostsCount = postsToUpdate.length;
-
-  for (const post of postsToUpdate) {
-    await db.post.update({
-      where: {
-        id: post.id,
-      },
-      data: {
-        id: post.id,
-        votesCount: post.votesCount,
-        name: post.name,
-        description: post.description,
-        tagline: post.tagline,
-        url: post.url,
-        hasAi: postAiResults.get(post.id) ?? false,
-        thumbnailUrl: post.thumbnail.url,
-        deleted: false,
-      },
-    });
+  // Update posts in batches
+  const BATCH_SIZE = 50;
+  for (let i = 0; i < postsToUpdate.length; i += BATCH_SIZE) {
+    const batch = postsToUpdate.slice(i, i + BATCH_SIZE);
+    await db.$transaction(
+      batch.map(post => 
+        db.post.update({
+          where: { id: post.id },
+          data: {
+            votesCount: post.votesCount,
+            name: post.name,
+            description: post.description,
+            tagline: post.tagline,
+            url: post.url,
+            hasAi: postAiResults.get(post.id) ?? false,
+            thumbnailUrl: post.thumbnail.url,
+            deleted: false,
+          },
+        })
+      )
+    );
   }
+
+  const updatedPostsCount = postsToUpdate.length;
 
   const topicPosts = posts.flatMap((post) =>
     post.topics.nodes.map((topic) => ({
