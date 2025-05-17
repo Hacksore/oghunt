@@ -1,7 +1,7 @@
-import { UpArrow } from "./icons/UpArrow";
-import { ProductPost } from "../types";
-import { Pill } from "./Pill";
-import Image from "next/image";
+import Image from 'next/image';
+import type { ProductPost } from '../types';
+import { Pill } from './Pill';
+import { UpArrow } from './icons/UpArrow';
 
 interface CardProps {
   post: ProductPost;
@@ -17,6 +17,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       key={post.id}
       target="_blank"
       className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
+      rel="noreferrer"
     >
       {!homie && (
         <div className="flex flex-row items-center justify-center gap-4 pb-2">

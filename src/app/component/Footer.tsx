@@ -20,7 +20,7 @@ export const Footer = () => {
           </svg>
         </a>
         <p className="mt-8 p-4">
-          OGHUNT is an independent application and is not affiliated with or endorsed by{" "}
+          OGHUNT is an independent application and is not affiliated with or endorsed by{' '}
           <a
             aria-label="product-hunt"
             target="_blank"
@@ -39,6 +39,7 @@ export const Footer = () => {
             target="_blank"
             className="text-sm duration-300 hover:underline"
             href="https://github.com/sponsors/Hacksore"
+            rel="noreferrer"
           >
             Sponsor on the Hub
           </a>
@@ -47,6 +48,7 @@ export const Footer = () => {
             target="_blank"
             className="text-sm duration-300 hover:underline"
             href="https://buymeacoffee.com/hacksore"
+            rel="noreferrer"
           >
             Buy me a Coffee
           </a>
@@ -69,6 +71,7 @@ export const Footer = () => {
             target="_blank"
             className="text-sm duration-300 hover:underline"
             href="https://discord.com/servers/trash-devs-796594544980000808"
+            rel="noreferrer"
           >
             Trash Devs Community
           </a>

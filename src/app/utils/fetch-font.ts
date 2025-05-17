@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 const baseUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+  : 'http://localhost:3000';
 
 type Primitives = boolean | number | string | null;
 type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
@@ -12,7 +12,7 @@ const jsonStr = z.string().transform((str, ctx) => {
     return JSON.parse(str) as JsonValue;
   } catch (error) {
     console.log(error);
-    ctx.addIssue({ code: "custom", message: "Needs to be JSON" });
+    ctx.addIssue({ code: 'custom', message: 'Needs to be JSON' });
   }
 });
 
@@ -27,7 +27,7 @@ export function zodParams<TType>(schema: z.ZodType<TType>) {
 
       return querySchema.safeParse(obj);
     },
-    toSearchString: (obj: (typeof schema)["_input"]) => {
+    toSearchString: (obj: (typeof schema)['_input']) => {
       schema.parse(obj);
       return `input=${encodeURIComponent(JSON.stringify(obj))}`;
     },

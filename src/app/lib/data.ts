@@ -1,5 +1,5 @@
-import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { Post, PostResponse, ProductPost } from "../types";
+import type { Post, PostResponse, ProductPost } from '../types';
+import { getStartAndEndOfDayInUTC } from '../utils/date';
 
 const buildGetAllPostsVotes = (keys: string[]) => `
 query {
@@ -11,7 +11,7 @@ query {
     }
   `,
     )
-    .join("")}
+    .join('')}
 }
 `;
 
@@ -55,13 +55,13 @@ export async function getAllPost(): Promise<Post[]> {
   const allPosts: Post[] = [];
 
   while (hasNextPage) {
-    const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
+    const response = await fetch('https://api.producthunt.com/v2/api/graphql', {
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${process.env.PH_API_KEY}`,
       },
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         query: GET_ALL_POSTS,
         variables: {
@@ -71,7 +71,7 @@ export async function getAllPost(): Promise<Post[]> {
           postedBefore: postedBefore,
         },
       }),
-      cache: "no-cache",
+      cache: 'no-cache',
     });
     const result: PostResponse = await response.json();
 
@@ -87,17 +87,17 @@ export async function getAllPost(): Promise<Post[]> {
 export async function getAllPostsVotesMoarBetter(
   ids: string[],
 ): Promise<Record<string, { votesCount: number }>> {
-  const response = await fetch("https://api.producthunt.com/v2/api/graphql", {
+  const response = await fetch('https://api.producthunt.com/v2/api/graphql', {
     headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${process.env.PH_API_KEY}`,
     },
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify({
       query: buildGetAllPostsVotes(ids),
     }),
-    cache: "no-cache",
+    cache: 'no-cache',
   }).then((res) => res.json());
 
   return response.data;

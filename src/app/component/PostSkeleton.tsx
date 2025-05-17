@@ -40,7 +40,7 @@ export const PostSkeleton = () => {
         <div className="mb-2 h-3 w-11/12 rounded-full bg-neutral-700 md:h-5 md:w-3/5 dark:bg-gray-700"></div>
 
         <div className="mb-2 flex w-full flex-wrap gap-x-2 md:mb-4">
-          {new Array(3).fill("").map((_, i) => (
+          {new Array(3).fill('').map((_, i) => (
             <div
               key={i}
               className="h-5 w-2/12 rounded-full bg-neutral-700 md:h-7 md:w-1/12 dark:bg-gray-700"

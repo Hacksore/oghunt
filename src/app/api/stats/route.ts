@@ -1,31 +1,31 @@
-import { unstable_cache } from "next/cache";
-import { getTodaysLaunches } from "../../lib/persistence";
-import { filterPosts } from "@/app/utils/string";
-import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
-import { ProductPost } from "@/app/types";
+import type { ProductPost } from '@/app/types';
+import { getStartAndEndOfDayInUTC } from '@/app/utils/date';
+import { filterPosts } from '@/app/utils/string';
+import { unstable_cache } from 'next/cache';
+import { getTodaysLaunches } from '../../lib/persistence';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 interface AllCachedPosts {
   allPosts: ProductPost[];
-  cache: "HIT" | "MISS";
+  cache: 'HIT' | 'MISS';
 }
 
 async function getTodaysLaunchesCached(): Promise<AllCachedPosts> {
-  const allPosts = await unstable_cache(() => getTodaysLaunches(), ["todaylaunches"], {
+  const allPosts = await unstable_cache(() => getTodaysLaunches(), ['todaylaunches'], {
     revalidate: 300, // 5 mins to limit db queries
   })();
 
   if (!allPosts) {
     return {
       allPosts: await getTodaysLaunches(),
-      cache: "MISS",
+      cache: 'MISS',
     };
   }
 
   return {
     allPosts,
-    cache: "HIT",
+    cache: 'HIT',
   };
 }
 

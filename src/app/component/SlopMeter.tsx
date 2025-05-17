@@ -1,7 +1,8 @@
-"use client";
-import React, { useEffect, useRef, useState } from "react";
-import * as d3 from "d3";
-import { formatNumber } from "../utils/string";
+'use client';
+import * as d3 from 'd3';
+import type React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { formatNumber } from '../utils/string';
 
 const useResizeObserver = (ref: React.RefObject<SVGSVGElement>) => {
   const [width, setWidth] = useState<number | null>(null);
@@ -51,67 +52,67 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
 
     const svg = d3.select(svgRef.current);
 
-    svg.attr("width", containerWidth).attr("height", height);
+    svg.attr('width', containerWidth).attr('height', height);
 
     // Clear previous content
-    svg.selectAll("*").remove();
+    svg.selectAll('*').remove();
 
-    const defs = svg.append("defs");
+    const defs = svg.append('defs');
     const gradient = defs
-      .append("linearGradient")
-      .attr("id", "gradientA")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
+      .append('linearGradient')
+      .attr('id', 'gradientA')
+      .attr('x1', '0%')
+      .attr('y1', '0%')
+      .attr('x2', '100%')
+      .attr('y2', '0%');
 
-    gradient.append("stop").attr("offset", "20%").attr("stop-color", "#fda4af"); // Start color
+    gradient.append('stop').attr('offset', '20%').attr('stop-color', '#fda4af'); // Start color
 
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fb923c"); // End color
+    gradient.append('stop').attr('offset', '100%').attr('stop-color', '#fb923c'); // End color
 
-    const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
+    const barGroup = svg.append('g').attr('transform', 'translate(0, 0)');
 
     // Bar A (Bar on the left side)
     barGroup
-      .append("rect")
-      .attr("x", 0)
-      .attr("y", 0)
-      .attr("width", containerWidth * ratioA)
-      .attr("height", height)
-      .attr("fill", "url(#gradientA)");
+      .append('rect')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('width', containerWidth * ratioA)
+      .attr('height', height)
+      .attr('fill', 'url(#gradientA)');
 
     // Bar B (Bar on the right side)
     barGroup
-      .append("rect")
-      .attr("x", containerWidth * ratioA)
-      .attr("y", 0)
-      .attr("width", containerWidth * ratioB)
-      .attr("height", height)
-      .classed("dark:fill-[#171717] fill-neutral-200", true);
+      .append('rect')
+      .attr('x', containerWidth * ratioA)
+      .attr('y', 0)
+      .attr('width', containerWidth * ratioB)
+      .attr('height', height)
+      .classed('dark:fill-[#171717] fill-neutral-200', true);
 
     // Text A (Label on the left side)
     svg
-      .append("text")
-      .attr("x", 8)
-      .attr("y", height / 2 + 5)
-      .attr("text-anchor", "start")
-      .attr("fill", "black")
-      .style("font-weight", "bold")
-      .text(nameA + " • " + formatNumber(propA));
+      .append('text')
+      .attr('x', 8)
+      .attr('y', height / 2 + 5)
+      .attr('text-anchor', 'start')
+      .attr('fill', 'black')
+      .style('font-weight', 'bold')
+      .text(nameA + ' • ' + formatNumber(propA));
 
     // Text B (Label on the right side)
     svg
-      .append("text")
-      .attr("x", containerWidth - 8)
-      .attr("y", height / 2 + 5)
-      .attr("text-anchor", "end")
-      .classed("font-bold dark:fill-neutral-200 fill-black", true)
-      .text(formatNumber(propB) + " • " + nameB);
+      .append('text')
+      .attr('x', containerWidth - 8)
+      .attr('y', height / 2 + 5)
+      .attr('text-anchor', 'end')
+      .classed('font-bold dark:fill-neutral-200 fill-black', true)
+      .text(formatNumber(propB) + ' • ' + nameB);
   }, [containerWidth, propA, propB, nameA, nameB, height]);
 
   return (
     <div className="overflow-hidden rounded-lg">
-      <svg ref={svgRef} style={{ width: "100%" }} />
+      <svg ref={svgRef} style={{ width: '100%' }} />
     </div>
   );
 };

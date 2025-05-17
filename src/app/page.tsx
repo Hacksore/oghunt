@@ -1,19 +1,19 @@
-import { Analytics } from "@vercel/analytics/react";
-import { filterPosts } from "./utils/string";
-import { getTodaysLaunches } from "./lib/persistence";
-import ScrollToTop from "./component/ScrollToTop";
-import { SlopMeter } from "./component/SlopMeter";
-import { Card } from "./component/Card";
-import { MobileCard } from "./component/MobileCard";
-import { generateOGHuntMetadata } from "./metadata";
+import { Analytics } from '@vercel/analytics/react';
+import { Card } from './component/Card';
+import { MobileCard } from './component/MobileCard';
+import ScrollToTop from './component/ScrollToTop';
+import { SlopMeter } from './component/SlopMeter';
+import { getTodaysLaunches } from './lib/persistence';
+import { generateOGHuntMetadata } from './metadata';
+import { filterPosts } from './utils/string';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | Product Hunt with ZERO AI Slop™",
+  title: 'OGHUNT | Product Hunt with ZERO AI Slop™',
   description:
-    "Product Hunt with ZERO AI Slop™ is a collection of projects launched on Product Hunt that are not AI-generated.",
+    'Product Hunt with ZERO AI Slop™ is a collection of projects launched on Product Hunt that are not AI-generated.',
 });
 
 export default async function Page() {
