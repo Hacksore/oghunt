@@ -4,7 +4,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { formatNumber } from "../utils/string";
 
-const useResizeObserver = (ref: React.RefObject<SVGSVGElement>) => {
+const useResizeObserver = (ref: React.RefObject<SVGSVGElement | null>) => {
   const [width, setWidth] = useState<number | null>(null);
 
   useEffect(() => {
