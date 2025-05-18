@@ -103,16 +103,16 @@ Topics: ${topicsText}
         analysisResults.push({
           isAiRelated: false,
           confidence: 0,
-          reasoning: "No analysis result available"
+          reasoning: "No analysis result available",
         });
       }
     }
 
     // Validate each result has required properties
-    analysisResults = analysisResults.map(result => ({
+    analysisResults = analysisResults.map((result) => ({
       isAiRelated: result?.isAiRelated ?? false,
       confidence: result?.confidence ?? 0,
-      reasoning: result?.reasoning ?? "No reasoning provided"
+      reasoning: result?.reasoning ?? "No reasoning provided",
     }));
   } catch (error) {
     console.error("Error parsing API response:", error);
@@ -120,7 +120,7 @@ Topics: ${topicsText}
     analysisResults = posts.map(() => ({
       isAiRelated: false,
       confidence: 0,
-      reasoning: "Error analyzing post"
+      reasoning: "Error analyzing post",
     }));
   }
 
