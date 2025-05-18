@@ -1,48 +1,84 @@
-# oghunt
+# Turborepo starter
 
-Product Hunt with ZERO AI Slop™
-![image](https://github.com/user-attachments/assets/733569f6-ca25-4f91-bda4-472f1c833646)
+This Turborepo starter is maintained by the Turborepo core team.
 
-### Development
+## Using this example
 
-This is what you need to get up and running
+Run the following command:
 
-Create a ProductHunt account. Then, go to your [API Dashboard](https://www.producthunt.com/v2/oauth/applications). Afterwards, create an application. Set the redirect URI to `https://localhost:3000` for local development purposes. Then, generate a `Developer Token`, copy that, create a `.env` file similar to [.env.example](/.env.example). Set `CRON_SECRET` to whatever you'd like locally. Set `DATABASE_URL` to `"postgresql://dev:dev@localhost:5432/oghunt"` and make sure you already don't have PostgreSQL running on your machine otherwise Docker won't know what to do the port already being in use.
-
-```
-docker compose up -d
+```sh
+npx create-turbo@latest
 ```
 
-With the docker container running in the background: install dependencies, execute prisma commands, and run the app.
+## What's inside?
 
-1. `pnpm i`
-2. `pnpm db:generate` (only needed once or when you change schema)
-3. `pnpm db:push` (only needed once to push these changes to the local DB)
-4. `pnpm dev`
-5. `curl http://localhost:3000/api/update-posts` (to seed the DB)
+This Turborepo includes the following packages/apps:
 
-Then, we need to seed the DB. With the app and the docker container running, we'll do it via an API request to our backend to run our DB seed script.
-We'll send a GET request to `http://localhost:3000/api/update-posts` with a header with a key of `Authorization` and a value of `Bearer CRON_SECRET` where `CRON_SECRET` is equal to the secret you put for `CRON_SECRET` in your `.env` file.
+### Apps and Packages
 
-Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-## Team
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
-- Lead Developer: [Pizza](https://github.com/RossLitzenberger)
-- Product Owner: [Pati](https://typehero.dev/)
-- Project Manager: [Hacksore](https://github.com/Hacksore)
-- Senior Lead Developer: [Jim](https://github.com/JoshHyde9)
-- Tech Consultant: [Trash](https://github.com/bautistaaa)
-- Algorithm Specialist: [🐝](https://github.com/ArcherScript)
-- Database Engineer: [Overclock](https://github.com/LucFauvel)
-- Knows HTML: [Chad](https://github.com/chadstewart)
-- Lead 404 Engineer: [Shane](https://github.com/swalker326)
-- Lead UI/UX Engineer: [Boston](https://github.com/BostonRohan)
-- System Architect: [Max](https://github.com/maxdemaio)
-- Data Scientist: [TypeSafe](https://github.com/typesafeui)
-- Data Visualization: [Nathan](https://github.com/nathanroark)
-- Senior Lead Frontend Developer: [Jean](https://github.com/Kampouse)
-- Human Resources: [Metalface](https://github.com/metal-face)
-- Scrum Leader: [Aodhan](https://github.com/MVAodhan)
-- Previous Lead Tailwind Engineer (hiring for this role): [PicklNik](https://github.com/picklenik)
-- Civil Engineering Lead: [Mark](https://github.com/markkhoo)
+### Utilities
+
+This Turborepo has some additional tools already setup for you:
+
+- [TypeScript](https://www.typescriptlang.org/) for static type checking
+- [ESLint](https://eslint.org/) for code linting
+- [Prettier](https://prettier.io) for code formatting
+
+### Build
+
+To build all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm build
+```
+
+### Develop
+
+To develop all apps and packages, run the following command:
+
+```
+cd my-turborepo
+pnpm dev
+```
+
+### Remote Caching
+
+> [!TIP]
+> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+
+Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+
+By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+
+```
+cd my-turborepo
+npx turbo login
+```
+
+This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+
+Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+
+```
+npx turbo link
+```
+
+## Useful Links
+
+Learn more about the power of Turborepo:
+
+- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
+- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
+- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
+- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
+- [Configuration Options](https://turborepo.com/docs/reference/configuration)
+- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
