@@ -94,9 +94,34 @@ Topics: ${topicsText}
     } else {
       analysisResults = parsed;
     }
+
+    // Validate that we have the expected number of results
+    if (analysisResults.length !== posts.length) {
+      console.warn(`Expected ${posts.length} results but got ${analysisResults.length}`);
+      // Pad the results array with default values if needed
+      while (analysisResults.length < posts.length) {
+        analysisResults.push({
+          isAiRelated: false,
+          confidence: 0,
+          reasoning: "No analysis result available"
+        });
+      }
+    }
+
+    // Validate each result has required properties
+    analysisResults = analysisResults.map(result => ({
+      isAiRelated: result?.isAiRelated ?? false,
+      confidence: result?.confidence ?? 0,
+      reasoning: result?.reasoning ?? "No reasoning provided"
+    }));
   } catch (error) {
     console.error("Error parsing API response:", error);
-    analysisResults = [];
+    // Create default results for all posts
+    analysisResults = posts.map(() => ({
+      isAiRelated: false,
+      confidence: 0,
+      reasoning: "Error analyzing post"
+    }));
   }
 
   // Map results back to posts
