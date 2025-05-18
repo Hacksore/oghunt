@@ -1,6 +1,8 @@
 "use server";
 
 import OpenAI from "openai";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 
 if (!process.env.OPENAI_API_KEY) {
   throw new Error("OPENAI_API_KEY is not set in environment variables");
@@ -10,25 +12,10 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const BATCH_ANALYSIS_PROMPT = `Analyze if these product descriptions are related to AI, machine learning, natural language processing, GPT, neural networks, deep learning, or any other AI technologies. Consider:
-- Direct mentions of AI technologies
-- Implied AI functionality
-- AI-related buzzwords
-- AI Models (e.g. GPT-4, Claude, Gemini, and including "Custom Trained Modules", etc.)
-- Machine learning capabilities
-- Any developer tooling that that mentions AI
-
-For each product, respond with a JSON object containing:
-{
-  "isAiRelated": boolean,
-  "confidence": number (0-1),
-  "reasoning": string
-}
-
-Products to analyze:
-{products}
-
-Respond with a JSON array of results in the same order as the products.`;
+const BATCH_ANALYSIS_PROMPT = readFileSync(
+  join(process.cwd(), "src/app/services/prompt.txt"),
+  "utf-8"
+);
 
 // Batch analyze posts - only called from /api/update-posts
 export const batchAnalyzePosts = async (
