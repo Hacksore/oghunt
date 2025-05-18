@@ -5,6 +5,7 @@
     "PH_API_KEY",
     "CRON_SECRET",
     "OPENAI_API_KEY",
+    "GEMINI_API_KEY",
     "POSTHOG_API_KEY",
     "DATABASE_URL"
   ],

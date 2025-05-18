@@ -2,20 +2,14 @@
 
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import OpenAI from "openai";
-
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("OPENAI_API_KEY is not set in environment variables");
-}
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+import { GoogleGenAI } from "@google/genai";
 
 const BATCH_ANALYSIS_PROMPT = readFileSync(
   join(process.cwd(), "src/app/services/prompt.txt"),
   "utf-8",
 );
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // NOTE: this makes it more consistent, but it's not the best way to do it
 // becuase we are getting closer and closer to the timeout limit for the function
@@ -68,23 +62,15 @@ Topics: ${topicsText}
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4.1-mini",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      response_format: { type: "json_object" },
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-001",
+      contents: prompt,
+      config: {
+        systemInstruction: "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results.",
+      }
     });
 
-    const responseContent = completion.choices[0].message.content;
+    const responseContent = response.data;
 
     interface AnalysisResult {
       isAiRelated: boolean;
