@@ -22,6 +22,7 @@
         "!.next/cache/**"
       ]
     },
+    "db:generate": {},
     "lint": {
       "dependsOn": [
         "^lint"
