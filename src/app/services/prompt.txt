@@ -5,6 +5,7 @@ Analyze if these product descriptions are related to AI, machine learning, natur
 - AI Models (e.g. GPT-4, Claude, Gemini, and including "Custom Trained Modules", etc.)
 - Machine learning capabilities
 - Any developer tooling that that mentions AI
+- Anything relative to "vibe coding"
 
 For each product, respond with a JSON object containing:
 {
