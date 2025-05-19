@@ -1,4 +1,4 @@
-import { SlopMeter } from "./SlopMeter";
+import { SlopMeter } from "./slop-meter";
 
 interface SlopMeterSectionProps {
   aiPostsCount: number;

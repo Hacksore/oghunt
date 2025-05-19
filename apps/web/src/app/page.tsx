@@ -1,12 +1,12 @@
 import { Analytics } from "@vercel/analytics/react";
-import { Card } from "./component/Card";
-import { MobileCard } from "./component/MobileCard";
-import ScrollToTop from "./component/ScrollToTop";
-import { SlopMeterSection } from "./component/SlopMeterSection";
+import { Card } from "./component/card";
+import { GithubStar } from "./component/github-star";
+import { JsonLd } from "./component/json-ld";
+import { MobileCard } from "./component/mobile-card";
+import ScrollToTop from "./component/scroll-to-top";
+import { SlopMeterSection } from "./component/slop-meter-section";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
-import { JsonLd } from "./component/JsonLd";
-import { GithubStar } from "./component/GithubStar";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour

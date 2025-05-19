@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ChevronUp } from "./icons/ChevronUp";
+import { ChevronUp } from "./icons/chevron-up";
 
 export default function ScrollToTop() {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
