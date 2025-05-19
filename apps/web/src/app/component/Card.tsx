@@ -33,7 +33,9 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
               fill
               className="rounded-lg"
               sizes="(max-width: 768px) 40px, 96px"
-              alt={`${post.name} logo`}
+              alt={`${post.name} logo - ${post.tagline}`}
+              loading={index < 3 ? "eager" : "lazy"}
+              priority={index < 3}
             />
           )}
         </div>
