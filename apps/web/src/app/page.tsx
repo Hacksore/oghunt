@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-import { Card } from "./component/card.tmp";
+import { Card } from "./component/card";
 import { GithubStar } from "./component/github-star";
 import { JsonLd } from "./component/json-ld";
 import { MobileCard } from "./component/mobile-card";
