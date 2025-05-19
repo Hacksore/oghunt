@@ -34,6 +34,23 @@ export default async function Page() {
         <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </header>
 
+      <section className="max-w-2xl mx-auto my-6 text-left" id="about-oghunt">
+        <h2 className="text-xl font-semibold mb-2">About OGHUNT</h2>
+        <p>
+          OGHUNT is a platform that filters{" "}
+          <a
+            href="https://www.producthunt.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-primary hover:text-primary"
+          >
+            Product Hunt
+          </a>{" "}
+          launches to show you only non-AI projects. Our mission is to help you discover innovative
+          products without the clutter of AI-generated content.
+        </p>
+      </section>
+
       <div>
         <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
           {posts.map((post, index) => (
