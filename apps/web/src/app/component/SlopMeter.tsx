@@ -111,8 +111,8 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
   }, [containerWidth, propA, propB, nameA, nameB, height]);
 
   return (
-    <div className="overflow-hidden rounded-lg">
-      <svg ref={svgRef} style={{ width: "100%" }} />
+    <div className="overflow-hidden rounded-lg" style={{ height: height }}>
+      <svg ref={svgRef} style={{ width: "100%", height: height }} />
     </div>
   );
 };
