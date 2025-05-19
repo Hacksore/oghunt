@@ -45,14 +45,14 @@ export const formatNumber = (num: number): string => {
  * Returns null if input is not a string.
  */
 export const parseJsonWithCodeFence = (input: string) => {
-  if (typeof input !== 'string') {
+  if (typeof input !== "string") {
     return null; // Handle non-string input
   }
 
   let jsonString = input.trim();
 
   // Remove code fences if present
-  if (jsonString.startsWith('```json') && jsonString.endsWith('```')) {
+  if (jsonString.startsWith("```json") && jsonString.endsWith("```")) {
     jsonString = jsonString.substring(7, jsonString.length - 3).trim();
   }
 
@@ -65,4 +65,4 @@ export const parseJsonWithCodeFence = (input: string) => {
     console.error("Error parsing JSON:", error);
     return null; // Or you could throw the error, depending on your needs
   }
-}
+};
