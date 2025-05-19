@@ -3,6 +3,7 @@ import db from "../../db";
 import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import { batchAnalyzePosts } from "../../services/ai-analyzer";
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
+import type { Post, PostResponse, ProductPost } from "../../types";
 
 export const dynamic = "force-dynamic";
 
@@ -19,6 +20,7 @@ export async function GET(request: NextRequest) {
   const postsToUpdate = [];
   const partitionedCreatePosts = [];
 
+  // TODO: rate limit bypass?
   const rawPosts = await getAllPost();
   const allVotes = await getAllPostsVotesMoarBetter(rawPosts.map((post) => post.id));
 

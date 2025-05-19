@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { GoogleGenAI } from "@google/genai";
+import { parseJsonWithCodeFence } from "../utils/string";
 
 const BATCH_ANALYSIS_PROMPT = readFileSync(
   join(process.cwd(), "src/app/services/prompt.txt"),
@@ -66,11 +67,13 @@ Topics: ${topicsText}
       model: "gemini-2.0-flash-001",
       contents: prompt,
       config: {
-        systemInstruction: "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results.",
+        systemInstruction: "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results, DO NOT OUTPUT MARKDOWN CODE FENCES.",
       }
     });
 
-    const responseContent = response.data;
+    // TODO: we should error handle this somehow
+    const responseContent = parseJsonWithCodeFence(response.text ?? "[]");
+    console.log("Response content:", responseContent);
 
     interface AnalysisResult {
       isAiRelated: boolean;

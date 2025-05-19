@@ -36,3 +36,33 @@ export const formatNumber = (num: number): string => {
   const formatter = Intl.NumberFormat("en", { notation: "compact" });
   return formatter.format(num);
 };
+
+/**
+ * Removes JSON code fences (```json ... ```) from a string and attempts to parse the result as JSON.
+ *
+ * @param {string} input The string to process, which may or may not contain JSON code fences.
+ * @returns {object | null} Returns the parsed JSON object if successful, or null if the input is not valid JSON (after removing fences).
+ * Returns null if input is not a string.
+ */
+export const parseJsonWithCodeFence = (input: string) => {
+  if (typeof input !== 'string') {
+    return null; // Handle non-string input
+  }
+
+  let jsonString = input.trim();
+
+  // Remove code fences if present
+  if (jsonString.startsWith('```json') && jsonString.endsWith('```')) {
+    jsonString = jsonString.substring(7, jsonString.length - 3).trim();
+  }
+
+  // Attempt to parse the JSON
+  try {
+    const parsedJSON = JSON.parse(jsonString);
+    return parsedJSON;
+  } catch (error) {
+    // Handle JSON parsing errors
+    console.error("Error parsing JSON:", error);
+    return null; // Or you could throw the error, depending on your needs
+  }
+}
