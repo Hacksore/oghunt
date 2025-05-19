@@ -18,6 +18,9 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 // Process posts in smaller chunks to avoid token limits
 const CHUNK_SIZE = 50;
 
+// WE DONT WANT ANY SLOP
+const CONFIDENCE_THRESHOLD = 0.25;
+
 export const analyzePosts = async (
   posts: {
     id: string;
@@ -81,10 +84,11 @@ Topics: ${topicsText}
       },
     });
 
-    // LOG the tokens in case we have to log deeper
-    console.log("Input Tokens:", response.usageMetadata?.promptTokenCount);
-    console.log("Output Tokens:", response.usageMetadata?.candidatesTokenCount);
-    console.log("Total Tokens:", response.usageMetadata?.totalTokenCount);
+    console.log({
+      inputTokens: response.usageMetadata?.promptTokenCount,
+      outputTokens: response.usageMetadata?.candidatesTokenCount,
+      totalTokens: response.usageMetadata?.totalTokenCount,
+    });
 
     // Try to parse the response directly first
     let parsedResponse: unknown;
@@ -150,8 +154,7 @@ Topics: ${topicsText}
       const post = chunkPosts[j];
       const result = analysisResults[j];
 
-      // Lower confidence threshold to 0.5 and handle undefined results
-      const isAiRelated = result?.confidence > 0.5 ? result.isAiRelated : false;
+      const isAiRelated = result?.confidence > CONFIDENCE_THRESHOLD ? result.isAiRelated : false;
       console.log({
         post: post.name,
         isAiRelated,
