@@ -1,4 +1,4 @@
-import { Card } from "../component/card";
+import { Card } from "../component/card.tmp";
 import { MobileCard } from "../component/mobile-card";
 import { generateOGHuntMetadata } from "../metadata";
 import { PROJECTS } from "../projects";
