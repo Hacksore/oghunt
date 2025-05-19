@@ -21,4 +21,4 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
       <div className="pt-2 opacity-60">projects launched today</div>
     </div>
   );
-} 
+}

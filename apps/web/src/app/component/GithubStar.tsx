@@ -13,4 +13,4 @@ export const GithubStar = () => {
       <div className="absolute inset-[2px] h-[calc(100%-4px)] w-[calc(100%-4px)] rounded-[inherit] bg-[inherit]" />
     </a>
   );
-}; 
+};
