@@ -24,6 +24,12 @@
       ]
     },
     "db:generate": {},
+    "check": {
+      "dependsOn": [
+        "^check-types",
+        "^lint"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"

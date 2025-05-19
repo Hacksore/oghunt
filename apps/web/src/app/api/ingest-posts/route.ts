@@ -1,9 +1,9 @@
 import type { NextRequest } from "next/server";
 import db from "../../db";
-import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import { analyzePosts } from "../../lib/ai-analyzer";
-import { PRODUCT_HUNT_NAME } from "../../utils/string";
+import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import type { Post, PostResponse, ProductPost } from "../../types";
+import { PRODUCT_HUNT_NAME } from "../../utils/string";
 
 export const dynamic = "force-dynamic";
 
