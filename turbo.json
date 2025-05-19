@@ -4,7 +4,7 @@
   "globalEnv": [
     "PH_API_KEY",
     "CRON_SECRET",
-    "OPENAI_API_KEY",
+    "GEMINI_API_KEY",
     "POSTHOG_API_KEY",
     "DATABASE_URL"
   ],
@@ -23,6 +23,12 @@
       ]
     },
     "db:generate": {},
+    "check": {
+      "dependsOn": [
+        "^check-types",
+        "^lint"
+      ]
+    },
     "lint": {
       "dependsOn": [
         "^lint"
@@ -31,6 +37,11 @@
     "check-types": {
       "dependsOn": [
         "^check-types"
+      ]
+    },
+    "format": {
+      "dependsOn": [
+        "^format"
       ]
     },
     "dev": {

@@ -1,7 +1,8 @@
 import type { NextRequest } from "next/server";
 import db from "../../db";
+import { analyzePosts } from "../../lib/ai-analyzer";
 import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
-import { batchAnalyzePosts } from "../../services/ai-analyzer";
+import type { Post, PostResponse, ProductPost } from "../../types";
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
 
 export const dynamic = "force-dynamic";
@@ -19,6 +20,7 @@ export async function GET(request: NextRequest) {
   const postsToUpdate = [];
   const partitionedCreatePosts = [];
 
+  // TODO: rate limit bypass?
   const rawPosts = await getAllPost();
   const allVotes = await getAllPostsVotesMoarBetter(rawPosts.map((post) => post.id));
 
@@ -36,7 +38,7 @@ export async function GET(request: NextRequest) {
     ...convertPostToProductPost(post),
     id: post.id,
   }));
-  const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
+  const aiAnalysisResults = await analyzePosts(postsToAnalyze);
 
   // Create a map of post IDs to their AI analysis results
   const postAiResults = new Map(

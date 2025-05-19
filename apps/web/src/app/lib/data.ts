@@ -74,6 +74,10 @@ export async function getAllPost(): Promise<Post[]> {
       cache: "no-cache",
     });
     const result: PostResponse = await response.json();
+    if (!result.data) {
+      // dump all the headers so we know the rate limit
+      console.log(response.headers);
+    }
 
     const data = result.data?.posts;
     allPosts.push(...(data?.nodes || []));

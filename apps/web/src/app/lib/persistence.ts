@@ -2,10 +2,10 @@
 
 import type { Prisma } from "@prisma/client";
 import db from "../db";
-import { batchAnalyzePosts } from "../services/ai-analyzer";
 import type { Post as PostType } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
 import { PRODUCT_HUNT_NAME } from "../utils/string";
+import { analyzePosts } from "./ai-analyzer";
 import {
   convertPostToProductPost,
   getAllPost as getAllDailyPostRightNow,
@@ -85,7 +85,7 @@ export async function fetchAndUpdateDatabase() {
     ...convertPostToProductPost(post),
     id: post.id,
   }));
-  const aiAnalysisResults = await batchAnalyzePosts(postsToAnalyze);
+  const aiAnalysisResults = await analyzePosts(postsToAnalyze);
 
   // Create a map of post IDs to their AI analysis results
   const postAiResults = new Map(
