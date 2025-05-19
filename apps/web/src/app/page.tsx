@@ -5,6 +5,7 @@ import ScrollToTop from "./component/ScrollToTop";
 import { SlopMeter } from "./component/SlopMeter";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
+import { JsonLd } from "./component/JsonLd";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
@@ -21,6 +22,7 @@ export default async function Page() {
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
+      <JsonLd posts={posts} />
       <header className="flex flex-col gap-4 pb-10">
         <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
           Product Hunt with ZERO AI Slop™
