@@ -51,7 +51,7 @@ export default async function Page() {
         </p>
       </section>
 
-      <div>
+      <section>
         <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
           {posts.map((post, index) => (
             <div key={post.id}>
@@ -74,7 +74,7 @@ export default async function Page() {
             Click here to view the Homies Projects
           </a>
         </div>
-      </div>
+      </section>
       <ScrollToTop />
       <Analytics />
     </main>
