@@ -80,7 +80,7 @@ Topics: ${topicsText}
       contents: prompt,
       config: {
         systemInstruction:
-          "You are an AI content analyzer that determines if products are AI-related. Respond with a JSON array of results, DO NOT OUTPUT MARKDOWN CODE FENCES.",
+          "You are an AI content analyzer that determines if products are AI-related.",
       },
     });
 
