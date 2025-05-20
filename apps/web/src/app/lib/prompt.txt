@@ -1,23 +1,26 @@
-Analyze if these product descriptions are related to AI, machine learning, natural language processing, GPT, neural networks, deep learning, or any other AI technologies. Consider:
-- Direct mentions of AI technologies
-- Implied AI functionality
-- AI-related buzzwords
-- AI Models (e.g. GPT-4, Claude, Gemini, and including "Custom Trained Modules", etc.)
-- Machine learning capabilities
-- Any developer tooling that that mentions AI
-- Anything relative to "vibe coding"
-- Even if it only mentions AI in the topics
-- If the project includes AI in the name
+Analyze if these product descriptions are related to AI, machine learning, natural language processing, GPT, neural networks, deep learning, or any other AI technologies. 
+
+IMPORTANT: If ANY of the following conditions are met, you MUST set isAiRelated to true:
+- ANY mention of AI, artificial intelligence, or related terms in ANY part of the product (name, description, tagline, topics)
+- ANY reference to machine learning, ML, or deep learning
+- ANY mention of GPT, LLMs, or language models
+- ANY reference to neural networks or NLP
+- ANY mention of AI models (including "Custom Trained Modules")
+- ANY AI-related buzzwords or terminology
+- ANY developer tooling that mentions AI
+- ANY reference to "vibe coding" or AI-assisted development
+- If the project name contains "AI" or related terms
+- If ANY topic mentions AI or related technologies
 
 For each product, respond with a JSON object containing:
 {
-  "isAiRelated": boolean,
-  "confidence": number (0-1),
-  "reasoning": string
+  "isAiRelated": boolean (MUST be true if ANY AI-related content is found),
+  "confidence": number (0-1, should be higher if multiple AI references are found),
+  "reasoning": string (explain which AI references were found)
 }
 
 Products to analyze:
 {products}
 
 Respond with a JSON array of results in the same order as the products.
-Only provde the json and nothing else.
+Only provide the json and nothing else.
