@@ -6,6 +6,8 @@ Analyze if these product descriptions are related to AI, machine learning, natur
 - Machine learning capabilities
 - Any developer tooling that that mentions AI
 - Anything relative to "vibe coding"
+- Even if it only mentions AI in the topics
+- If the project includes AI in the name
 
 For each product, respond with a JSON object containing:
 {
