@@ -80,7 +80,7 @@ Topics: ${topicsText}
       contents: prompt,
       config: {
         systemInstruction:
-          "You are an AI content analyzer that determines if products are AI-related.",
+          "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
       },
     });
 
@@ -90,13 +90,25 @@ Topics: ${topicsText}
       totalTokens: response.usageMetadata?.totalTokenCount,
     });
 
-    // Try to parse the response directly first
+    // Try to parse the response with improved error handling
     let parsedResponse: unknown;
     try {
       parsedResponse = JSON.parse(response.text ?? "[]");
     } catch (e) {
-      // If direct parsing fails, try with code fence removal
-      parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
+      console.warn('Initial JSON parse failed, attempting to clean and parse:', e);
+      try {
+        parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
+      } catch (e2) {
+        console.error('Failed to parse JSON after cleaning:', e2);
+        // If all parsing attempts fail, create a default response
+        parsedResponse = {
+          results: chunkPosts.map(() => ({
+            isAiRelated: false,
+            confidence: 0,
+            reasoning: "Failed to parse model response",
+          })),
+        };
+      }
     }
 
     let analysisResults: AnalysisResult[];
