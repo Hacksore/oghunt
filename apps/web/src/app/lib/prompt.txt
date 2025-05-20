@@ -19,4 +19,5 @@ For each product, respond with a JSON object containing:
 Products to analyze:
 {products}
 
-You must respond with a JSON array of results in the same order as the products.
+Respond with a JSON array of results in the same order as the products.
+Only provde the json and nothing else.
