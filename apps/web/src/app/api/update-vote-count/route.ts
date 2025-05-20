@@ -1,7 +1,7 @@
+import { Prisma } from "@prisma/client";
 import type { NextRequest } from "next/server";
 import db from "../../db";
 import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
-import { Prisma } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -40,15 +40,15 @@ export async function GET(request: NextRequest) {
       });
       updatedCount++;
     } catch (error) {
-      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2025') {
+      if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") {
         failedUpdates.push({
           postId: post.id,
-          error: 'Post not found in database'
+          error: "Post not found in database",
         });
       } else {
         failedUpdates.push({
           postId: post.id,
-          error: error instanceof Error ? error.message : 'Unknown error occurred'
+          error: error instanceof Error ? error.message : "Unknown error occurred",
         });
       }
     }

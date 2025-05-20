@@ -95,11 +95,11 @@ Topics: ${topicsText}
     try {
       parsedResponse = JSON.parse(response.text ?? "[]");
     } catch (e) {
-      console.warn('Initial JSON parse failed, attempting to clean and parse:', e);
+      console.warn("Initial JSON parse failed, attempting to clean and parse:", e);
       try {
         parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
       } catch (e2) {
-        console.error('Failed to parse JSON after cleaning:', e2);
+        console.error("Failed to parse JSON after cleaning:", e2);
         // If all parsing attempts fail, create a default response
         parsedResponse = {
           results: chunkPosts.map(() => ({
