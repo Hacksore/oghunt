@@ -53,22 +53,22 @@ export const parseJsonWithCodeFence = (input: string) => {
 
   const splt = jsonString.split("```");
   if (splt.length > 1) {
-    const splitWithBrackets = splt.find((s) => s.includes("{"));
+    const splitWithBrackets = splt.find((s) => s.includes("["));
     if (splitWithBrackets) {
-      if (!splitWithBrackets.startsWith("{")) {
+      if (!splitWithBrackets.startsWith("[")) {
         // remove everything before the first bracket
-        jsonString = splitWithBrackets.substring(splitWithBrackets.indexOf("{"));
+        jsonString = splitWithBrackets.substring(splitWithBrackets.indexOf("["));
       }
       // remove everything after the last bracket
-      const lastBracketIndex = jsonString.lastIndexOf("}");
+      const lastBracketIndex = jsonString.lastIndexOf("]");
       jsonString = jsonString.substring(0, lastBracketIndex + 1);
     }
   } else {
-    if (!jsonString.startsWith("{")) {
-      jsonString = jsonString.substring(jsonString.indexOf("{"));
+    if (!jsonString.startsWith("[")) {
+      jsonString = jsonString.substring(jsonString.indexOf("["));
     }
-    if (!jsonString.endsWith("}")) {
-      jsonString = jsonString.substring(0, jsonString.lastIndexOf("}") + 1);
+    if (!jsonString.endsWith("]")) {
+      jsonString = jsonString.substring(0, jsonString.lastIndexOf("]") + 1);
     }
   }
   // Attempt to parse the JSON
