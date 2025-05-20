@@ -3,10 +3,10 @@
   "ui": "tui",
   "globalEnv": [
     "PH_API_KEY",
+    "DATABASE_URL",
     "CRON_SECRET",
     "GEMINI_API_KEY",
-    "POSTHOG_API_KEY",
-    "DATABASE_URL"
+    "POSTHOG_API_KEY"
   ],
   "tasks": {
     "build": {
@@ -22,6 +22,7 @@
         "!.next/cache/**"
       ]
     },
+    "db:push": {},
     "db:generate": {},
     "check": {
       "dependsOn": [

@@ -19,7 +19,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const CHUNK_SIZE = 50;
 
 // WE DONT WANT ANY SLOP
-const CONFIDENCE_THRESHOLD = 0.25;
+const CONFIDENCE_THRESHOLD = 0.2;
 
 export const analyzePosts = async (
   posts: {
@@ -75,14 +75,20 @@ Topics: ${topicsText}
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-001",
-      contents: prompt,
-      config: {
-        systemInstruction:
-          "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
-      },
-    });
+    let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
+    try {
+      response = await ai.models.generateContent({
+        model: "gemini-2.0-flash-001",
+        contents: prompt,
+        config: {
+          systemInstruction:
+            "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
+        },
+      });
+    } catch (error) {
+      console.error("Failed to generate content for chunk:", error);
+      throw new Error("Failed to analyze posts: AI service error");
+    }
 
     console.log({
       inputTokens: response.usageMetadata?.promptTokenCount,
@@ -100,14 +106,7 @@ Topics: ${topicsText}
         parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
       } catch (e2) {
         console.error("Failed to parse JSON after cleaning:", e2);
-        // If all parsing attempts fail, create a default response
-        parsedResponse = {
-          results: chunkPosts.map(() => ({
-            isAiRelated: false,
-            confidence: 0,
-            reasoning: "Failed to parse model response",
-          })),
-        };
+        throw new Error("Failed to analyze posts: Invalid response format");
       }
     }
 
@@ -131,34 +130,31 @@ Topics: ${topicsText}
 
       // Validate that we have the expected number of results
       if (!analysisResults || analysisResults.length !== chunkPosts.length) {
-        console.warn(
+        console.error(
           "Expected",
           chunkPosts.length,
           "results but got",
           analysisResults?.length ?? 0,
         );
-        // Create default results for all posts
-        analysisResults = chunkPosts.map(() => ({
-          isAiRelated: false,
-          confidence: 0,
-          reasoning: "Failed to parse model response",
-        }));
+        throw new Error("Failed to analyze posts: Incomplete results");
       }
 
       // Validate each result has required properties
-      analysisResults = analysisResults.map((result) => ({
-        isAiRelated: result?.isAiRelated ?? false,
-        confidence: result?.confidence ?? 0,
-        reasoning: result?.reasoning ?? "No reasoning provided",
-      }));
+      analysisResults = analysisResults.map((result) => {
+        if (!result || typeof result !== "object") {
+          throw new Error("Failed to analyze posts: Invalid result format", {
+            cause: result,
+          });
+        }
+        return {
+          isAiRelated: result?.isAiRelated ?? false,
+          confidence: result?.confidence ?? 0,
+          reasoning: result?.reasoning ?? "No reasoning provided",
+        };
+      });
     } catch (error) {
       console.error("Error processing analysis results:", error);
-      // Create default results for all posts
-      analysisResults = chunkPosts.map(() => ({
-        isAiRelated: false,
-        confidence: 0,
-        reasoning: "Error analyzing post",
-      }));
+      throw new Error("Failed to analyze posts: Invalid results format");
     }
 
     // Map results back to posts
@@ -166,7 +162,8 @@ Topics: ${topicsText}
       const post = chunkPosts[j];
       const result = analysisResults[j];
 
-      const isAiRelated = result?.confidence > CONFIDENCE_THRESHOLD ? result.isAiRelated : false;
+      // If confidence is high enough, we trust the AI's determination
+      const isAiRelated = result?.confidence >= CONFIDENCE_THRESHOLD ? result.isAiRelated : false;
       console.log({
         post: post.name,
         isAiRelated,
