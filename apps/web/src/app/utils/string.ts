@@ -51,26 +51,26 @@ export const parseJsonWithCodeFence = (input: string) => {
 
   let jsonString = input.trim();
 
-  const splt = jsonString.split('```');
+  const splt = jsonString.split("```");
   if (splt.length > 1) {
-  const splitWithBrackets = splt.find((s) => s.includes('{'));
-  if (splitWithBrackets) {
-   		if (!splitWithBrackets.startsWith('{')) {
-   			// remove everything before the first bracket
-   			jsonString = splitWithBrackets.substring(splitWithBrackets.indexOf('{'));
-   		}
-   		// remove everything after the last bracket
-   		const lastBracketIndex = jsonString.lastIndexOf('}');
-   		jsonString = jsonString.substring(0, lastBracketIndex + 1);
-   	}
-   } else {
-   	if (!jsonString.startsWith('{')) {
-   		jsonString = jsonString.substring(jsonString.indexOf('{'));
-   	}
-   	if (!jsonString.endsWith('}')) {
-   		jsonString = jsonString.substring(0, jsonString.lastIndexOf('}') + 1);
-   	}
-   }
+    const splitWithBrackets = splt.find((s) => s.includes("{"));
+    if (splitWithBrackets) {
+      if (!splitWithBrackets.startsWith("{")) {
+        // remove everything before the first bracket
+        jsonString = splitWithBrackets.substring(splitWithBrackets.indexOf("{"));
+      }
+      // remove everything after the last bracket
+      const lastBracketIndex = jsonString.lastIndexOf("}");
+      jsonString = jsonString.substring(0, lastBracketIndex + 1);
+    }
+  } else {
+    if (!jsonString.startsWith("{")) {
+      jsonString = jsonString.substring(jsonString.indexOf("{"));
+    }
+    if (!jsonString.endsWith("}")) {
+      jsonString = jsonString.substring(0, jsonString.lastIndexOf("}") + 1);
+    }
+  }
   // Attempt to parse the JSON
   try {
     const parsedJSON = JSON.parse(jsonString);
