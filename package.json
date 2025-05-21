@@ -9,7 +9,7 @@
     "lint": "turbo run lint",
     "format": "turbo run format",
     "check": "turbo run check",
-    "check-types": "turbo run check-types"
+    "fix": "turbo run fix"
   },
   "devDependencies": {
     "prettier": "^3.5.3",

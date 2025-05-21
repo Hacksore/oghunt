@@ -26,7 +26,6 @@
     "db:generate": {},
     "check": {
       "dependsOn": [
-        "^check-types",
         "^lint"
       ]
     },
@@ -35,14 +34,15 @@
         "^lint"
       ]
     },
-    "check-types": {
-      "dependsOn": [
-        "^check-types"
-      ]
-    },
     "format": {
       "dependsOn": [
         "^format"
+      ]
+    },
+    "fix": {
+      "dependsOn": [
+        "^format",
+        "^lint"
       ]
     },
     "dev": {
