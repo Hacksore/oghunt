@@ -11,7 +11,7 @@ env:
 
 jobs:
   ingest:
-    name: Quality 
+    name: Quality
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repo
