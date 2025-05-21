@@ -8,9 +8,12 @@ importers:
 
   .:
     devDependencies:
-      prettier:
-        specifier: ^3.5.3
-        version: 3.5.3
+      '@biomejs/biome':
+        specifier: ^1.9.4
+        version: 1.9.4
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       turbo:
         specifier: ^2.5.3
         version: 2.5.3
@@ -51,9 +54,6 @@ importers:
         specifier: ^3.23.8
         version: 3.25.1
     devDependencies:
-      '@biomejs/biome':
-        specifier: ^1.9.4
-        version: 1.9.4
       '@tailwindcss/line-clamp':
         specifier: ^0.4.4
         version: 0.4.4(tailwindcss@3.4.17)
@@ -72,9 +72,6 @@ importers:
       dotenv:
         specifier: ^16.4.5
         version: 16.5.0
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
       postcss:
         specifier: ^8
         version: 8.5.3
@@ -1566,11 +1563,6 @@ packages:
   postcss@8.5.3:
     resolution: {integrity: sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==}
     engines: {node: ^10 || ^12 || >=14}
-
-  prettier@3.5.3:
-    resolution: {integrity: sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==}
-    engines: {node: '>=14'}
-    hasBin: true
 
   prisma@5.18.0:
     resolution: {integrity: sha512-+TrSIxZsh64OPOmaSgVPH7ALL9dfU0jceYaMJXsNrTkFHO7/3RANi5K2ZiPB1De9+KDxCWn7jvRq8y8pvk+o9g==}
@@ -3436,8 +3428,6 @@ snapshots:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
-
-  prettier@3.5.3: {}
 
   prisma@5.18.0:
     dependencies:

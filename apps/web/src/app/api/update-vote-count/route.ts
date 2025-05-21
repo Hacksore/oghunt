@@ -1,8 +1,8 @@
 import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import db from "../../db";
 import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
-import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
