@@ -9,8 +9,9 @@ IMPORTANT: If ANY of the following conditions are met, you MUST set isAiRelated 
 - ANY AI-related buzzwords or terminology
 - ANY developer tooling that mentions AI
 - ANY reference to "vibe coding" or AI-assisted development
+- ANY video or audio generation models
+- ANY topic mentions AI or related technologies
 - If the project name contains "AI" or related terms
-- If ANY topic mentions AI or related technologies
 
 For each product, respond with a JSON object containing:
 {
@@ -21,6 +22,8 @@ For each product, respond with a JSON object containing:
 
 Products to analyze:
 {products}
+
+---
 
 Respond with a JSON array of results in the same order as the products.
 Only provide the json and nothing else.

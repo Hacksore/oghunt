@@ -21,6 +21,106 @@ const CHUNK_SIZE = 50;
 // WE DONT WANT ANY SLOP
 const CONFIDENCE_THRESHOLD = 0.2;
 
+// Helper function to format a product for analysis
+const formatProductText = (
+  product: {
+    name: string;
+    tagline: string;
+    description: string;
+    topics: { name: string; description: string }[];
+  },
+  index?: number,
+): string => {
+  const topicsText = product.topics.map((t) => `${t.name}: ${t.description}`).join(", ");
+  return `Product ${index !== undefined ? index + 1 : 1}:
+Name: ${product.name}
+Tagline: ${product.tagline}
+Description: ${product.description}
+Topics: ${topicsText}
+---`;
+};
+
+// Helper function to generate AI content
+const generateAiContent = async (prompt: string) => {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.0-flash-001",
+    contents: prompt,
+    config: {
+      systemInstruction:
+        "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
+    },
+  });
+
+  console.log({
+    inputTokens: response.usageMetadata?.promptTokenCount,
+    outputTokens: response.usageMetadata?.candidatesTokenCount,
+    totalTokens: response.usageMetadata?.totalTokenCount,
+  });
+
+  return response;
+};
+
+// Helper function to parse and validate AI response
+const parseAiResponse = (
+  response: Awaited<ReturnType<typeof ai.models.generateContent>>,
+  expectedLength?: number,
+): AnalysisResult[] => {
+  let parsedResponse: unknown;
+  try {
+    parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
+  } catch (error: unknown) {
+    console.error("Failed to parse JSON after cleaning:", error);
+    throw new Error("Failed to analyze: Invalid response format");
+  }
+
+  let analysisResults: AnalysisResult[];
+  try {
+    // If the response is an object with a results array, use that
+    if (
+      parsedResponse &&
+      typeof parsedResponse === "object" &&
+      "results" in parsedResponse &&
+      Array.isArray(parsedResponse.results)
+    ) {
+      analysisResults = parsedResponse.results;
+    }
+    // If it's not an array, wrap it in an array
+    else if (!Array.isArray(parsedResponse)) {
+      analysisResults = [parsedResponse as AnalysisResult];
+    } else {
+      analysisResults = parsedResponse as AnalysisResult[];
+    }
+
+    // Validate that we have the expected number of results if specified
+    if (
+      expectedLength !== undefined &&
+      (!analysisResults || analysisResults.length !== expectedLength)
+    ) {
+      console.error("Expected", expectedLength, "results but got", analysisResults?.length ?? 0);
+      throw new Error("Failed to analyze: Incomplete results");
+    }
+
+    // Validate each result has required properties
+    analysisResults = analysisResults.map((result) => {
+      if (!result || typeof result !== "object") {
+        throw new Error("Failed to analyze: Invalid result format", {
+          cause: result,
+        });
+      }
+      return {
+        isAiRelated: result?.isAiRelated ?? false,
+        confidence: result?.confidence ?? 0,
+        reasoning: result?.reasoning ?? "No reasoning provided",
+      };
+    });
+  } catch (error) {
+    console.error("Error processing analysis results:", error);
+    throw new Error("Failed to analyze: Invalid results format");
+  }
+
+  return analysisResults;
+};
+
 export const analyzePosts = async (
   posts: {
     id: string;
@@ -62,100 +162,20 @@ export const analyzePosts = async (
 
     // Format chunk posts into a single prompt
     const productsText = chunkPosts
-      .map((post, index) => {
-        const topicsText = post.topics.map((t) => `${t.name}: ${t.description}`).join(", ");
-        return `Product ${index + 1}:
-Name: ${post.name}
-Tagline: ${post.tagline}
-Description: ${post.description}
-Topics: ${topicsText}
----`;
-      })
+      .map((post, index) => formatProductText(post, index))
       .join("\n\n");
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
     let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
     try {
-      response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-001",
-        contents: prompt,
-        config: {
-          systemInstruction:
-            "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
-        },
-      });
+      response = await generateAiContent(prompt);
     } catch (error) {
       console.error("Failed to generate content for chunk:", error);
       throw new Error("Failed to analyze posts: AI service error");
     }
 
-    console.log({
-      inputTokens: response.usageMetadata?.promptTokenCount,
-      outputTokens: response.usageMetadata?.candidatesTokenCount,
-      totalTokens: response.usageMetadata?.totalTokenCount,
-    });
-
-    // Try to parse the response with improved error handling
-    let parsedResponse: unknown;
-    try {
-      parsedResponse = JSON.parse(response.text ?? "[]");
-    } catch (e) {
-      console.warn("Initial JSON parse failed, attempting to clean and parse:", e);
-      try {
-        parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
-      } catch (e2) {
-        console.error("Failed to parse JSON after cleaning:", e2);
-        throw new Error("Failed to analyze posts: Invalid response format");
-      }
-    }
-
-    let analysisResults: AnalysisResult[];
-    try {
-      // If the response is an object with a results array, use that
-      if (
-        parsedResponse &&
-        typeof parsedResponse === "object" &&
-        "results" in parsedResponse &&
-        Array.isArray(parsedResponse.results)
-      ) {
-        analysisResults = parsedResponse.results;
-      }
-      // If it's not an array, wrap it in an array
-      else if (!Array.isArray(parsedResponse)) {
-        analysisResults = [parsedResponse as AnalysisResult];
-      } else {
-        analysisResults = parsedResponse as AnalysisResult[];
-      }
-
-      // Validate that we have the expected number of results
-      if (!analysisResults || analysisResults.length !== chunkPosts.length) {
-        console.error(
-          "Expected",
-          chunkPosts.length,
-          "results but got",
-          analysisResults?.length ?? 0,
-        );
-        throw new Error("Failed to analyze posts: Incomplete results");
-      }
-
-      // Validate each result has required properties
-      analysisResults = analysisResults.map((result) => {
-        if (!result || typeof result !== "object") {
-          throw new Error("Failed to analyze posts: Invalid result format", {
-            cause: result,
-          });
-        }
-        return {
-          isAiRelated: result?.isAiRelated ?? false,
-          confidence: result?.confidence ?? 0,
-          reasoning: result?.reasoning ?? "No reasoning provided",
-        };
-      });
-    } catch (error) {
-      console.error("Error processing analysis results:", error);
-      throw new Error("Failed to analyze posts: Invalid results format");
-    }
+    const analysisResults = parseAiResponse(response, chunkPosts.length);
 
     // Map results back to posts
     for (let j = 0; j < chunkPosts.length; j++) {
