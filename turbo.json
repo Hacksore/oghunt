@@ -26,23 +26,33 @@
     "db:generate": {},
     "check": {
       "dependsOn": [
-        "^lint"
+        "^check:lint",
+        "^check:format"
       ]
     },
-    "lint": {
+    "check:lint": {
       "dependsOn": [
-        "^lint"
+        "^check:lint"
       ]
     },
-    "format": {
+    "check:format": {
       "dependsOn": [
-        "^format"
+        "^check:format"
+      ]
+    },
+    "fix:lint": {
+      "dependsOn": [
+        "^fix:lint"
+      ]
+    },
+    "fix:format": {
+      "dependsOn": [
+        "^fix:format"
       ]
     },
     "fix": {
       "dependsOn": [
-        "^format",
-        "^lint"
+        "^fix"
       ]
     },
     "dev": {
