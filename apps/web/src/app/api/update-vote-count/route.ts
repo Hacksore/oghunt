@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import type { NextRequest } from "next/server";
 import db from "../../db";
 import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -53,6 +54,9 @@ export async function GET(request: NextRequest) {
       }
     }
   }
+
+  // revalidate the /api/list path
+  revalidatePath("/api/list");
 
   return Response.json({
     success: true,

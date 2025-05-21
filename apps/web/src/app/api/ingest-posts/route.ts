@@ -4,6 +4,7 @@ import { analyzePosts } from "../../lib/ai-analyzer";
 import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import type { Post, PostResponse, ProductPost } from "../../types";
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
+import { revalidatePath } from "next/cache";
 
 export const dynamic = "force-dynamic";
 
@@ -151,6 +152,8 @@ export async function GET(request: NextRequest) {
       deleted: true,
     },
   });
+
+  revalidatePath("/api/list");
 
   return Response.json({
     success: true,
