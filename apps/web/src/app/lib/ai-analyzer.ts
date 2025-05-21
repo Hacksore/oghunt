@@ -182,7 +182,8 @@ export const analyzePosts = async (
       const post = chunkPosts[j];
       const result = analysisResults[j];
 
-      // If confidence is high enough, we trust the AI's determination
+      // If confidence is above our CONFIDENCE_THRESHOLD, we consider it AI-related
+      // cause the model might give false positives and think it doesnt need to mark it explicitly
       const isAiRelated = result?.confidence >= CONFIDENCE_THRESHOLD ? result.isAiRelated : false;
       console.log({
         post: post.name,
