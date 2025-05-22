@@ -16,7 +16,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={cn(inter.className, "bg-primary")}>
+      {/*  can i not drive this via the theme somehow */}
+      <body
+        className={cn(
+          inter.className,
+          "bg-white",
+          "dark:bg-primary/95",
+          "text-black",
+          "dark:text-white",
+        )}
+      >
         <Header />
         {children}
         <Footer />

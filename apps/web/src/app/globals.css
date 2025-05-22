@@ -1,13 +1,12 @@
 @import "tailwindcss";
 
-@theme {
-  --color-accent: #5349f5;
-  --color-primary: #17171f;
+@theme inline {
+  --color-primary: #17171F;
 }
 
-@layer base {
-  html {
-    @apply text-white;
+:root {
+  @variant dark {
+    --color-primary: #fff;
   }
 }
 
