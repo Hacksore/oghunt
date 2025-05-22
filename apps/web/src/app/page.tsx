@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Card } from "./component/card";
 import { JsonLd } from "./component/json-ld";
+import { Link } from "./component/link";
 import { MobileCard } from "./component/mobile-card";
 import ScrollToTop from "./component/scroll-to-top";
 import { SlopMeterSection } from "./component/slop-meter-section";
@@ -30,14 +31,12 @@ export default async function Page() {
       <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
         <p className="text-2xl">
           OGHUNT is a platform that filters{" "}
-          <a
+          <Link
             href="https://www.producthunt.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-bold text-accent hover:underline"
+            className="font-bold"
           >
             Product Hunt
-          </a>{" "}
+          </Link>{" "}
           launches to show you only non-AI projects. Our mission is to help you discover innovative
           products without the clutter of AI-generated content.
         </p>
@@ -60,13 +59,12 @@ export default async function Page() {
         </div>
         <div className="flex flex-col items-center pt-8 text-center">
           <p className="text-2xl">Now that you viewed all the non AI projects</p>
-          <a
-            className="pt-2 text-xl text-accent hover:underline"
+          <Link
             href="/homies"
-            rel="noopener noreferrer"
+            className="pt-2 text-xl"
           >
             Click here to view the Homies Projects
-          </a>
+          </Link>
         </div>
       </section>
       <ScrollToTop />
