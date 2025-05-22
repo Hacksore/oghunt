@@ -37,7 +37,5 @@ jobs:
         run: pnpm install
       - name: Generate Prisma
         run: pnpm db:generate
-      - name: Lint
-        run: pnpm check:lint
-      - name: Format
-        run: pnpm check:format
+      - name: Biome check
+        run: pnpm check

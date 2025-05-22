@@ -6,10 +6,6 @@
     "dev": "turbo run dev",
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
-    "check:lint": "turbo run check:lint",
-    "check:format": "turbo run check:format",
-    "fix:lint": "turbo run fix:lint",
-    "fix:format": "turbo run fix:format",
     "check": "turbo run check",
     "fix": "turbo run fix"
   },
