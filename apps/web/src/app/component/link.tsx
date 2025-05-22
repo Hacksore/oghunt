@@ -9,7 +9,7 @@ type LinkProps = {
 
 export function Link({ href, children, className = "", ...props }: LinkProps) {
   const isExternal = href.startsWith("http") || href.startsWith("//");
-  const baseStyles = "text-accent hover:underline";
+  const baseStyles = "text-accent hover:text-hover-accent hover:underline";
   const combinedClassName = `${baseStyles} ${className}`.trim();
 
   if (isExternal) {

@@ -3,6 +3,7 @@
 @theme inline {
   --color-primary: #070707;
   --color-accent: #ff495b;
+  --color-hover-accent: #ff6d79;
 }
 
 /* TODO: someone cook this in tailwind */
