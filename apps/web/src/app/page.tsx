@@ -25,11 +25,9 @@ export default async function Page() {
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
       <header className="flex flex-col gap-4 pb-10">
-        <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
+        <h1 className="mb-4 text-4xl font-bold md:text-5xl">
           Product Hunt with ZERO AI Slop™
         </h1>
-
-        <GithubStar />
 
         <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </header>
