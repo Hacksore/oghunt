@@ -1,15 +1,15 @@
-import NextLink from 'next/link';
-import { ComponentProps } from 'react';
+import NextLink from "next/link";
+import type { ComponentProps } from "react";
 
 type LinkProps = {
   href: string;
   children: React.ReactNode;
   className?: string;
-} & Omit<ComponentProps<'a'>, 'href'>;
+} & Omit<ComponentProps<"a">, "href">;
 
-export function Link({ href, children, className = '', ...props }: LinkProps) {
-  const isExternal = href.startsWith('http') || href.startsWith('//');
-  const baseStyles = 'text-accent hover:underline';
+export function Link({ href, children, className = "", ...props }: LinkProps) {
+  const isExternal = href.startsWith("http") || href.startsWith("//");
+  const baseStyles = "text-accent hover:underline";
   const combinedClassName = `${baseStyles} ${className}`.trim();
 
   if (isExternal) {
@@ -31,4 +31,4 @@ export function Link({ href, children, className = '', ...props }: LinkProps) {
       {children}
     </NextLink>
   );
-} 
+}

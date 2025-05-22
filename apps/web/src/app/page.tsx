@@ -31,10 +31,7 @@ export default async function Page() {
       <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
         <p className="text-2xl">
           OGHUNT is a platform that filters{" "}
-          <Link
-            href="https://www.producthunt.com"
-            className="font-bold"
-          >
+          <Link href="https://www.producthunt.com" className="font-bold">
             Product Hunt
           </Link>{" "}
           launches to show you only non-AI projects. Our mission is to help you discover innovative
@@ -59,10 +56,7 @@ export default async function Page() {
         </div>
         <div className="flex flex-col items-center pt-8 text-center">
           <p className="text-2xl">Now that you viewed all the non AI projects</p>
-          <Link
-            href="/homies"
-            className="pt-2 text-xl"
-          >
+          <Link href="/homies" className="pt-2 text-xl">
             Click here to view the Homies Projects
           </Link>
         </div>
