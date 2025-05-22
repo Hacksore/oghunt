@@ -2,7 +2,7 @@
 
 @theme inline {
   --color-primary: #070707;
-  --color-accent: var(--color-blue-500);
+  --color-accent: #FF495B;
 }
 
 /* TODO: someone cook this in tailwind */
