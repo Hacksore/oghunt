@@ -7,6 +7,7 @@
     "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "check": "turbo run check",
+    "format": "turbo run format",
     "fix": "turbo run fix"
   },
   "devDependencies": {

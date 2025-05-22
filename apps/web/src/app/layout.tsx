@@ -5,6 +5,7 @@ import "./globals.css";
 
 import { Footer } from "./component/footer";
 import { Header } from "./component/header";
+import { cn } from "./utils/tw";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,7 +16,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      {/*  can i not drive this via the theme somehow */}
+      <body
+        className={cn(
+          inter.className,
+          "bg-white",
+          "dark:bg-primary",
+          "text-black",
+          "dark:text-white",
+        )}
+      >
         <Header />
         {children}
         <Footer />

@@ -7,9 +7,8 @@ interface SlopMeterSectionProps {
 
 export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSectionProps) {
   return (
-    <div className="w-full">
-      <h2 className="text-mg pb-2 font-bold md:text-lg">SlopMeter™</h2>
-      <div className="mx-auto w-full">
+    <div className="w-full mt-12 flex flex-col items-center justify-center">
+      <div className="mx-auto mb-2 w-full">
         <SlopMeter
           propA={aiPostsCount}
           propB={nonAiPostsCount}
@@ -18,7 +17,7 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
           height={32}
         />
       </div>
-      <div className="pt-2 opacity-60">projects launched today</div>
+      <div className="text-sm dark:text-gray-500">SlopMeter™</div>
     </div>
   );
 }

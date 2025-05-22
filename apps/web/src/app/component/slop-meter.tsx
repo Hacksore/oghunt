@@ -57,19 +57,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
     // Clear previous content
     svg.selectAll("*").remove();
 
-    const defs = svg.append("defs");
-    const gradient = defs
-      .append("linearGradient")
-      .attr("id", "gradientA")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
-
-    gradient.append("stop").attr("offset", "20%").attr("stop-color", "#fda4af"); // Start color
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fb923c"); // End color
-
     const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
 
     // Bar A (Bar on the left side)
@@ -79,7 +66,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("y", 0)
       .attr("width", containerWidth * ratioA)
       .attr("height", height)
-      .attr("fill", "url(#gradientA)");
+      .classed("fill-accent dark:fill-accent", true);
 
     // Bar B (Bar on the right side)
     barGroup
@@ -89,30 +76,19 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("width", containerWidth * ratioB)
       .attr("height", height)
       .classed("dark:fill-[#171717] fill-neutral-200", true);
-
-    // Text A (Label on the left side)
-    svg
-      .append("text")
-      .attr("x", 8)
-      .attr("y", height / 2 + 5)
-      .attr("text-anchor", "start")
-      .attr("fill", "black")
-      .style("font-weight", "bold")
-      .text(`${nameA} • ${formatNumber(propA)}`);
-
-    // Text B (Label on the right side)
-    svg
-      .append("text")
-      .attr("x", containerWidth - 8)
-      .attr("y", height / 2 + 5)
-      .attr("text-anchor", "end")
-      .classed("font-bold dark:fill-neutral-200 fill-black", true)
-      .text(`${formatNumber(propB)} • ${nameB}`);
-  }, [containerWidth, propA, propB, nameA, nameB, height]);
+  }, [containerWidth, propA, propB, height]);
 
   return (
-    <div className="overflow-hidden rounded-lg" style={{ height: height }}>
-      <svg ref={svgRef} style={{ width: "100%", height: height }} />
+    <div>
+      <div className="flex text-lg font-bold justify-between mb-1">
+        <div className="pl-1">
+          {nameA} • {formatNumber(propA)}
+        </div>
+        <div className="pr-1">
+          {formatNumber(propB)} • {nameB}
+        </div>
+      </div>
+      <svg className="w-full rounded-full" ref={svgRef} style={{ height: height }} />
     </div>
   );
 };

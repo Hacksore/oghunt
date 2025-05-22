@@ -29,6 +29,11 @@
         "^check"
       ]
     },
+    "format": {
+      "dependsOn": [
+        "^fix"
+      ]
+    },
     "fix": {
       "dependsOn": [
         "^fix"

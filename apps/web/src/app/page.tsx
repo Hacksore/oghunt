@@ -1,6 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Card } from "./component/card";
-import { GithubStar } from "./component/github-star";
 import { JsonLd } from "./component/json-ld";
 import { MobileCard } from "./component/mobile-card";
 import ScrollToTop from "./component/scroll-to-top";
@@ -24,31 +23,26 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
-      <header className="flex flex-col gap-4 pb-10">
-        <h1 className="mb-4 bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text text-4xl font-bold text-transparent md:text-5xl dark:from-pink-300 dark:to-orange-300">
-          Product Hunt with ZERO AI Slop™
-        </h1>
+      <div className="flex flex-col gap-4">
+        <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop™</h1>
+      </div>
 
-        <GithubStar />
-
-        <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
-      </header>
-
-      <section className="max-w-2xl mx-auto my-6 text-left" id="about-oghunt">
-        <h2 className="text-xl font-semibold mb-2">About OGHUNT</h2>
-        <p>
+      <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
+        <p className="text-2xl">
           OGHUNT is a platform that filters{" "}
           <a
             href="https://www.producthunt.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-primary hover:text-primary"
+            className="font-bold text-accent hover:underline"
           >
             Product Hunt
           </a>{" "}
           launches to show you only non-AI projects. Our mission is to help you discover innovative
           products without the clutter of AI-generated content.
         </p>
+
+        <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </section>
 
       <section>
@@ -67,7 +61,7 @@ export default async function Page() {
         <div className="flex flex-col items-center pt-8 text-center">
           <p className="text-2xl">Now that you viewed all the non AI projects</p>
           <a
-            className="border-b border-[var(--background-start-rgb)] bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text pt-2 text-xl text-transparent duration-150 hover:border-black dark:border-black dark:from-pink-300 dark:to-orange-300 dark:hover:border-white"
+            className="pt-2 text-xl text-accent hover:underline"
             href="/homies"
             rel="noopener noreferrer"
           >
