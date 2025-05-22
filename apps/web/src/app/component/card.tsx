@@ -16,7 +16,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       href={`${link.origin}${link.pathname}?ref=oghunt&utm_source=oghunt.com`}
       key={post.id}
       target="_blank"
-      className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 hover:bg-neutral-300/50 dark:hover:bg-primary/90"
+      className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 dark:hover:bg-neutral-900 hover:bg-neutral-300"
       rel="noreferrer"
     >
       {!homie && (
@@ -57,7 +57,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
 
       {!homie && (
         <div className="ml-auto flex flex-col items-center rounded-lg px-4 py-2">
-          <UpArrow className="h-20 w-20 stroke-0" gradient />
+          <UpArrow className="h-16 w-16 stroke-0" gradient />
           <p className="font-bold">{post.votesCount}</p>
         </div>
       )}

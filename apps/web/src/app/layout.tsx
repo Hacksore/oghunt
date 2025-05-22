@@ -21,7 +21,7 @@ export default function RootLayout({
         className={cn(
           inter.className,
           "bg-white",
-          "dark:bg-primary/95",
+          "dark:bg-primary",
           "text-black",
           "dark:text-white",
         )}

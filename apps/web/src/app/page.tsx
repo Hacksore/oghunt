@@ -61,7 +61,7 @@ export default async function Page() {
         <div className="flex flex-col items-center pt-8 text-center">
           <p className="text-2xl">Now that you viewed all the non AI projects</p>
           <a
-            className="border-b border-[var(--background-start-rgb)] bg-gradient-to-r from-pink-400 to-orange-400 bg-clip-text pt-2 text-xl text-transparent duration-150 hover:border-black dark:border-black dark:from-pink-300 dark:to-orange-300 dark:hover:border-white"
+            className="pt-2 text-xl text-accent hover:underline"
             href="/homies"
             rel="noopener noreferrer"
           >
