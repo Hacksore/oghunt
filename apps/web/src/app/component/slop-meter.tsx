@@ -66,9 +66,8 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("x2", "100%")
       .attr("y2", "0%");
 
-    gradient.append("stop").attr("offset", "20%").attr("stop-color", "#fda4af"); // Start color
-
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#fb923c"); // End color
+    gradient.append("stop").attr("offset", "20%").attr("stop-color", "#FF4A5C"); // Start color
+    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#544AF6"); // End color
 
     const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
 
