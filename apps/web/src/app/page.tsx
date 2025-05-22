@@ -20,6 +20,8 @@ export default async function Page() {
   const posts = await getTodaysLaunches(false);
   const aiPosts = await getTodaysLaunches(true);
 
+  await new Promise((resolve) => setTimeout(resolve, 100_000));
+
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
