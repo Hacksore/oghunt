@@ -11,6 +11,12 @@ interface AnalysisResult {
   reasoning: string;
 }
 
+interface ParseResponse {
+  results: AnalysisResult[];
+  expectedCount?: number;
+  actualCount: number;
+}
+
 const BATCH_ANALYSIS_PROMPT = readFileSync(join(process.cwd(), "src/app/lib/prompt.txt"), "utf-8");
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -64,7 +70,7 @@ const generateAiContent = async (prompt: string) => {
 const parseAiResponse = (
   response: Awaited<ReturnType<typeof ai.models.generateContent>>,
   expectedLength?: number,
-): AnalysisResult[] => {
+): ParseResponse => {
   let parsedResponse: unknown;
   try {
     parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
@@ -91,15 +97,6 @@ const parseAiResponse = (
       analysisResults = parsedResponse as AnalysisResult[];
     }
 
-    // Validate that we have the expected number of results if specified
-    if (
-      expectedLength !== undefined &&
-      (!analysisResults || analysisResults.length !== expectedLength)
-    ) {
-      console.error("Expected", expectedLength, "results but got", analysisResults?.length ?? 0);
-      throw new Error("Failed to analyze: Incomplete results");
-    }
-
     // Validate each result has required properties
     analysisResults = analysisResults.map((result) => {
       if (!result || typeof result !== "object") {
@@ -118,7 +115,11 @@ const parseAiResponse = (
     throw new Error("Failed to analyze: Invalid results format");
   }
 
-  return analysisResults;
+  return {
+    results: analysisResults,
+    expectedCount: expectedLength,
+    actualCount: analysisResults.length,
+  };
 };
 
 export const analyzePosts = async (
@@ -131,6 +132,7 @@ export const analyzePosts = async (
   }[],
 ): Promise<Map<string, boolean>> => {
   const results = new Map<string, boolean>();
+  let totalMismatches = 0;
 
   // Process posts in chunks
   for (let i = 0; i < posts.length; i += CHUNK_SIZE) {
@@ -175,7 +177,18 @@ export const analyzePosts = async (
       throw new Error("Failed to analyze posts: AI service error");
     }
 
-    const analysisResults = parseAiResponse(response, chunkPosts.length);
+    const {
+      results: analysisResults,
+      expectedCount,
+      actualCount,
+    } = parseAiResponse(response, chunkPosts.length);
+
+    if (expectedCount !== undefined && expectedCount !== actualCount) {
+      totalMismatches++;
+      console.warn(
+        `Chunk ${Math.floor(i / CHUNK_SIZE) + 1}: Expected ${expectedCount} results but got ${actualCount}`,
+      );
+    }
 
     // Map results back to posts
     for (let j = 0; j < chunkPosts.length; j++) {
@@ -195,6 +208,12 @@ export const analyzePosts = async (
       // Use post ID as the cache key
       results.set(post.id, isAiRelated);
     }
+  }
+
+  if (totalMismatches > 0) {
+    console.warn(
+      `Analysis complete with ${totalMismatches} chunks having mismatched result counts`,
+    );
   }
 
   return results;
