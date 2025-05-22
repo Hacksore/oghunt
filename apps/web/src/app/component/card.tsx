@@ -43,9 +43,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
 
       <div className="flex flex-col items-start gap-2">
         <div className="flex gap-2">
-          <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold md:text-4xl">
-            {post.name}
-          </h2>
+          <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold md:text-4xl">{post.name}</h2>
         </div>
 
         <p className="max-w-[69ch] text-base opacity-60 md:text-lg">{post.tagline}</p>

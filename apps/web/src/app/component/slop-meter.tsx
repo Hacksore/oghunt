@@ -66,7 +66,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("y", 0)
       .attr("width", containerWidth * ratioA)
       .attr("height", height)
-      .classed("fill-accent dark:fill-accent", true)
+      .classed("fill-accent dark:fill-accent", true);
 
     // Bar B (Bar on the right side)
     barGroup
@@ -76,7 +76,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("width", containerWidth * ratioB)
       .attr("height", height)
       .classed("dark:fill-[#171717] fill-neutral-200", true);
-
   }, [containerWidth, propA, propB, height]);
 
   return (
@@ -86,7 +85,7 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
           {nameA} • {formatNumber(propA)}
         </div>
         <div className="pr-1">
-          {formatNumber(propB)} • {nameB}  
+          {formatNumber(propB)} • {nameB}
         </div>
       </div>
       <svg className="w-full rounded-full" ref={svgRef} style={{ height: height }} />

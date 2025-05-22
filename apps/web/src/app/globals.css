@@ -5,7 +5,6 @@
   --color-accent: var(--color-blue-500);
 }
 
-
 /* TODO: someone cook this in tailwind */
 .fancy {
   --offset: 2px;
