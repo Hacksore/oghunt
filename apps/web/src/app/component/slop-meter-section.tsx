@@ -17,7 +17,7 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
           height={32}
         />
       </div>
-      <div className="text-sm dark:text-gray-500">SlopMeter™</div>
+      <div className="text-sm opacity-60">SlopMeter™</div>
     </div>
   );
 }

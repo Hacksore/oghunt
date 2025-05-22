@@ -1,5 +1,6 @@
 import NextLink from "next/link";
 import type { ComponentProps } from "react";
+import { cn } from "../utils/tw";
 
 type LinkProps = {
   href: string;
@@ -10,13 +11,12 @@ type LinkProps = {
 export function Link({ href, children, className = "", ...props }: LinkProps) {
   const isExternal = href.startsWith("http") || href.startsWith("//");
   const baseStyles = "text-accent hover:text-hover-accent hover:underline";
-  const combinedClassName = `${baseStyles} ${className}`.trim();
 
   if (isExternal) {
     return (
       <a
         href={href}
-        className={combinedClassName}
+        className={cn(baseStyles, className)}
         target="_blank"
         rel="noopener noreferrer"
         {...props}
@@ -27,7 +27,7 @@ export function Link({ href, children, className = "", ...props }: LinkProps) {
   }
 
   return (
-    <NextLink href={href} className={combinedClassName} {...props}>
+    <NextLink href={href} className={cn(baseStyles, className)} {...props}>
       {children}
     </NextLink>
   );
