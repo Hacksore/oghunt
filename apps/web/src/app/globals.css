@@ -2,15 +2,9 @@
 
 @theme inline {
   --color-primary: #17171f;
-  --color-accent: #3f39ec;
+  --color-accent: var(--color-blue-500);
 }
 
-:root {
-  @variant dark {
-    --color-primary: #fff;
-    --color-accent: #3f39ec;
-  }
-}
 
 /* TODO: someone cook this in tailwind */
 .fancy {

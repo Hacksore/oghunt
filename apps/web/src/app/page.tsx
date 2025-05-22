@@ -25,23 +25,24 @@ export default async function Page() {
       <JsonLd posts={posts} />
       <div className="flex flex-col gap-4">
         <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop™</h1>
-        <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </div>
 
-      <section className="max-w-2xl mx-auto my-6 text-left" id="about-oghunt">
+      <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
         <p className="text-2xl">
           OGHUNT is a platform that filters{" "}
           <a
             href="https://www.producthunt.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-accent hover:text-primary"
+            className="font-bold text-accent hover:underline"
           >
             Product Hunt
           </a>{" "}
           launches to show you only non-AI projects. Our mission is to help you discover innovative
           products without the clutter of AI-generated content.
         </p>
+
+        <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </section>
 
       <section>

@@ -21,7 +21,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
     >
       {!homie && (
         <div className="flex flex-row items-center justify-center gap-4 pb-2">
-          <div className="rounded-lg border border-neutral-700 p-4 text-xl">#{index + 1}</div>
+          <div className="rounded-lg p-4 text-3xl">#{index + 1}</div>
         </div>
       )}
 
@@ -43,7 +43,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
 
       <div className="flex flex-col items-start gap-2">
         <div className="flex gap-2">
-          <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-4xl">
+          <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold md:text-4xl">
             {post.name}
           </h2>
         </div>

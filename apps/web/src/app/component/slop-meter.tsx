@@ -57,18 +57,6 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
     // Clear previous content
     svg.selectAll("*").remove();
 
-    const defs = svg.append("defs");
-    const gradient = defs
-      .append("linearGradient")
-      .attr("id", "gradientA")
-      .attr("x1", "0%")
-      .attr("y1", "0%")
-      .attr("x2", "100%")
-      .attr("y2", "0%");
-
-    gradient.append("stop").attr("offset", "20%").attr("stop-color", "#FF4A5C"); // Start color
-    gradient.append("stop").attr("offset", "100%").attr("stop-color", "#544AF6"); // End color
-
     const barGroup = svg.append("g").attr("transform", "translate(0, 0)");
 
     // Bar A (Bar on the left side)
@@ -89,19 +77,19 @@ export const SlopMeter: React.FC<RatioBarProps> = ({ propA, propB, nameA, nameB,
       .attr("height", height)
       .classed("dark:fill-[#171717] fill-neutral-200", true);
 
-  }, [containerWidth, propA, propB, nameA, nameB, height]);
+  }, [containerWidth, propA, propB, height]);
 
   return (
     <div>
       <div className="flex text-lg font-bold justify-between mb-1">
-        <div>
+        <div className="pl-1">
           {nameA} • {formatNumber(propA)}
         </div>
-        <div>
-          {nameB} • {formatNumber(propB)}
+        <div className="pr-1">
+          {formatNumber(propB)} • {nameB}  
         </div>
       </div>
-      <svg ref={svgRef} style={{ width: "100%", height: height }} />
+      <svg className="w-full rounded-full" ref={svgRef} style={{ height: height }} />
     </div>
   );
 };
