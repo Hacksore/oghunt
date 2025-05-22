@@ -5,6 +5,12 @@
   --color-primary: #17171f;
 }
 
+@layer base {
+  html {
+    @apply text-white;
+  }
+}
+
 /* TODO: someone cook this in tailwind */
 .fancy {
   --offset: 2px;
