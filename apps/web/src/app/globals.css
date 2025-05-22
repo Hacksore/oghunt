@@ -2,11 +2,13 @@
 
 @theme inline {
   --color-primary: #17171f;
+  --color-accent: #3f39ec;
 }
 
 :root {
   @variant dark {
     --color-primary: #fff;
+    --color-accent: #3f39ec;
   }
 }
 

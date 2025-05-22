@@ -1,6 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Card } from "./component/card";
-import { GithubStar } from "./component/github-star";
 import { JsonLd } from "./component/json-ld";
 import { MobileCard } from "./component/mobile-card";
 import ScrollToTop from "./component/scroll-to-top";
@@ -24,21 +23,19 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
-      <header className="flex flex-col gap-4 pb-10">
+      <div className="flex flex-col gap-4">
         <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop™</h1>
-
         <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
-      </header>
+      </div>
 
       <section className="max-w-2xl mx-auto my-6 text-left" id="about-oghunt">
-        <h2 className="text-xl font-semibold mb-2">About OGHUNT</h2>
-        <p>
+        <p className="text-2xl">
           OGHUNT is a platform that filters{" "}
           <a
             href="https://www.producthunt.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="underline text-primary hover:text-primary"
+            className="underline text-accent hover:text-primary"
           >
             Product Hunt
           </a>{" "}
