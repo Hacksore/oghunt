@@ -25,9 +25,7 @@ export default async function Page() {
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
       <header className="flex flex-col gap-4 pb-10">
-        <h1 className="mb-4 text-4xl font-bold md:text-5xl">
-          Product Hunt with ZERO AI Slop™
-        </h1>
+        <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop™</h1>
 
         <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </header>
