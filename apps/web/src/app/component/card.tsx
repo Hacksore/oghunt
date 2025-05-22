@@ -58,8 +58,8 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       </div>
 
       {!homie && (
-        <div className="ml-auto flex flex-col items-center rounded-lg border border-neutral-700 px-4 py-2">
-          <UpArrow className="h-12 w-12 stroke-0" gradient />
+        <div className="ml-auto flex flex-col items-center rounded-lg px-4 py-2">
+          <UpArrow className="h-20 w-20 stroke-0" gradient />
           <p className="font-bold">{post.votesCount}</p>
         </div>
       )}
