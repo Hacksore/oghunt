@@ -9,7 +9,7 @@ export function JsonLd({ posts }: JsonLdProps) {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "OGHUNT",
-    description: "Product Hunt with ZERO AI Slop™ which uses AI to filter out AI projects",
+    description: "Product Hunt with ZERO AI Slop which uses AI to filter out AI projects",
     url: "https://oghunt.com",
     potentialAction: {
       "@type": "SearchAction",

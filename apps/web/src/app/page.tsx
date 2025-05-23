@@ -12,9 +12,9 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | Product Hunt with ZERO AI Slop Powered By AI™",
+  title: "OGHUNT | Product Hunt with ZERO AI Slop Powered By AI",
   description:
-    "Product Hunt with ZERO AI Slop™ which uses AI to filter out AI projects. You no longer have to worry about AI projects cluttering your feed",
+    "Product Hunt with ZERO AI Slop which uses AI to filter out AI projects. You no longer have to worry about AI projects cluttering your feed",
 });
 
 export default async function Page() {
@@ -25,7 +25,7 @@ export default async function Page() {
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
       <div className="flex flex-col gap-4">
-        <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop™</h1>
+        <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop</h1>
       </div>
 
       <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">

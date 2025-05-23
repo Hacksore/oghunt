@@ -49,7 +49,7 @@ export async function GET() {
         <div
           style={{
             width: `${aiPercentage}%`,
-            backgroundImage: "linear-gradient(90deg, #fda4af 20%, #fb923c 100%)",
+            backgroundColor: "#ff495b",
           }}
           tw="flex h-full rounded-l-3xl"
         >
