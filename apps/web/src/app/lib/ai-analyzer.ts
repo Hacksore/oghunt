@@ -21,7 +21,8 @@ const BATCH_ANALYSIS_PROMPT = readFileSync(join(process.cwd(), "src/app/lib/prom
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // Process posts in smaller chunks to avoid token limits
-const CHUNK_SIZE = 50;
+// NOTE: hoping making this smaller gives us more accurate results
+const CHUNK_SIZE = 20;
 
 // Helper function to format a product for analysis
 const formatProductText = (
