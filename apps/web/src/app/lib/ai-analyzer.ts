@@ -7,7 +7,6 @@ import { parseJsonWithCodeFence } from "../utils/string";
 
 interface AnalysisResult {
   isAiRelated: boolean;
-  confidence: number;
   reasoning: string;
 }
 
@@ -23,9 +22,6 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 // Process posts in smaller chunks to avoid token limits
 const CHUNK_SIZE = 50;
-
-// WE DONT WANT ANY SLOP
-const CONFIDENCE_THRESHOLD = 0.2;
 
 // Helper function to format a product for analysis
 const formatProductText = (
@@ -106,7 +102,6 @@ const parseAiResponse = (
       }
       return {
         isAiRelated: result?.isAiRelated ?? false,
-        confidence: result?.confidence ?? 0,
         reasoning: result?.reasoning ?? "No reasoning provided",
       };
     });
@@ -195,18 +190,14 @@ export const analyzePosts = async (
       const post = chunkPosts[j];
       const result = analysisResults[j];
 
-      // If confidence is above our CONFIDENCE_THRESHOLD, we consider it AI-related
-      // cause the model might give false positives and think it doesnt need to mark it explicitly
-      const isAiRelated = result?.confidence >= CONFIDENCE_THRESHOLD ? result.isAiRelated : false;
       console.log({
         post: post.name,
-        isAiRelated,
-        confidence: result?.confidence,
+        isAiRelated: result.isAiRelated,
         reasoning: result?.reasoning,
       });
 
       // Use post ID as the cache key
-      results.set(post.id, isAiRelated);
+      results.set(post.id, result.isAiRelated);
     }
   }
 

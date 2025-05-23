@@ -16,7 +16,6 @@ IMPORTANT: If ANY of the following conditions are met, you MUST set isAiRelated 
 For each product, respond with a JSON object containing:
 {
   "isAiRelated": boolean (MUST be true if ANY AI-related content is found),
-  "confidence": number (0-1, should be higher if multiple AI references are found),
   "reasoning": string (explain which AI references were found)
 }
 
