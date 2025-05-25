@@ -25,21 +25,23 @@ export default async function Page() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <JsonLd posts={posts} />
-      <div className="flex flex-col gap-4">
-        <h1 className="mb-4 text-4xl font-bold md:text-5xl">Product Hunt with ZERO AI Slop</h1>
-      </div>
 
       <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
         <p className="text-2xl">
-          OGHUNT is a platform that filters{" "}
+          OGHUNT filters{" "}
           <Link href="https://www.producthunt.com" className="font-bold">
             Product Hunt
           </Link>{" "}
-          launches to show you only non-AI projects. Our mission is to help you discover innovative
-          products without the clutter of AI-generated content.
+          launches that contain AI slop so you can discover innovative products.
         </p>
 
         <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
+        
+        <div className="mt-4 text-center">
+          <Link href="#newsletter" className="text-lg font-bold hover:underline">
+            Get daily email updates on new projects with our newsletter
+          </Link>
+        </div>
       </section>
 
       <section>
@@ -62,7 +64,7 @@ export default async function Page() {
           </Link>
         </div>
       </section>
-      <section className="flex flex-col items-center pt-8 text-center">
+      <section className="flex flex-col items-center pt-8 text-center" id="newsletter">
         <EmailSignUpForm />
       </section>
       <ScrollToTop />
