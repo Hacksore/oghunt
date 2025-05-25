@@ -19,12 +19,6 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 dark:hover:bg-neutral-900 hover:bg-neutral-300"
       rel="noreferrer"
     >
-      {!homie && (
-        <div className="flex flex-row items-center justify-center gap-4 pb-2">
-          <div className="rounded-lg p-4 text-3xl">#{index + 1}</div>
-        </div>
-      )}
-
       <div className="flex self-start lg:self-center">
         <div className="relative size-10 object-contain lg:size-24">
           {post.thumbnailUrl && (
