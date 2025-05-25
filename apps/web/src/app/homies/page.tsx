@@ -1,12 +1,12 @@
+import { PROJECTS } from "@/app/projects";
 import { Card } from "../../components/card";
 import { Link } from "../../components/link";
 import { MobileCard } from "../../components/mobile-card";
 import { generateOGHuntMetadata } from "../metadata";
-import { PROJECTS } from "../products";
 
 export const generateMetadata = generateOGHuntMetadata({
   title: "OGHUNT | The Homies Products",
-  description: "Our homies cooked many diffrent side products please give them a look 🙏",
+  description: "Our homies cooked many different side products please give them a look 🙏",
 });
 
 export default function Component() {
