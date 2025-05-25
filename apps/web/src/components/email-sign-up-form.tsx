@@ -32,10 +32,10 @@ export function EmailSignUpForm() {
             htmlFor="email"
             className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100"
           >
-            Stay updated with our newsletter
+            Get the latest updates and news delivered to your inbox
           </label>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
-            Get the latest updates and news delivered to your inbox.
+          <p className="text-sm pb-4  text-neutral-500 dark:text-neutral-400">
+            Top 3 OGHUNT launches of the day sent daily to your inbox
           </p>
           <div className="relative">
             <input

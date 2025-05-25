@@ -2,11 +2,11 @@ import { Card } from "../../components/card";
 import { Link } from "../../components/link";
 import { MobileCard } from "../../components/mobile-card";
 import { generateOGHuntMetadata } from "../metadata";
-import { PROJECTS } from "../projects";
+import { PROJECTS } from "../products";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | The Homies Projects",
-  description: "Our homies cooked many diffrent side projects please give them a look 🙏",
+  title: "OGHUNT | The Homies Products",
+  description: "Our homies cooked many diffrent side products please give them a look 🙏",
 });
 
 export default function Component() {
@@ -15,7 +15,7 @@ export default function Component() {
       <Link href="/" className="mt-4 font-bold text-2xl">
         ← Back to Product Hunt with ZERO AI Slop
       </Link>
-      <h1 className="text-white my-8 text-6xl font-extrabold">The Homies Projects</h1>
+      <h1 className="text-white my-8 text-6xl font-extrabold">The Homies Products</h1>
 
       <div className="flex flex-col gap-4 overflow-hidden px-2 text-left md:gap-8">
         {PROJECTS.map((item, idx) => (
