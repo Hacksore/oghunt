@@ -2,7 +2,7 @@
 import * as d3 from "d3";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import { formatNumber } from "../utils/string";
+import { formatNumber } from "../app/utils/string";
 
 const useResizeObserver = (ref: React.RefObject<SVGSVGElement | null>) => {
   const [width, setWidth] = useState<number | null>(null);

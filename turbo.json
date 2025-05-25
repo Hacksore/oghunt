@@ -3,6 +3,7 @@
   "ui": "tui",
   "globalEnv": [
     "PH_API_KEY",
+    "LOOPS_FORM_ENDPOINT",
     "DATABASE_URL",
     "CRON_SECRET",
     "GEMINI_API_KEY",

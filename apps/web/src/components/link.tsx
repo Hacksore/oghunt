@@ -1,6 +1,6 @@
 import NextLink from "next/link";
 import type { ComponentProps } from "react";
-import { cn } from "../utils/tw";
+import { cn } from "../app/utils/tw";
 
 type LinkProps = {
   href: string;

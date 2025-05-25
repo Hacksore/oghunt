@@ -1,10 +1,11 @@
 import { Analytics } from "@vercel/analytics/react";
-import { Card } from "./component/card";
-import { JsonLd } from "./component/json-ld";
-import { Link } from "./component/link";
-import { MobileCard } from "./component/mobile-card";
-import ScrollToTop from "./component/scroll-to-top";
-import { SlopMeterSection } from "./component/slop-meter-section";
+import { Card } from "../components/card";
+import { EmailSignUpForm } from "../components/email-sign-up-form";
+import { JsonLd } from "../components/json-ld";
+import { Link } from "../components/link";
+import { MobileCard } from "../components/mobile-card";
+import ScrollToTop from "../components/scroll-to-top";
+import { SlopMeterSection } from "../components/slop-meter-section";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
 
@@ -60,6 +61,9 @@ export default async function Page() {
             Click here to view the Homies Projects
           </Link>
         </div>
+      </section>
+      <section className="flex flex-col items-center pt-8 text-center">
+        <EmailSignUpForm />
       </section>
       <ScrollToTop />
       <Analytics />

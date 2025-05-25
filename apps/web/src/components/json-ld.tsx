@@ -1,4 +1,4 @@
-import type { ProductPost } from "../types";
+import type { ProductPost } from "../app/types";
 
 interface JsonLdProps {
   posts: ProductPost[];

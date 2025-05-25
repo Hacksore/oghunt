@@ -1,6 +1,6 @@
-import { Card } from "../component/card";
-import { Link } from "../component/link";
-import { MobileCard } from "../component/mobile-card";
+import { Card } from "../../components/card";
+import { Link } from "../../components/link";
+import { MobileCard } from "../../components/mobile-card";
 import { generateOGHuntMetadata } from "../metadata";
 import { PROJECTS } from "../projects";
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { ProductPost } from "../types";
+import type { ProductPost } from "../app/types";
 import { UpArrow } from "./icons/up-arrow";
 import { Pill } from "./pill";
 

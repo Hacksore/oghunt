@@ -1,4 +1,4 @@
-import type { ProductPost } from "../types";
+import type { ProductPost } from "../app/types";
 import { Pill } from "./pill";
 
 export const MobileCard = ({ post }: { post: ProductPost }) => {
