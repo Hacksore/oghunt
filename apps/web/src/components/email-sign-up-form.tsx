@@ -25,16 +25,16 @@ export function EmailSignUpForm() {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-primary rounded-xl border border-neutral-200 dark:border-neutral-700">
+    <div className="w-full max-w-md mx-auto p-6 bg-white dark:bg-neutral-900 rounded-xl border border-neutral-200 dark:border-neutral-800">
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="block text-sm font-semibold text-neutral-900 dark:text-neutral-100"
+            className="block text-sm font-semibold text-balance text-neutral-900 dark:text-neutral-100"
           >
             Get the latest updates and news delivered to your inbox
           </label>
-          <p className="text-sm pb-4  text-neutral-500 dark:text-neutral-400">
+          <p className="text-sm pb-4 text-neutral-500 text-balance">
             Top 3 OGHUNT launches of the day sent daily to your inbox
           </p>
           <div className="relative">

@@ -31,7 +31,7 @@ export default async function ListPage() {
           </div>
         </section>
 
-        <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
+        <div className="flex flex-col gap-10 md:gap-4">
           {posts.map((post, index) => (
             <div key={post.id}>
               <div className="hidden md:flex">

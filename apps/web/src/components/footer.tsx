@@ -9,19 +9,19 @@ export const Footer = () => {
             aria-label="github"
             target="_blank"
             rel="noreferrer"
-            className="text-white hover:text-white"
+            className="text-neutral-900 dark:text-neutral-100 dark:hover:text-white hover:text-black"
             href="https://github.com/Hacksore/oghunt"
           >
             Source code on Github
           </Link>
         </div>
-        <p className="text-sm opacity-60">
+        <p className="text-sm text-neutral-500 text-balance max-w-[40ch] font-light">
           OGHUNT is an independent application and is not affiliated with or endorsed by{" "}
           <Link href="https://www.producthunt.com" className="font-bold">
             Product Hunt
           </Link>
         </p>
-        <p className="text-sm opacity-60">
+        <p className="text-sm text-neutral-500 text-balance max-w-[40ch]">
           © {new Date().getFullYear()} OGHUNT. All rights reserved.
         </p>
       </div>

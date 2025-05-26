@@ -21,7 +21,7 @@ export function ThemeButton() {
         {themes.map((t) => (
           <div
             key={t}
-            className="h-9 w-9 rounded-md dark:bg-neutral-300 bg-neutral-300 animate-[pulse_2s_ease-in-out_infinite]"
+            className="size-8 rounded-full dark:bg-neutral-300 bg-neutral-300 animate-[pulse_2s_ease-in-out_infinite]"
           />
         ))}
       </div>
@@ -29,7 +29,11 @@ export function ThemeButton() {
   }
 
   return (
-    <div className={cn("flex items-center gap-1")}>
+    <div
+      className={cn(
+        "flex items-center gap-1 p-1 rounded-full border bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700",
+      )}
+    >
       {themes.map((t) => {
         const isActive = theme === t;
         return (
@@ -37,20 +41,14 @@ export function ThemeButton() {
             key={t}
             variant={isActive ? "outline" : "ghost"}
             onClick={() => setTheme(t)}
-            className="h-9 w-9 p-0"
+            className={`size-6 p-0 rounded-full !border-none ${isActive ? "bg-accent text-white" : "hover:bg-neutral-200 dark:hover:bg-neutral-800"}`}
           >
             {t === "system" && <Laptop aria-hidden="true" className="size-4" />}
             {t === "light" && (
-              <Sun
-                aria-hidden="true"
-                className={cn("size-4", isActive && "fill-black dark:fill-white")}
-              />
+              <Sun aria-hidden="true" className={cn("size-4", isActive && "dark:fill-white")} />
             )}
             {t === "dark" && (
-              <Moon
-                aria-hidden="true"
-                className={cn("size-4", isActive && "fill-black dark:fill-white")}
-              />
+              <Moon aria-hidden="true" className={cn("size-4", isActive && "dark:fill-white")} />
             )}
           </Button>
         );

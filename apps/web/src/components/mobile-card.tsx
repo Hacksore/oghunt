@@ -22,7 +22,7 @@ export const MobileCard = ({ post }: { post: ProductPost }) => {
               />
             )}
           </div>
-          <h2 className="max-w-[69ch] truncate text-lg font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-2xl">
+          <h2 className="max-w-[min(69ch,calc(100vw-4.5rem))] truncate text-lg font-bold duration-300 group-hover:translate-x-2 group-hover:underline md:text-2xl ">
             {post.name}
           </h2>
         </div>

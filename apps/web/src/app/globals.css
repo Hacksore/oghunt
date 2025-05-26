@@ -6,7 +6,7 @@
   --color-hover-accent: #ff6d79;
 }
 
-@variant dark (&:where([data-theme="dark"]));
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* TODO: someone cook this in tailwind */
 .fancy {
@@ -67,4 +67,10 @@
   to {
     transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
   }
+}
+
+.bg-lines-grid {
+  background-size: 80px 80px;
+  background-position: -40px -40px;
+  background-image: linear-gradient(to right, #8884 1px, transparent 1px);
 }
