@@ -1,3 +1,4 @@
+import env from "@/app/env";
 import { fetchFont } from "@/app/utils/fetch-font";
 import { ImageResponse } from "next/og";
 
@@ -10,8 +11,7 @@ const size = {
   height: 630,
 };
 
-const API_URL =
-  process.env.NODE_ENV === "production" ? "https://oghunt.com" : "http://localhost:3000";
+const API_URL = env.NODE_ENV === "production" ? "https://oghunt.com" : "http://localhost:3000";
 
 // Image generation
 export async function GET() {

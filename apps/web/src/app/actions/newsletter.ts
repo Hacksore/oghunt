@@ -1,8 +1,10 @@
 "use server";
 
+import env from "../env";
+
 export async function subscribeToNewsletter(email: string) {
   try {
-    const response = await fetch(process.env.LOOPS_FORM_ENDPOINT, {
+    const response = await fetch(env.LOOPS_FORM_ENDPOINT, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

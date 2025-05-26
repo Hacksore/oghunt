@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
+import env from "./env";
 
 export const OG_URL =
-  process.env.NODE_ENV !== "production" ? "http://localhost:3000" : "https://oghunt.com";
+  env.NODE_ENV !== "production" ? "http://localhost:3000" : "https://oghunt.com";
 
 type OpenGraphFunction = () => Promise<Metadata>;
 

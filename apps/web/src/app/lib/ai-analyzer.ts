@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { GoogleGenAI } from "@google/genai";
+import env from "../env";
 import { parseJsonWithCodeFence } from "../utils/string";
 
 interface AnalysisResult {
@@ -18,7 +19,7 @@ interface ParseResponse {
 
 const BATCH_ANALYSIS_PROMPT = readFileSync(join(process.cwd(), "src/app/lib/prompt.txt"), "utf-8");
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
 // Process posts in smaller chunks to avoid token limits
 // NOTE: hoping making this smaller gives us more accurate results
