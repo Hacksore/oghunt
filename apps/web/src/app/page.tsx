@@ -28,9 +28,9 @@ export default async function Page() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6">
             Discover Real Products,{" "}
-            <span className="text-blue-600">No AI Slop</span>
+            <span className="text-accent">No AI Slop</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl opacity-60 mb-8 max-w-2xl mx-auto">
             OGHUNT filters out AI-generated products from Product Hunt, helping you discover genuine innovation and creativity.
           </p>
           <div className="flex gap-4 justify-center">
