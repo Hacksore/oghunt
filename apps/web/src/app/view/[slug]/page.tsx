@@ -4,14 +4,15 @@ import { notFound } from "next/navigation";
 import db from "../../db";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export default async function ProjectPage({ params }: PageProps) {
+  const resolvedParams = await params;
   // Extract the ID from the slug (format: "id-product-name")
-  const id = params.slug.split("-")[0];
+  const id = resolvedParams.slug.split("-")[0];
 
   const project = await db.post.findUnique({
     where: {
