@@ -38,14 +38,7 @@ export function SlopGraph({ metrics }: SlopGraphProps) {
           formatter={(value: number) => [`${value.toFixed(1)}%`, "AI Projects"]}
           labelFormatter={(date: Date) => date.toLocaleDateString()}
         />
-        <Line
-          type="monotone"
-          dataKey="aiProjectsPercentage"
-          stroke="#ff495b"
-          strokeWidth={2}
-          dot={{ fill: "#ff495b", r: 4 }}
-          activeDot={{ r: 6 }}
-        />
+        <Line type="monotone" dataKey="aiProjectsPercentage" stroke="#ff495b" strokeWidth={2} />
       </LineChart>
     </ResponsiveContainer>
   );
