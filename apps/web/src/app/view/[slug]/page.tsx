@@ -1,3 +1,4 @@
+import { generateOGHuntMetadata } from "@/app/metadata";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -8,6 +9,30 @@ interface PageProps {
     slug: string;
   }>;
 }
+
+export const generateMetadata = async ({ params }: PageProps) => {
+  const resolvedParams = await params;
+  const id = resolvedParams.slug.split("-")[0];
+
+  const project = await db.post.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!project) {
+    return generateOGHuntMetadata({
+      title: "OGHUNT | Project Not Found",
+      description: "The requested project could not be found.",
+    })();
+  }
+
+  return generateOGHuntMetadata({
+    title: `OGHUNT | ${project.name}`,
+    description: project.tagline,
+    skipOgImage: true,
+  })();
+};
 
 export default async function ProjectPage({ params }: PageProps) {
   const resolvedParams = await params;
@@ -21,7 +46,7 @@ export default async function ProjectPage({ params }: PageProps) {
   });
 
   if (!project) {
-    notFound();
+    return notFound();
   }
 
   return (

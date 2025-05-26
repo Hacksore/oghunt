@@ -9,9 +9,11 @@ type OpenGraphFunction = () => Promise<Metadata>;
 export function generateOGHuntMetadata({
   title,
   description,
+  skipOgImage = false,
 }: {
   title: string;
   description?: string;
+  skipOgImage?: boolean;
 }): OpenGraphFunction {
   return async () => {
     const CACHE_DELAY = 30 * 1000;
@@ -46,14 +48,16 @@ export function generateOGHuntMetadata({
         title,
         description: description,
         siteName: "OGHUNT",
-        images: [
-          {
-            url: `${OG_URL}/api/og/${cacheKey}.png`,
-            width: 1200,
-            height: 630,
-            alt: "OGHUNT - Product Hunt with ZERO AI Slop",
-          },
-        ],
+        images: skipOgImage
+          ? undefined
+          : [
+              {
+                url: `${OG_URL}/api/og/${cacheKey}.png`,
+                width: 1200,
+                height: 630,
+                alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+              },
+            ],
         locale: "en-US",
         type: "website",
         url: OG_URL,
@@ -63,14 +67,16 @@ export function generateOGHuntMetadata({
         title: "OGHUNT",
         description: description,
         creator: "@oghunt",
-        images: [
-          {
-            url: `${OG_URL}/api/og/${cacheKey}.png`,
-            width: 1200,
-            height: 630,
-            alt: "OGHUNT - Product Hunt with ZERO AI Slop",
-          },
-        ],
+        images: skipOgImage
+          ? undefined
+          : [
+              {
+                url: `${OG_URL}/api/og/${cacheKey}.png`,
+                width: 1200,
+                height: 630,
+                alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+              },
+            ],
       },
       icons: {
         icon: [
