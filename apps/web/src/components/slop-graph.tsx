@@ -16,20 +16,11 @@ interface SlopGraphProps {
 }
 
 export function SlopGraph({ metrics }: SlopGraphProps) {
-  // const data = metrics.map((metric) => ({
-  //   ...metric,
-  //   timestamp: new Date(metric.timestamp),
-  //   aiProjectsPercentage: metric.aiProjectsPercentage * 100, // Convert to percentage
-  // }));
-
-  // stup data
-  const data = [
-    { timestamp: new Date("2025-01-01"), aiProjectsPercentage: 10 },
-    { timestamp: new Date("2025-01-02"), aiProjectsPercentage: 20 },
-    { timestamp: new Date("2025-01-03"), aiProjectsPercentage: 30 },
-    { timestamp: new Date("2025-01-04"), aiProjectsPercentage: 40 },
-    { timestamp: new Date("2025-01-05"), aiProjectsPercentage: 50 },
-  ];
+  const data = metrics.map((metric) => ({
+    ...metric,
+    timestamp: new Date(metric.timestamp),
+    aiProjectsPercentage: metric.aiProjectsPercentage * 100, // Convert to percentage
+  }));
 
   return (
     <ResponsiveContainer width="100%" height="100%">
