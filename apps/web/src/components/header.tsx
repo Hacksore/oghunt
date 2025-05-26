@@ -5,8 +5,8 @@ import { useTheme } from "next-themes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "./ui/button";
 import { ThemeButton } from "./theme-button";
+import { Button } from "./ui/button";
 
 const themes = ["system", "light", "dark"] as const;
 
@@ -20,9 +20,7 @@ export function Header() {
           <Image src="/icon.svg" alt="Oghunt Logo" width={32} height={32} className="h-8 w-8" />
           <span className="text-xl font-semibold">oghunt</span>
         </Link>
-        <div className={cn("flex items-center rounded-full border p-0.5")}>
-          <ThemeButton />
-        </div>
+        <ThemeButton />
       </div>
     </header>
   );

@@ -1,8 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useTheme } from "next-themes";
-import { Laptop, Moon, Sun } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Laptop, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 
 const themes = ["system", "light", "dark"] as const;
@@ -18,15 +18,11 @@ export function ThemeButton() {
   if (!mounted) return null;
 
   return (
-    <div className={cn("flex items-center rounded-full border p-0.5")}>
+    <div className={cn("flex items-eeecenter")}>
       {themes.map((t) => {
         const isActive = theme === t;
         return (
-          <Button
-            key={t}
-            className={cn("rounded-full p-1.5", isActive && "bg-secondary")}
-            onClick={() => setTheme(t)}
-          >
+          <Button key={t} variant={isActive ? "outline" : "ghost"} onClick={() => setTheme(t)}>
             {t === "system" && <Laptop aria-hidden="true" className="size-4" />}
             {t === "light" && (
               <Sun
