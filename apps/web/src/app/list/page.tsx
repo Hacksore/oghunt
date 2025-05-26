@@ -4,6 +4,7 @@ import { MobileCard } from "../../components/mobile-card";
 import { getTodaysLaunches } from "../lib/persistence";
 import { generateOGHuntMetadata } from "../metadata";
 import { SlopMeterSection } from "@/components/slop-meter-section";
+import ScrollToTop from "@/components/scroll-to-top";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300;
@@ -29,7 +30,7 @@ export default async function ListPage() {
         </div>
 
       {/* Stats Section */}
-      <section className="w-full py-16 px-4">
+      <section className="w-full px-4">
         <div className="max-w-4xl mx-auto">
           <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
         </div>
@@ -54,6 +55,7 @@ export default async function ListPage() {
           </div>
         )}
       </section>
+      <ScrollToTop />
       <Analytics />
     </main>
   );

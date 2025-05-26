@@ -7,7 +7,7 @@ interface SlopMeterSectionProps {
 
 export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSectionProps) {
   return (
-    <div className="w-full mt-12 flex flex-col items-center justify-center">
+    <div className="w-full flex flex-col items-center justify-center">
       <div className="mx-auto mb-2 w-full">
         <SlopMeter
           propA={aiPostsCount}

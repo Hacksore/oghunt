@@ -1,11 +1,8 @@
 import { Analytics } from "@vercel/analytics/react";
 import { Card } from "../components/card";
-import { EmailSignUpForm } from "../components/email-sign-up-form";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
-import ScrollToTop from "../components/scroll-to-top";
-import { SlopMeterSection } from "../components/slop-meter-section";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
 import { Button } from "@/components/ui/button";
@@ -21,7 +18,6 @@ export const generateMetadata = generateOGHuntMetadata({
 
 export default async function Page() {
   const posts = await getTodaysLaunches(false);
-  const aiPosts = await getTodaysLaunches(true);
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center">
@@ -78,19 +74,6 @@ export default async function Page() {
         </div>
       </section>
 
-      {/* Newsletter Section */}
-      <section className="w-full py-16 px-4" id="newsletter">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-          <p className="text-gray-600 mb-8">
-            Get daily email updates on new products, filtered to show only real innovation.
-          </p>
-          <EmailSignUpForm />
-        </div>
-      </section>
-
-      <ScrollToTop />
-      <Analytics />
     </main>
   );
 }
