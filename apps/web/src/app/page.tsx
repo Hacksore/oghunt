@@ -47,9 +47,9 @@ export default async function Page() {
       </section>
 
       {/* Featured Products Section */}
-      <section className="w-full py-8 px-4">
+      <section className="w-full px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center">Today's Top 3 Launches</h2>
+          <h2 className="text-3xl font-bold text-center mb-8">Today's Top 3 Launches</h2>
           <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
             {posts.slice(0, 3).map((post, index) => (
               <div key={post.id}>

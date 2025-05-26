@@ -31,7 +31,7 @@ export default function RootLayout({
         <Header />
         {children}
         {/* Newsletter Section */}
-        <section className="w-full py-16 px-4" id="newsletter">
+        <section className="w-full py-8 px-4" id="newsletter">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
             <p className="opacity-60 mb-8">
