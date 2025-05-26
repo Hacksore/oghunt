@@ -15,14 +15,30 @@ export function ThemeButton() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {
+    return (
+      <div className="flex items-center gap-1">
+        {themes.map((t) => (
+          <div
+            key={t}
+            className="h-9 w-9 rounded-md dark:bg-neutral-300 bg-neutral-300 animate-[pulse_2s_ease-in-out_infinite]"
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
-    <div className={cn("flex items-eeecenter")}>
+    <div className={cn("flex items-center gap-1")}>
       {themes.map((t) => {
         const isActive = theme === t;
         return (
-          <Button key={t} variant={isActive ? "outline" : "ghost"} onClick={() => setTheme(t)}>
+          <Button
+            key={t}
+            variant={isActive ? "outline" : "ghost"}
+            onClick={() => setTheme(t)}
+            className="h-9 w-9 p-0"
+          >
             {t === "system" && <Laptop aria-hidden="true" className="size-4" />}
             {t === "light" && (
               <Sun
