@@ -16,11 +16,20 @@ interface SlopGraphProps {
 }
 
 export function SlopGraph({ metrics }: SlopGraphProps) {
-  const data = metrics.map((metric) => ({
-    ...metric,
-    timestamp: new Date(metric.timestamp),
-    aiProjectsPercentage: metric.aiProjectsPercentage * 100, // Convert to percentage
-  }));
+  // const data = metrics.map((metric) => ({
+  //   ...metric,
+  //   timestamp: new Date(metric.timestamp),
+  //   aiProjectsPercentage: metric.aiProjectsPercentage * 100, // Convert to percentage
+  // }));
+
+  // stup data
+  const data = [
+    { timestamp: new Date("2025-01-01"), aiProjectsPercentage: 10 },
+    { timestamp: new Date("2025-01-02"), aiProjectsPercentage: 20 },
+    { timestamp: new Date("2025-01-03"), aiProjectsPercentage: 30 },
+    { timestamp: new Date("2025-01-04"), aiProjectsPercentage: 40 },
+    { timestamp: new Date("2025-01-05"), aiProjectsPercentage: 50 },
+  ];
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -38,17 +47,17 @@ export function SlopGraph({ metrics }: SlopGraphProps) {
           formatter={(value: number) => [`${value.toFixed(1)}%`, "AI Projects"]}
           labelFormatter={(date: Date) => date.toLocaleDateString()}
           contentStyle={{
-            backgroundColor: "rgb(var(--background))",
-            border: "1px solid rgb(var(--border))",
+            backgroundColor: "var(--color-background)",
+            border: "1px solid var(--color-border)",
             borderRadius: "0.5rem",
-            color: "rgb(var(--foreground))",
+            color: "var(--color-text-primary)",
           }}
         />
         <Line
           type="monotone"
           dataKey="aiProjectsPercentage"
-          stroke="rgb(var(--primary))"
-          strokeWidth={2}
+          stroke="var(--color-accent)"
+          strokeWidth={1}
           dot={false}
         />
       </LineChart>
