@@ -5,13 +5,14 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "db:generate": "turbo run db:generate",
-    "db:push": "turbo run db:push",
+    "db:push": "dotenv -e .env -- turbo run db:push",
     "check": "turbo run check",
     "format": "turbo run format",
     "fix": "turbo run fix"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "dotenv-cli": "^8.0.0",
     "npm-run-all": "^4.1.5",
     "turbo": "^2.5.3",
     "typescript": "5.8.2"
