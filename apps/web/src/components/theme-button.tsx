@@ -17,11 +17,15 @@ export function ThemeButton() {
 
   if (!mounted) {
     return (
-      <div className="flex items-center gap-1">
+      <div
+        className={cn(
+          "flex items-center gap-1 p-1 rounded-full border bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700",
+        )}
+      >
         {themes.map((t) => (
           <div
             key={t}
-            className="size-8 rounded-full dark:bg-neutral-300 bg-neutral-300 animate-[pulse_2s_ease-in-out_infinite]"
+            className="size-6 rounded-full bg-muted/50 animate-[pulse_2s_ease-in-out_infinite]"
           />
         ))}
       </div>
