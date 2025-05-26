@@ -11,7 +11,7 @@ export const generateMetadata = generateOGHuntMetadata({
 
 export default function Component() {
   return (
-    <div className="from-background to-muted flex min-h-screen flex-col items-center bg-gradient-to-b p-1 text-center">
+    <div className="flex min-h-screen flex-col items-center bg-gradient-to-b p-1 text-center">
       <Link href="/" className="mt-4 font-bold text-2xl">
         ← Back to Product Hunt with ZERO AI Slop
       </Link>

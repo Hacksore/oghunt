@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Component() {
   return (
-    <div className="from-background to-muted flex min-h-screen flex-col items-center justify-center bg-gradient-to-b p-1 text-center">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b p-1 text-center">
       <h1 className="text-9xl font-extrabold">404</h1>
       <Button>
         <Link href="/">Escape to Safety (Homepage)</Link>
