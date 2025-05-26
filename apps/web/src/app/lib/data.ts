@@ -1,3 +1,4 @@
+import env from "../env";
 import type { Post, PostResponse, ProductPost } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
 
@@ -59,7 +60,7 @@ export async function getAllPost(): Promise<Post[]> {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.PH_API_KEY}`,
+        Authorization: `Bearer ${env.PH_API_KEY}`,
       },
       method: "POST",
       body: JSON.stringify({
@@ -95,7 +96,7 @@ export async function getAllPostsVotesMoarBetter(
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.PH_API_KEY}`,
+      Authorization: `Bearer ${env.PH_API_KEY}`,
     },
     method: "POST",
     body: JSON.stringify({

@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-const baseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+import env from "../env";
+
+const baseUrl = env.VERCEL_URL ? `https://${env.VERCEL_URL}` : "http://localhost:3000";
 
 type Primitives = boolean | number | string | null;
 type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
