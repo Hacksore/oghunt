@@ -35,7 +35,7 @@ export function ThemeButton() {
   return (
     <div
       className={cn(
-        "flex items-center gap-1 p-1 rounded-full border bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700",
+        "flex items-center gap-1 p-1 rounded-full border bg-neutral-100 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700",
       )}
     >
       {themes.map((t) => {
