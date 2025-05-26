@@ -6,6 +6,8 @@
   --color-hover-accent: #ff6d79;
 }
 
+@variant dark (&:where([data-theme="dark"]));
+
 /* TODO: someone cook this in tailwind */
 .fancy {
   --offset: 2px;
