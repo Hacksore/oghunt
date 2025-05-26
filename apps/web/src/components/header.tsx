@@ -6,18 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import { ThemeButton } from "./theme-button";
 
 const themes = ["system", "light", "dark"] as const;
 
 export function Header() {
-  const [mounted, setMounted] = useState(false);
   const { setTheme, theme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
 
   return (
     <header className="w-full">
@@ -27,31 +21,7 @@ export function Header() {
           <span className="text-xl font-semibold">oghunt</span>
         </Link>
         <div className={cn("flex items-center rounded-full border p-0.5")}>
-          {themes.map((t) => {
-            const isActive = theme === t;
-            return (
-              <Button
-                key={t}
-                type="button"
-                variant={isActive ? "default" : "ghost"}
-                onClick={() => setTheme(t)}
-              >
-                {t === "system" && "system"}
-                {t === "light" && (
-                  <Sun
-                    aria-hidden="true"
-                    className={cn("size-4", isActive && "fill-black dark:fill-white")}
-                  />
-                )}
-                {t === "dark" && (
-                  <Moon
-                    aria-hidden="true"
-                    className={cn("size-4", isActive && "fill-black dark:fill-white")}
-                  />
-                )}
-              </Button>
-            );
-          })}
+          <ThemeButton />
         </div>
       </div>
     </header>
