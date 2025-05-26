@@ -27,7 +27,9 @@ export const MobileCard = ({ post }: { post: ProductPost }) => {
           </h2>
         </div>
 
-        <p className="line-clamp-2 max-w-[69ch] text-sm opacity-60 md:text-base">{post.tagline}</p>
+        <p className="line-clamp-2 max-w-[69ch] text-sm text-neutral-500 dark:text-neutral-400 md:text-base">
+          {post.tagline}
+        </p>
         <div className="flex flex-wrap gap-2">
           {post.topics?.map(({ id, name }) => (
             <Pill key={`${id}${post.id}`} name={name} />

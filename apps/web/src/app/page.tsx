@@ -42,16 +42,14 @@ export default async function Page() {
               No AI Slop
             </span>
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 font-light max-md:text-balance">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 dark:text-neutral-400 max-md:text-balance">
             OGHUNT filters out AI-generated products from{" "}
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
             <Button asChild>
-              <Link className="text-white hover:text-black" href="/list">
-                View Today's Launches
-              </Link>
+              <Link href="/list">View Today's Launches</Link>
             </Button>
             <Button variant="outline" className="backdrop-blur">
               <Link href="#newsletter">Get Daily Updates</Link>
@@ -79,9 +77,7 @@ export default async function Page() {
           </div>
           <div className="text-center mt-8">
             <Button asChild>
-              <Link href="/list" className="text-white hover:text-black">
-                View all launches →
-              </Link>
+              <Link href="/list">View all launches →</Link>
             </Button>
           </div>
         </div>

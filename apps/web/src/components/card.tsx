@@ -40,7 +40,9 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
           <h2 className="line-clamp-3 max-w-[69ch] text-2xl font-bold md:text-4xl">{post.name}</h2>
         </div>
 
-        <p className="max-w-[69ch] text-base opacity-60 md:text-lg">{post.tagline}</p>
+        <p className="max-w-[69ch] text-base text-neutral-500 dark:text-neutral-400 md:text-lg">
+          {post.tagline}
+        </p>
         <div className="flex flex-wrap gap-2">
           {post.topics?.map(({ id, name }) => (
             <Pill key={`${id}${post.id}`} name={name} />

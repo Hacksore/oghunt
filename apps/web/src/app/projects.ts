@@ -101,8 +101,7 @@ export const PROJECTS: ProductPost[] = [
     tagline: "See the health inspection results of Seattle restaurants",
     createdAt: new Date(),
     votesCount: 42069,
-    thumbnailUrl:
-      "https://www.seattlesafeeats.com/_app/immutable/assets/needstoimprove.Cr0daC_v.png",
+    thumbnailUrl: "https://www.seattlesafeeats.com/favicon.png",
     name: "Seattle Safe Eats",
     url: "https://seattlesafeeats.com",
     description:

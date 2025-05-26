@@ -1,16 +1,14 @@
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Component() {
   return (
     <div className="from-background to-muted flex min-h-screen flex-col items-center justify-center bg-gradient-to-b p-1 text-center">
-      <h1 className="text-primary text-9xl font-extrabold">404</h1>
-      <button
-        type="button"
-        className="2 animate-pulse rounded bg-gradient-to-r from-pink-400 to-orange-400 px-2 py-3 text-gray-900 dark:text-white"
-      >
+      <h1 className="text-9xl font-extrabold">404</h1>
+      <Button>
         <Link href="/">Escape to Safety (Homepage)</Link>
-      </button>
+      </Button>
       <p className="mb-8 mt-4 text-2xl font-semibold">
         Oops! Looks like this page took an unexpected vacation.
       </p>
