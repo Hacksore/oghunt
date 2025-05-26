@@ -63,7 +63,11 @@ export default async function Page() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button>View all launches →</Button>
+            <Button asChild>
+              <Link href="/list" className="text-inherit hover:text-white">
+                View all launches →
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
