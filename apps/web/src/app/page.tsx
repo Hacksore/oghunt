@@ -8,6 +8,7 @@ import ScrollToTop from "../components/scroll-to-top";
 import { SlopMeterSection } from "../components/slop-meter-section";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
+import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
@@ -23,54 +24,71 @@ export default async function Page() {
   const aiPosts = await getTodaysLaunches(true);
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
+    <main className="flex min-h-screen w-full flex-col items-center">
       <JsonLd posts={posts} />
 
-      <section className="max-w-3xl mx-auto my-6 text-left" id="about-oghunt">
-        <p className="text-2xl pb-4">
-          OGHUNT filters daily launches from{" "}
-          <Link href="https://www.producthunt.com" className="font-bold">
-            Product Hunt
-          </Link>{" "}
-          that contain AI so you can discover real innovative products
-        </p>
-        <p className="text-2xl pb-4">
-          We made this because more than half of the launches on Product Hunt contain AI slop,
-          OGHUNT fixes this!
-        </p>
-
-        <div className="mt-4 text-center">
-          <Link href="#newsletter" className="text-lg font-bold hover:underline">
-            Get daily email updates on new products with our newsletter
-          </Link>
+      {/* Hero Section */}
+      <section className="w-full bg-gradient-to-b from-primary/5 to-primary/10 py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h1 className="text-5xl font-bold mb-6">
+            Discover Real Products,{" "}
+            <span className="text-blue-600">No AI Slop</span>
+          </h1>
+          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            OGHUNT filters out AI-generated products from Product Hunt, helping you discover genuine innovation and creativity.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Button>
+              <Link href="/list">
+                View Today's Launches
+              </Link>
+            </Button>
+            <Button variant="outline">
+              
+              <Link href="#newsletter">
+                Get Daily Updates
+              </Link>
+            </Button>
+          </div>
         </div>
-
-        <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
       </section>
 
-      <section>
-        <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
-          {posts.map((post, index) => (
-            <div key={post.id}>
-              <div className="hidden md:flex">
-                <Card post={post} index={index} />
+      {/* Featured Products Section */}
+      <section className="w-full py-16 px-4 bg-primary/5">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold mb-8 text-center">Today's Featured Products</h2>
+          <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
+            {posts.slice(0, 3).map((post, index) => (
+              <div key={post.id}>
+                <div className="hidden md:flex">
+                  <Card post={post} index={index} />
+                </div>
+                <div className="md:hidden">
+                  <MobileCard post={post} />
+                </div>
               </div>
-              <div className="md:hidden">
-                <MobileCard post={post} />
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex flex-col items-center pt-8 text-center">
-          <p className="text-2xl">Now that you viewed all the non AI products</p>
-          <Link href="/homies" className="pt-2 text-xl">
-            Click here to view the Homies Products
-          </Link>
+            ))}
+          </div>
+          <div className="text-center mt-8">
+            <Button
+            >
+              View all launches →
+            </Button>
+          </div>
         </div>
       </section>
-      <section className="flex flex-col items-center pt-8 text-center" id="newsletter">
-        <EmailSignUpForm />
+
+      {/* Newsletter Section */}
+      <section className="w-full py-16 px-4" id="newsletter">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
+          <p className="text-gray-600 mb-8">
+            Get daily email updates on new products, filtered to show only real innovation.
+          </p>
+          <EmailSignUpForm />
+        </div>
       </section>
+
       <ScrollToTop />
       <Analytics />
     </main>
