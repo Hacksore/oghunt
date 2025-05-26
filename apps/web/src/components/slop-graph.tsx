@@ -38,16 +38,16 @@ export function SlopGraph({ metrics }: SlopGraphProps) {
           formatter={(value: number) => [`${value.toFixed(1)}%`, "AI Projects"]}
           labelFormatter={(date: Date) => date.toLocaleDateString()}
           contentStyle={{
-            backgroundColor: "var(--background)",
-            border: "1px solid var(--border)",
+            backgroundColor: "rgb(var(--background))",
+            border: "1px solid rgb(var(--border))",
             borderRadius: "0.5rem",
-            color: "var(--foreground)",
+            color: "rgb(var(--foreground))",
           }}
         />
         <Line
           type="monotone"
           dataKey="aiProjectsPercentage"
-          stroke="#ff495b"
+          stroke="rgb(var(--primary))"
           strokeWidth={2}
           dot={false}
         />

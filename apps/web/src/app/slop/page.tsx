@@ -5,7 +5,7 @@ import prisma from "../db";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "SlopMeter™ History",
+  title: "OGHUNT | SlopMeter™ History",
   description: "View the history of SlopMeter™ metrics",
 };
 
