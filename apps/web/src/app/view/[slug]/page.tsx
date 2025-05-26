@@ -1,7 +1,7 @@
-import { notFound } from "next/navigation";
-import db from "../../db";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
+import { notFound } from "next/navigation";
+import db from "../../db";
 
 interface PageProps {
   params: {
@@ -10,9 +10,12 @@ interface PageProps {
 }
 
 export default async function ProjectPage({ params }: PageProps) {
+  // Extract the ID from the slug (format: "id-product-name")
+  const id = params.slug.split("-")[0];
+
   const project = await db.post.findUnique({
     where: {
-      id: params.slug,
+      id: id,
     },
   });
 
@@ -27,7 +30,9 @@ export default async function ProjectPage({ params }: PageProps) {
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-3xl font-bold mb-2">{project.name}</h1>
-              <p className="text-neutral-500 dark:text-neutral-400 text-lg mb-4">{project.tagline}</p>
+              <p className="text-neutral-500 dark:text-neutral-400 text-lg mb-4">
+                {project.tagline}
+              </p>
             </div>
             <img
               src={project.thumbnailUrl}
@@ -57,4 +62,4 @@ export default async function ProjectPage({ params }: PageProps) {
       </div>
     </div>
   );
-} 
+}

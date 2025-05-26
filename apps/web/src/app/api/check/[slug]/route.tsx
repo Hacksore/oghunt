@@ -5,12 +5,12 @@ export async function GET(_request: Request, props: { params: Promise<{ slug: st
   const params = await props.params;
   const slug = decodeURIComponent(params.slug);
 
+  // Extract the ID from the slug (assuming format is "id-product-name")
+  const id = slug.split("-")[0];
+
   const post = await prisma.post.findFirst({
     where: {
-      name: {
-        equals: slug,
-        mode: "insensitive",
-      },
+      id: id,
     },
   });
 

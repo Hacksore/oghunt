@@ -81,3 +81,13 @@ export const parseJsonWithCodeFence = (input: string) => {
     return null; // Or you could throw the error, depending on your needs
   }
 };
+
+export const generatePostSlug = (post: { id: string; name: string }) => {
+  // Convert the name to a URL-friendly slug
+  const nameSlug = post.name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-") // Replace non-alphanumeric chars with hyphens
+    .replace(/^-+|-+$/g, ""); // Remove leading/trailing hyphens
+
+  return `${post.id}-${nameSlug}`;
+};

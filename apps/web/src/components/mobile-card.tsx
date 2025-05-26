@@ -1,15 +1,14 @@
+import Link from "next/link";
 import type { ProductPost } from "../app/types";
+import { generatePostSlug } from "../app/utils/string";
 import { Pill } from "./pill";
 
 export const MobileCard = ({ post }: { post: ProductPost }) => {
-  const link = new URL(post.url);
   return (
-    <a
-      href={`${link.origin}${link.pathname}?utm_source=oghunt.com`}
+    <Link
+      href={`/view/${generatePostSlug(post)}`}
       key={post.id}
-      target="_blank"
       className="items-cener group w-full cursor-pointer flex-col gap-8 rounded-2xl duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
-      rel="noreferrer"
     >
       <div className="flex flex-col items-start gap-2">
         <div className="flex items-center gap-2">
@@ -39,6 +38,6 @@ export const MobileCard = ({ post }: { post: ProductPost }) => {
           {post.description}
         </p>
       </div>
-    </a>
+    </Link>
   );
 };
