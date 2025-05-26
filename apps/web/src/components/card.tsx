@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ProductPost } from "../app/types";
 import { UpArrow } from "./icons/up-arrow";
 import { Pill } from "./pill";
@@ -10,14 +11,11 @@ interface CardProps {
 }
 
 export const Card = ({ post, index, homie = false }: CardProps) => {
-  const link = new URL(post.url);
   return (
-    <a
-      href={`${link.origin}${link.pathname}?ref=oghunt&utm_source=oghunt.com`}
+    <Link
+      href={`/view/${post.id}`}
       key={post.id}
-      target="_blank"
       className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 dark:hover:bg-neutral-900 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 active:duration-75 active:scale-98 active:origin-bottom active:shadow-none border border-dashed border-transparent hover:border-neutral-300 hover:rounded-3xl dark:hover:border-neutral-800"
-      rel="noreferrer"
     >
       <div className="flex self-start lg:self-center">
         <div className="relative size-10 object-contain lg:size-24 group-hover:-translate-y-1/2 duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:drop-shadow-2xl">
@@ -64,6 +62,6 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
           <p className="font-bold">{post.votesCount}</p>
         </div>
       )}
-    </a>
+    </Link>
   );
 };
