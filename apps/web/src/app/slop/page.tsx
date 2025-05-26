@@ -1,7 +1,13 @@
 import { SlopGraph } from "@/components/slop-graph";
+import type { Metadata } from "next";
 import prisma from "../db";
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "SlopMeter™ History",
+  description: "View the history of SlopMeter™ metrics",
+};
 
 export default async function SlopPage() {
   // Get metrics from the last 30 days

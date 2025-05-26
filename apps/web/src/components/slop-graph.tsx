@@ -37,8 +37,20 @@ export function SlopGraph({ metrics }: SlopGraphProps) {
         <Tooltip
           formatter={(value: number) => [`${value.toFixed(1)}%`, "AI Projects"]}
           labelFormatter={(date: Date) => date.toLocaleDateString()}
+          contentStyle={{
+            backgroundColor: "var(--background)",
+            border: "1px solid var(--border)",
+            borderRadius: "0.5rem",
+            color: "var(--foreground)",
+          }}
         />
-        <Line type="monotone" dataKey="aiProjectsPercentage" stroke="#ff495b" strokeWidth={2} />
+        <Line
+          type="monotone"
+          dataKey="aiProjectsPercentage"
+          stroke="#ff495b"
+          strokeWidth={2}
+          dot={false}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
