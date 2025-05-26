@@ -1,11 +1,10 @@
-import { Analytics } from "@vercel/analytics/react";
+import { Button } from "@/components/ui/button";
 import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
-import { Button } from "@/components/ui/button";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
@@ -24,35 +23,33 @@ export default async function Page() {
       <JsonLd posts={posts} />
 
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-b from-primary/5 to-primary/10 py-20 px-4">
+      <section className="w-full py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl font-bold mb-6">
-            Discover Real Products,{" "}
-            <span className="text-accent">No AI Slop</span>
+            Discover Real Products, <span className="text-accent">No AI Slop</span>
           </h1>
-          <p className="text-xl opacity-60 mb-8 max-w-2xl mx-auto">
-            OGHUNT filters out AI-generated products from Product Hunt, helping you discover genuine innovation and creativity.
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            OGHUNT filters out AI-generated products from{" "}
+            <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
+            innovation and creativity.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button>
-              <Link href="/list">
+            <Button asChild>
+              <Link className="text-inherit hover:text-black" href="/list">
                 View Today's Launches
               </Link>
             </Button>
             <Button variant="outline">
-              
-              <Link href="#newsletter">
-                Get Daily Updates
-              </Link>
+              <Link href="#newsletter">Get Daily Updates</Link>
             </Button>
           </div>
         </div>
       </section>
 
       {/* Featured Products Section */}
-      <section className="w-full py-16 px-4 bg-primary/5">
+      <section className="w-full py-8 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold mb-8 text-center">Today's Featured Products</h2>
+          <h2 className="text-3xl font-bold text-center">Today's Top 3 Launches</h2>
           <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
             {posts.slice(0, 3).map((post, index) => (
               <div key={post.id}>
@@ -66,14 +63,10 @@ export default async function Page() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button
-            >
-              View all launches →
-            </Button>
+            <Button>View all launches →</Button>
           </div>
         </div>
       </section>
-
     </main>
   );
 }
