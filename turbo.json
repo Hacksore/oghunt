@@ -2,6 +2,7 @@
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
   "globalEnv": [
+    "NODE_ENV",
     "PH_API_KEY",
     "LOOPS_FORM_ENDPOINT",
     "DATABASE_URL",

@@ -20,9 +20,6 @@ export default async function Image({ params }: { params: { slug: string } }) {
     fetchFont("Inter", 400),
   ]);
 
-  // Extract the ID from the slug (format: "id-product-name")
-  const id = params.slug.split("-")[0];
-
   const headersList = await headers();
   const host = headersList.get("host") || "localhost:3000";
   const protocol = host.includes("localhost") ? "http" : "https";
