@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
