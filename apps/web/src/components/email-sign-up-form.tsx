@@ -46,17 +46,20 @@ export function EmailSignUpForm() {
               required
               className="w-full px-4 py-3 rounded-lg border border-neutral-200 dark:border-neutral-700 focus:border-primary focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/30 transition-all duration-200 outline-none text-neutral-900 dark:text-neutral-100 placeholder-neutral-400 dark:placeholder-neutral-500 dark:bg-neutral-700"
               placeholder="Enter your email"
+              disabled={true}
             />
           </div>
         </div>
-        <Button type="submit" fullWidth disabled={status === "loading"}>
+        {/* <Button type="submit" fullWidth disabled={status === "loading"}> */}
+        <Button type="submit" fullWidth disabled={true}>
           {status === "loading" ? (
             <div className="flex items-center space-x-2">
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Subscribing...</span>
             </div>
           ) : (
-            "Subscribe to Daily Emails"
+            // "Subscribe to Daily Emails"
+            "Coming Soon"
           )}
         </Button>
         {status === "success" && (
