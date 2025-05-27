@@ -1,4 +1,4 @@
-import type { getTodaysLaunches } from "./lib/persistence";
+import type { getTodaysLaunches } from "./lib/launches";
 
 export interface PostResponse {
   data: {

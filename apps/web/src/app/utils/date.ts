@@ -6,8 +6,8 @@ export function getCurrentDateInPST(startDate?: Date) {
   // Get the UTC offset for PST (UTC-8)
   const pstOffset = 8 * 60 * 60 * 1000;
 
-  // Convert the current date to PST by adding the PST offset (since we want to go from UTC to PST)
-  const pstDate = new Date(currentUTCDate.getTime() + pstOffset);
+  // Convert the current date to PST by subtracting the PST offset
+  const pstDate = new Date(currentUTCDate.getTime() - pstOffset);
 
   // Return the PST date object
   return pstDate;

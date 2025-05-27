@@ -1,4 +1,4 @@
-import { getTodaysLaunches } from "@/app/lib/persistence";
+import { getTodaysLaunches } from "@/app/lib/launches";
 import { filterPosts } from "@/app/utils/string";
 import { unstable_cache } from "next/cache";
 
