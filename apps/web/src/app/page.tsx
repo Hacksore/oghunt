@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
 import { getTodaysLaunches } from "./lib/persistence";
 import { generateOGHuntMetadata } from "./metadata";
-import Image from "next/image";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
@@ -27,7 +27,7 @@ export default async function Page() {
       <section className="w-full pt-4 pb-8 sm:py-20 px-4 relative overflow-clip">
         <div className="-z-10 absolute bottom-0 right-1/2 translate-1/2 size-1/2 bg-accent/20 rounded-full blur-3xl" />
         {/* no -skew-x-12 because @Hacksore said we're straight 🏳️‍🌈 */}
-        <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]"/>
+        <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]" />
         <div className="max-w-4xl mx-auto text-center">
           <div className="p-[1px] mx-auto bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full w-fit mb-5">
             <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-2 items-center px-2 text-sm py-0.5">
@@ -37,7 +37,10 @@ export default async function Page() {
             </div>
           </div>
           <h1 className="text-5xl font-bold mb-6 max-sm:text-balance">
-            Discover <br className="md:hidden"/> Real Products, <br className="lg:hidden"/> <span className="bg-white bg-gradient-to-br from-accent to-accent/60 bg-clip-text text-transparent">No AI Slop</span>
+            Discover <br className="md:hidden" /> Real Products, <br className="lg:hidden" />{" "}
+            <span className="bg-white bg-gradient-to-br from-accent to-accent/60 bg-clip-text text-transparent">
+              No AI Slop
+            </span>
           </h1>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 font-light max-md:text-balance">
             OGHUNT filters out AI-generated products from{" "}
@@ -59,7 +62,7 @@ export default async function Page() {
 
       {/* Featured Products Section */}
       <section className="w-full px-4 border-t border-neutral-500/40 pt-16 relative bg-neutral-100 dark:bg-neutral-950 pb-12 rounded-b-3xl">
-        <div className="-z-10 absolute top-0 left-1/2 -translate-1/2 w-1/2 h-64 bg-accent/5 rounded-full blur-3xl"/>
+        <div className="-z-10 absolute top-0 left-1/2 -translate-1/2 w-1/2 h-64 bg-accent/5 rounded-full blur-3xl" />
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">Today's Top 3 Launches</h2>
           <div className="flex flex-col gap-10 md:gap-4">

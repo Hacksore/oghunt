@@ -29,7 +29,11 @@ export function ThemeButton() {
   }
 
   return (
-    <div className={cn("flex items-center gap-1 p-1 rounded-full border bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700")}>
+    <div
+      className={cn(
+        "flex items-center gap-1 p-1 rounded-full border bg-neutral-200 dark:bg-neutral-800 border-neutral-300 dark:border-neutral-700",
+      )}
+    >
       {themes.map((t) => {
         const isActive = theme === t;
         return (
@@ -41,16 +45,10 @@ export function ThemeButton() {
           >
             {t === "system" && <Laptop aria-hidden="true" className="size-4" />}
             {t === "light" && (
-              <Sun
-                aria-hidden="true"
-                className={cn("size-4", isActive && "dark:fill-white")}
-              />
+              <Sun aria-hidden="true" className={cn("size-4", isActive && "dark:fill-white")} />
             )}
             {t === "dark" && (
-              <Moon
-                aria-hidden="true"
-                className={cn("size-4", isActive && "dark:fill-white")}
-              />
+              <Moon aria-hidden="true" className={cn("size-4", isActive && "dark:fill-white")} />
             )}
           </Button>
         );

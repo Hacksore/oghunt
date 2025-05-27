@@ -51,8 +51,14 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
 
       {!homie && (
         <div className="ml-auto flex flex-col items-center rounded-lg px-4 py-2 relative">
-          <UpArrow className="absolute h-16 w-16 stroke-0 group-hover:-translate-y-1/2 group-hover:opacity-0 duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]" gradient />
-          <UpArrow className="h-16 w-16 stroke-0 translate-y-1/2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]" gradient />
+          <UpArrow
+            className="absolute h-16 w-16 stroke-0 group-hover:-translate-y-1/2 group-hover:opacity-0 duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
+            gradient
+          />
+          <UpArrow
+            className="h-16 w-16 stroke-0 translate-y-1/2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-300 ease-[cubic-bezier(0.175,0.885,0.32,1.275)]"
+            gradient
+          />
           <p className="font-bold">{post.votesCount}</p>
         </div>
       )}

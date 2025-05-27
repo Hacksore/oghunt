@@ -72,6 +72,5 @@
 .bg-lines-grid {
   background-size: 80px 80px;
   background-position: -40px -40px;
-  background-image:
-    linear-gradient(to right, #8884 1px, transparent 1px);
+  background-image: linear-gradient(to right, #8884 1px, transparent 1px);
 }
