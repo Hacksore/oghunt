@@ -3,7 +3,7 @@ import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Analytics } from "@vercel/analytics/react";
 import { Card } from "../../components/card";
 import { MobileCard } from "../../components/mobile-card";
-import { getTodaysLaunches } from "../lib/persistence";
+import { getTodaysLaunches } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
 
 export const dynamic = "force-dynamic";
