@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NODE_ENV: z.enum(["development", "production", "test"]), // I know we aren't testing but, just making sure types match
+  NODE_ENV: z.enum(["development", "production", "test"]).optional(),
   PH_API_KEY: z.string(),
   DATABASE_URL: z.string(),
   CRON_SECRET: z.string(),
