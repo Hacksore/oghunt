@@ -74,7 +74,7 @@ export default async function ProjectPage({ params }: PageProps) {
             <div className="flex gap-4 mt-8">
               <Button asChild>
                 <a
-                  href={`https://www.producthunt.com/posts/${project.id}`}
+                  href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2"

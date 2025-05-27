@@ -41,6 +41,12 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "oghunt.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

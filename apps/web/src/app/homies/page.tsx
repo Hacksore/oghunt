@@ -19,17 +19,17 @@ export default function Component() {
 
       <div className="flex flex-col gap-4 overflow-hidden px-2 text-left md:gap-8">
         {PROJECTS.map((item, idx) => (
-          <>
+          <div key={`homie-${item.id}`}>
             {idx !== 0 && (
               <div className="flex h-0.5 w-full bg-neutral-200 md:hidden dark:bg-neutral-800" />
             )}
             <div key={`desktop-${item.name}`} className="hidden md:flex">
-              <Card key={`card-${item.name}`} homie index={idx} post={item} />
+              <Card key={`card-${item.name}`} homie index={idx} post={item} url={item.url} />
             </div>
             <div key={`mobile-${item.name}`} className="md:hidden">
-              <MobileCard key={`card-${item.name}`} post={item} />
+              <MobileCard key={`card-${item.name}`} post={item} url={item.url} />
             </div>
-          </>
+          </div>
         ))}
       </div>
     </div>

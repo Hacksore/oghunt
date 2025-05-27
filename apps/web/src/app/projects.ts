@@ -1,176 +1,86 @@
 import type { ProductPost } from "./types";
 
-export const PROJECTS: ProductPost[] = [
-  {
-    id: "1",
+let projectCounter = 1;
+
+export function createProject(
+  data: Omit<ProductPost, "id" | "topics" | "createdAt" | "votesCount" | "deleted" | "hasAi"> & {
+    topics: string[];
+  },
+): ProductPost {
+  const projectId = projectCounter.toString();
+  projectCounter++;
+
+  const { topics: topicNames, ...restData } = data;
+
+  return {
+    id: projectId,
     hasAi: false,
-    topics: [
-      {
-        name: "Discord",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Tauri",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "React",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Rust",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-    ],
     deleted: false,
-    tagline: "Something about discord? idk",
+    votesCount: 0,
     createdAt: new Date(),
-    votesCount: 1337,
-    thumbnailUrl:
-      "https://raw.githubusercontent.com/overlayeddev/overlayed/main/apps/web/public/favicon_io/apple-touch-icon.png",
+    topics: topicNames.map((topicName, index) => ({
+      name: topicName,
+      description: "",
+      id: `${projectId}-${index + 1}`,
+      postId: projectId,
+    })),
+    ...restData,
+  };
+}
+
+export const PROJECTS: ProductPost[] = [
+  createProject({
+    name: "OGHUNT",
+    url: "https://oghunt.com",
+    tagline: "Product Hunt with ZERO AI Slop",
+    description: "Product Hunt with ZERO AI Slop",
+    thumbnailUrl: "https://oghunt.com/icon-128.png",
+    topics: ["Product Hunt", "AI", "Next.js"],
+  }),
+  createProject({
     name: "Overlayed",
     url: "https://overlayed.dev",
+    tagline: "Something about discord? idk",
     description:
       "See who's speaking in your Discord voice channel with a movable overlay, compatible with almost every game or app",
-  },
-  {
-    id: "1",
-    hasAi: false,
-    topics: [
-      {
-        name: "Job Hunt",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Productivity",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "React",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-    ],
-    deleted: false,
-    tagline: "Easily track job applications",
-    createdAt: new Date(),
-    votesCount: 1337,
-    thumbnailUrl: "https://my.flosa.app/img/logo-ball.png",
+    thumbnailUrl:
+      "https://raw.githubusercontent.com/overlayeddev/overlayed/main/apps/web/public/favicon_io/apple-touch-icon.png",
+    topics: ["Discord", "Tauri", "React", "Rust"],
+  }),
+  createProject({
     name: "Flosa",
     url: "https://flosa.app",
+    tagline: "Easily track job applications",
     description:
       "Flosa is a website designed to help users organize their job search process. It allows users to track applications, update statuses, visualize progress with a Sankey diagram, manage contacts and use a browser extension to save jobs from over 1,000 supported websites.",
-  },
-  {
-    id: "1",
-    hasAi: false,
-    topics: [
-      {
-        name: "Seattle",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Food",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Svelte",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-    ],
-    deleted: false,
-    tagline: "See the health inspection results of Seattle restaurants",
-    createdAt: new Date(),
-    votesCount: 42069,
-    thumbnailUrl: "https://www.seattlesafeeats.com/favicon.png",
+    thumbnailUrl: "https://my.flosa.app/img/logo-ball.png",
+    topics: ["Job Hunt", "Productivity", "React"],
+  }),
+  createProject({
     name: "Seattle Safe Eats",
     url: "https://seattlesafeeats.com",
+    tagline: "See the health inspection results of Seattle restaurants",
     description:
       "Seattle Safe Eats is a tool that helps you find restaurants that have passed health inspections in Seattle.",
-  },
-  {
-    id: "1",
-    hasAi: false,
-    topics: [
-      {
-        name: "Spotify",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Music",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "React",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-    ],
-    deleted: false,
-    tagline: "A clean and simple way to share your Spotify stats",
-    createdAt: new Date(),
-    votesCount: 69420,
-    thumbnailUrl: "https://splist.fm/android-chrome-192x192.png",
+    thumbnailUrl: "https://www.seattlesafeeats.com/favicon.png",
+    topics: ["Seattle", "Food", "Svelte"],
+  }),
+  createProject({
     name: "Splist.fm",
     url: "https://splist.fm/",
+    tagline: "A clean and simple way to share your Spotify stats",
     description:
       "share your spotify playlists with friends and family so that they know you listen to good music",
-  },
-  {
-    id: "1",
-    hasAi: false,
-    topics: [
-      {
-        name: "Astro",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Markdown",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-      {
-        name: "Food",
-        description: "",
-        id: "1",
-        postId: "1",
-      },
-    ],
-    deleted: false,
-    tagline: "Recipes made by an Australian chef",
-    createdAt: new Date(),
-    votesCount: 420,
-    thumbnailUrl: "https://cook-around-find-out-v2.vercel.app/logo-1000.jpg",
+    thumbnailUrl: "https://splist.fm/android-chrome-192x192.png",
+    topics: ["Spotify", "Music", "React"],
+  }),
+  createProject({
     name: "Cook Around and Find Out",
     url: "https://cook-around-find-out-v2.vercel.app/",
+    tagline: "Recipes made by an Australian chef",
     description:
       "Published recipes that I have piss-farted around with or found online and changed to my liking",
-  },
+    thumbnailUrl: "https://cook-around-find-out-v2.vercel.app/logo-1000.jpg",
+    topics: ["Astro", "Markdown", "Food"],
+  }),
 ];

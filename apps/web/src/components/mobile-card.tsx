@@ -3,10 +3,10 @@ import type { ProductPost } from "../app/types";
 import { generatePostSlug } from "../app/utils/string";
 import { Pill } from "./pill";
 
-export const MobileCard = ({ post }: { post: ProductPost }) => {
+export const MobileCard = ({ post, url }: { post: ProductPost; url?: string }) => {
   return (
     <Link
-      href={`/view/${generatePostSlug(post)}`}
+      href={url ? url : `/view/${generatePostSlug(post)}`}
       key={post.id}
       className="items-cener group w-full cursor-pointer flex-col gap-8 rounded-2xl duration-300 hover:bg-neutral-300/50 dark:hover:bg-neutral-900"
     >
