@@ -4,6 +4,7 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
+    "start": "turbo run dev",
     "db:generate": "turbo run db:generate",
     "db:push": "dotenv -e .env -- turbo run db:push",
     "db:studio": "dotenv -e .env -- turbo run db:studio",
