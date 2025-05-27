@@ -13,7 +13,7 @@
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
     "db:generate": "prisma generate"
-  },
+  }, 
   "dependencies": {
     "@google/genai": "^0.14.1",
     "@next/third-parties": "15.3.2",
