@@ -1,13 +1,13 @@
 // Function to get the current date in PST (UTC-8)
 // ProductHunt is in PST
-export function getCurrentDateInPST() {
-  const currentUTCDate = new Date();
+export function getCurrentDateInPST(startDate?: Date) {
+  const currentUTCDate = startDate || new Date();
 
   // Get the UTC offset for PST (UTC-8)
   const pstOffset = 8 * 60 * 60 * 1000;
 
-  // Convert the current date to PST by subtracting the PST offset
-  const pstDate = new Date(currentUTCDate.getTime() - pstOffset);
+  // Convert the current date to PST by adding the PST offset (since we want to go from UTC to PST)
+  const pstDate = new Date(currentUTCDate.getTime() + pstOffset);
 
   // Return the PST date object
   return pstDate;
@@ -15,8 +15,8 @@ export function getCurrentDateInPST() {
 
 // Function to get the start and end of the current day in PST
 // Then convert to UTC ISO-8601 strings
-export function getStartAndEndOfDayInUTC() {
-  const currentPSTDate = getCurrentDateInPST();
+export function getStartAndEndOfDayInUTC(startDate?: Date) {
+  const currentPSTDate = getCurrentDateInPST(startDate);
 
   // Get the PST date components
   const year = currentPSTDate.getUTCFullYear();
@@ -35,7 +35,7 @@ export function getStartAndEndOfDayInUTC() {
 
   // Return the start and end of the day in UTC ISO-8601 format
   return {
-    postedAfter: startOfDayUTC,
-    postedBefore: endOfDayUTC,
+    startOfDayUTC,
+    endOfDayUTC,
   };
 }
