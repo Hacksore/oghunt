@@ -1,7 +1,7 @@
 import prisma from "@/app/db";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: Promise<{ slug: string }> }) {
+export async function GET(_: Request, { params }: { params: Promise<{ slug: string }> }) {
   try {
     // Extract the ID from the slug (format: "id-product-name")
     const id = (await params).slug.split("-")[0];
