@@ -10,7 +10,7 @@ export default function Loading() {
 
         {/* Heading */}
         <div className="flex flex-col items-center w-full mb-6">
-          <div className="mb-2 h-10 w-3/4 rounded-full bg-[#88888820] sm:w-1/3 md:w-8/11 lg:w-3xl"/>
+          <div className="mb-2 h-10 w-3/4 rounded-full bg-[#88888820] sm:w-1/3 md:w-8/11 lg:w-3xl" />
           <div className="mb-2 h-10 w-11/12 rounded-full bg-[#88888820] sm:w-2/3 md:w-1/3 lg:hidden" />
           <div className="h-10 w-4/5 rounded-full bg-[#88888820] sm:w-2/5 md:hidden" />
         </div>
@@ -25,13 +25,13 @@ export default function Loading() {
 
         {/* CTA Buttons */}
         <div className="w-full flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <div className="h-10 w-[190px] rounded-md bg-[#88888820]"/>
-          <div className="h-10 w-[154px] rounded-md bg-[#88888820]"/>
+          <div className="h-10 w-[190px] rounded-md bg-[#88888820]" />
+          <div className="h-10 w-[154px] rounded-md bg-[#88888820]" />
         </div>
       </header>
 
       <section className="mx-auto w-full flex flex-col items-center justify-center border-t border-neutral-500/40 px-4 pt-16 pb-12 bg-neutral-100 rounded-b-3xl dark:bg-neutral-950">
-        <div className="h-[30px] mb-8 w-11/12 rounded-full bg-[#88888820] sm:w-2/3 md:w-[360px]"/>
+        <div className="h-[30px] mb-8 w-11/12 rounded-full bg-[#88888820] sm:w-2/3 md:w-[360px]" />
         <div className="w-full max-w-4xl flex flex-col gap-10 overflow-hidden md:gap-4">
           {Array.from({ length: 3 }).map(() => (
             <PostSkeleton key={`post-skeleton-${crypto.randomUUID()}`} />
@@ -39,7 +39,7 @@ export default function Loading() {
         </div>
 
         <div className="w-full flex flex-col items-center mt-8">
-          <div className="h-10 w-[163px] rounded-md bg-[#88888820]"/>
+          <div className="h-10 w-[163px] rounded-md bg-[#88888820]" />
         </div>
       </section>
     </main>
