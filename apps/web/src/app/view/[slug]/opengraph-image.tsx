@@ -1,5 +1,5 @@
-import prisma from "@/app/db";
 import { fetchFont } from "@/app/utils/fetch-font";
+import { headers } from "next/headers";
 import { ImageResponse } from "next/og";
 
 // Route segment config
@@ -20,45 +20,41 @@ export default async function Image({ params }: { params: { slug: string } }) {
     fetchFont("Inter", 400),
   ]);
 
-  // const baseImageRawData = await fetch(new URL("../../api/og/base-og.png", import.meta.url)).then((res) =>
-  //   res.arrayBuffer(),
-  // );
-
-  // const imageData = `data:image/png;base64,${Buffer.from(baseImageRawData).toString("base64")}`;
-
   // Extract the ID from the slug (format: "id-product-name")
   const id = params.slug.split("-")[0];
 
-  const post = await prisma.post.findFirst({
-    where: {
-      id: id,
-    },
-  });
+  const headersList = await headers();
+  const host = headersList.get("host") || "localhost:3000";
+  const protocol = host.includes("localhost") ? "http" : "https";
+  const baseUrl = `${protocol}://${host}`;
 
-  if (!post) {
+  const response = await fetch(`${baseUrl}/api/post/${params.slug}`);
+
+  if (!response.ok) {
     return new Response("Product not found", { status: 404 });
   }
+
+  const post = await response.json();
 
   return new ImageResponse(
     <div
       style={{
         width: "100%",
         height: "100%",
-        // backgroundImage: `url(${imageData})`,
       }}
-      tw="flex flex-col items-center justify-center"
+      tw="flex flex-col bg-[#17171F] items-center justify-center relative"
     >
       <div tw="flex flex-col items-center justify-center w-[90%]">
-        <p style={{ fontWeight: 700 }} tw="text-gray-400 text-2xl mb-4">
-          OGHUNT
-        </p>
-        <h1 style={{ fontWeight: 900 }} tw="text-white text-6xl text-center mb-4">
+        <h1 style={{ fontWeight: 900 }} tw="text-white text-8xl text-center mb-4">
           {post.name}
         </h1>
-        <p style={{ fontWeight: 400 }} tw="text-gray-400 text-2xl text-center">
+        <p style={{ fontWeight: 400 }} tw="text-white text-4xl text-center">
           {post.tagline}
         </p>
       </div>
+      <p style={{ fontWeight: 700 }} tw="text-white text-4xl text-bold absolute bottom-8 left-8">
+        OGHUNT
+      </p>
     </div>,
     {
       ...size,
