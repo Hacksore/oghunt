@@ -1,10 +1,9 @@
 export const PostSkeleton = () => {
   return (
-    <div className="group flex w-full cursor-pointer flex-row items-center rounded-2xl duration-300 md:gap-8 md:p-8">
-      <div className="hidden lg:flex lg:items-center lg:gap-x-8">
-        <div className="rounded-lg lg:size-12 bg-[#88888820]" />
-
-        <div className="relative object-contain lg:size-24">
+    <div className="group flex w-full flex-row items-center rounded-2xl duration-300 md:gap-8 md:p-8">
+      {/* Desktop iamge */}
+      <div className="hidden md:flex md:self-start lg:self-center">
+        <div className="relative size-10 object-contain lg:size-24">
           <svg
             className="text-[#88888820]"
             aria-hidden="true"
@@ -17,9 +16,10 @@ export const PostSkeleton = () => {
         </div>
       </div>
 
+      {/* Phone image */}
       <div className="flex w-full flex-col items-start gap-2">
-        <div className="flex w-full gap-x-2 lg:hidden">
-          <div className="relative block size-10 object-contain lg:hidden lg:size-24">
+        <div className="flex w-full gap-x-2 md:hidden">
+          <div className="relative block size-10 object-contain md:hidden md:size-24">
             <svg
               className="text-[#88888820]"
               aria-hidden="true"
@@ -31,30 +31,32 @@ export const PostSkeleton = () => {
             </svg>
           </div>
           <div className="flex w-full gap-2">
-            <div className="mb-3 h-8 w-1/2 rounded-full bg-[#88888820] md:w-2/5 " />
+            <div className="mb-3 h-8 w-1/2 rounded-full bg-[#88888820] md:w-2/5" />
           </div>
         </div>
 
-        <div className="mb-2 hidden h-10 w-2/5 rounded-full bg-[#88888820] lg:block " />
+        <div className="mb-2 hidden h-10 w-2/5 rounded-full bg-[#88888820] md:block" />
 
-        <div className="mb-2 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5 md:w-3/5 " />
+        <div className="mb-2 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5 md:w-3/5" />
 
-        <div className="mb-2 flex w-full flex-wrap gap-x-2 md:mb-4">
-          {Array.from({ length: 3 }).map((_, i) => (
+        <div className="mb-2 flex w-full flex-wrap gap-x-2 md:mb-2">
+          {Array.from({ length: 3 }).map(() => (
             <div
               key={`post-skeleton-pill-${crypto.randomUUID()}`}
-              className="h-5 w-2/12 rounded-full bg-[#88888820] md:h-7 md:w-1/12 "
+              className="h-5 w-2/12 rounded-full bg-[#88888820] md:h-7 md:w-2/12"
             />
           ))}
         </div>
 
-        <div className="mb-1 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5 " />
-        <div className="mb-1 h-3 w-10/12 rounded-full bg-[#88888820] md:h-5 " />
-        <div className="mb-1 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5 " />
+        <div className="mb-1 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5" />
+        <div className="mb-1 h-3 w-10/12 rounded-full bg-[#88888820] md:h-5" />
+        <div className="mb-1 h-3 w-11/12 rounded-full bg-[#88888820] md:h-5" />
       </div>
 
-      <div className="ml-auto hidden rounded-lg bg-[#88888820] px-4 py-2 lg:block ">
-        <div className="mb-6 h-10 w-10 rounded-full bg-[#88888820] " />
+      <div className="ml-auto hidden px-4 py-2 md:block">
+        <div className="mb-6 size-10 rounded-full bg-[#88888820]" />
+
+        <div className="mb-6 h-4 w-10 rounded-full bg-[#88888820]" />
       </div>
     </div>
   );
