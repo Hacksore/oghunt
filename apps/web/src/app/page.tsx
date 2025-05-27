@@ -14,6 +14,7 @@ export const generateMetadata = generateOGHuntMetadata({
   title: "OGHUNT | Product Hunt with ZERO AI Slop Powered By AI",
   description:
     "Product Hunt with ZERO AI Slop which uses AI to filter out AI products. You no longer have to worry about AI products cluttering your feed",
+  skipOgImage: true,
 });
 
 export default async function Page() {
