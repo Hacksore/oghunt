@@ -16,7 +16,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       href={`${link.origin}${link.pathname}?ref=oghunt&utm_source=oghunt.com`}
       key={post.id}
       target="_blank"
-      className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 dark:hover:bg-neutral-900 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 active:duration-75 active:scale-98 active:origin-bottom active:shadow-none"
+      className="group flex w-full cursor-pointer flex-row items-center gap-8 rounded-2xl p-8 duration-300 dark:hover:bg-neutral-900 hover:bg-white hover:shadow-lg hover:-translate-y-0.5 active:duration-75 active:scale-98 active:origin-bottom active:shadow-none border border-dashed border-transparent hover:border-neutral-300 hover:rounded-3xl dark:hover:border-neutral-800"
       rel="noreferrer"
     >
       <div className="flex self-start lg:self-center">

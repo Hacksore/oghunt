@@ -9,7 +9,7 @@ export const Footer = () => {
             aria-label="github"
             target="_blank"
             rel="noreferrer"
-            className="text-white hover:text-white"
+            className="text-neutral-900 dark:text-neutral-100 dark:hover:text-white hover:text-black"
             href="https://github.com/Hacksore/oghunt"
           >
             Source code on Github
