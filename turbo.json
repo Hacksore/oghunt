@@ -23,6 +23,7 @@
         "!.next/cache/**"
       ]
     },
+    "db:studio": {},
     "db:push": {},
     "db:generate": {},
     "check": {

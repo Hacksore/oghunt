@@ -17,7 +17,7 @@
   "dependencies": {
     "@google/genai": "^0.14.1",
     "@next/third-parties": "15.3.2",
-    "@prisma/client": "5.18.0",
+    "@prisma/client": "6.8.2",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@vercel/analytics": "^1.3.1",
@@ -43,7 +43,7 @@
     "@types/recharts": "^2.0.1",
     "dotenv": "^16.4.5",
     "postcss": "^8.5.3",
-    "prisma": "5.18.0",
+    "prisma": "6.8.2",
     "tailwindcss": "^4.1.7",
     "tsx": "^4.17.0",
     "tw-animate-css": "^1.3.0",

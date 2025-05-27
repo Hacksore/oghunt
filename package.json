@@ -6,6 +6,7 @@
     "dev": "turbo run dev",
     "db:generate": "turbo run db:generate",
     "db:push": "dotenv -e .env -- turbo run db:push",
+    "db:studio": "dotenv -e .env -- turbo run db:studio",
     "check": "turbo run check",
     "format": "turbo run format",
     "fix": "turbo run fix"
