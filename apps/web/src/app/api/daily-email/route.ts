@@ -28,11 +28,16 @@ export async function GET(request: NextRequest) {
     },
     {} as Record<string, string>,
   );
+  
+  const lists = await loops.getMailingLists();
 
-  // const event = await loops.sendEvent({
-  //   eventName: "daily_launches",
-  //   eventProperties,
-  // });
 
-  return Response.json({ eventProperties });
+  const event = await loops.sendEvent({
+    eventName: "daily_launches",
+    eventProperties,
+  });
+
+  console.log({ eventProperties, event });
+
+  return Response.json({ eventProperties, event });
 }
