@@ -21,6 +21,7 @@ export function Header() {
           <ThemeButton />
           <Link
             href="https://github.com/Hacksore/oghunt"
+            target="_blank"
             className="flex items-center gap-2 p-2 rounded-full hover:bg-neutral-500/20 dark:hover:bg-neutral-500/15 duration-300 group opacity-50 hover:opacity-100 border border-transparent hover:border-neutral-300 dark:hover:border-neutral-700"
           >
             <svg
