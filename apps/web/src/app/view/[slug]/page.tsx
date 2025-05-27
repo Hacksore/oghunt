@@ -24,6 +24,7 @@ export const generateMetadata = async ({ params }: PageProps) => {
     return generateOGHuntMetadata({
       title: "OGHUNT | Project Not Found",
       description: "The requested project could not be found.",
+      skipOgImage: true,
     })();
   }
 

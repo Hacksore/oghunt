@@ -48,16 +48,18 @@ export function generateOGHuntMetadata({
         title,
         description: description,
         siteName: "OGHUNT",
-        images: skipOgImage
-          ? undefined
-          : [
-              {
-                url: `${OG_URL}/api/og/${cacheKey}.png`,
-                width: 1200,
-                height: 630,
-                alt: "OGHUNT - Product Hunt with ZERO AI Slop",
-              },
-            ],
+        ...(skipOgImage
+          ? {}
+          : {
+              images: [
+                {
+                  url: `${OG_URL}/api/og/${cacheKey}.png`,
+                  width: 1200,
+                  height: 630,
+                  alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+                },
+              ],
+            }),
         locale: "en-US",
         type: "website",
         url: OG_URL,
@@ -67,16 +69,18 @@ export function generateOGHuntMetadata({
         title: "OGHUNT",
         description: description,
         creator: "@oghunt",
-        images: skipOgImage
-          ? undefined
-          : [
-              {
-                url: `${OG_URL}/api/og/${cacheKey}.png`,
-                width: 1200,
-                height: 630,
-                alt: "OGHUNT - Product Hunt with ZERO AI Slop",
-              },
-            ],
+        ...(skipOgImage
+          ? {}
+          : {
+              images: [
+                {
+                  url: `${OG_URL}/api/og/${cacheKey}.png`,
+                  width: 1200,
+                  height: 630,
+                  alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+                },
+              ],
+            }),
       },
       icons: {
         icon: [
