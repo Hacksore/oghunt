@@ -80,5 +80,5 @@ Please feel free to check out our [architecture diagram](./public/og-hunt-diagra
 - Senior Lead Frontend Developer: [Jean](https://github.com/Kampouse)
 - Human Resources: [Metalface](https://github.com/metal-face)
 - Scrum Leader: [Aodhan](https://github.com/MVAodhan)
-- Previous Lead Tailwind Engineer (hiring for this role): [PicklNik](https://github.com/picklenik)
+- 👑✨💅 Our Glorious Lead Tailwind Engineer: [PicklNik](https://github.com/picklenik)
 - Civil Engineering Lead: [Mark](https://github.com/markkhoo)

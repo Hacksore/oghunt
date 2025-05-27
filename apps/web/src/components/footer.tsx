@@ -15,13 +15,13 @@ export const Footer = () => {
             Source code on Github
           </Link>
         </div>
-        <p className="text-sm opacity-60">
+        <p className="text-sm text-neutral-500 text-balance max-w-[40ch] font-light">
           OGHUNT is an independent application and is not affiliated with or endorsed by{" "}
           <Link href="https://www.producthunt.com" className="font-bold">
             Product Hunt
           </Link>
         </p>
-        <p className="text-sm opacity-60">
+        <p className="text-sm text-neutral-500 text-balance max-w-[40ch]">
           © {new Date().getFullYear()} OGHUNT. All rights reserved.
         </p>
       </div>

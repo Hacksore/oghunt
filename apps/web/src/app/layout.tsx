@@ -21,15 +21,15 @@ export default function RootLayout({
           <Header />
           {children}
           {/* Newsletter Section */}
-          <section className="w-full py-8 px-4" id="newsletter">
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
-              <p className="opacity-60 mb-8">
-                Get daily email updates on new products, filtered to show only real innovation.
-              </p>
-              <EmailSignUpForm />
-            </div>
-          </section>
+            <section className="pt-8 p-4 mt-12 border rounded-3xl border-neutral-500/40 w-fit mx-auto shadow-lg bg-white dark:bg-black" id="newsletter">
+              <div className="max-w-2xl mx-auto text-center">
+                <h2 className="text-3xl font-bold mb-4">Stay Updated</h2>
+                <p className="text-neutral-500 font-light text-balance max-w-[40ch] mx-auto mb-8">
+                  Get daily email updates on new products, filtered to show only real innovation.
+                </p>
+                <EmailSignUpForm />
+              </div>
+            </section>
           <Footer />
         </Providers>
       </body>

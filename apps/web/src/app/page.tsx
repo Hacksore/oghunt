@@ -23,23 +23,25 @@ export default async function Page() {
       <JsonLd posts={posts} />
 
       {/* Hero Section */}
-      <section className="w-full py-20 px-4">
+      <section className="w-full pt-4 pb-8 sm:py-20 px-4 relative overflow-clip">
+        <div className="-z-10 absolute bottom-0 right-1/2 translate-1/2 size-1/2 bg-accent/20 rounded-full blur-3xl"/>
+        <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]"/>
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl font-bold mb-6">
-            Discover Real Products, <span className="text-accent">No AI Slop</span>
+          <h1 className="text-5xl font-bold mb-6 max-sm:text-balance">
+            Discover <br className="md:hidden"/> Real Products, <br className="lg:hidden"/> <span className="bg-white bg-gradient-to-br from-accent to-accent/60 bg-clip-text text-transparent">No AI Slop</span>
           </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 font-light max-md:text-balance">
             OGHUNT filters out AI-generated products from{" "}
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>
-          <div className="flex gap-4 justify-center">
+          <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
             <Button asChild>
-              <Link className="text-inherit hover:text-black" href="/list">
+              <Link className="text-white hover:text-black" href="/list">
                 View Today's Launches
               </Link>
             </Button>
-            <Button variant="outline">
+            <Button variant="outline" className="backdrop-blur">
               <Link href="#newsletter">Get Daily Updates</Link>
             </Button>
           </div>
@@ -47,10 +49,11 @@ export default async function Page() {
       </section>
 
       {/* Featured Products Section */}
-      <section className="w-full px-4">
+      <section className="w-full px-4 border-t border-neutral-500/40 pt-16 relative">
+        <div className="-z-10 absolute top-0 left-1/2 -translate-1/2 w-1/2 h-64 bg-accent/5 rounded-full blur-3xl"/>
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">Today's Top 3 Launches</h2>
-          <div className="flex flex-col gap-10 overflow-hidden md:gap-4">
+          <div className="flex flex-col gap-10 md:gap-4">
             {posts.slice(0, 3).map((post, index) => (
               <div key={post.id}>
                 <div className="hidden md:flex">
@@ -64,7 +67,7 @@ export default async function Page() {
           </div>
           <div className="text-center mt-8">
             <Button asChild>
-              <Link href="/list" className="text-inherit hover:text-white">
+              <Link href="/list" className="text-white hover:text-black">
                 View all launches →
               </Link>
             </Button>
