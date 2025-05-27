@@ -39,8 +39,8 @@ export async function GET(request: NextRequest) {
 
   for (const user of users) {
     try {
-    await loops.sendEvent({
-      email: user.email,
+      await loops.sendEvent({
+        email: user.email,
         eventName: "daily_launches",
         eventProperties,
       });
