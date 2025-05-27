@@ -6,20 +6,7 @@
   --color-hover-accent: #ff6d79;
 }
 
-@variant dark (&:where([data-theme="dark"]));
-
-
-/* html,
-body {
-  color: var(--color-neutral-900);
-  background: var(--color-neutral-100);
-}
-
-[data-theme='dark'] html,
-[data-theme='dark'] body {
-  color: var(--color-neutral-100);
-  background: var(--color-primary);
-} */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* TODO: someone cook this in tailwind */
 .fancy {

@@ -20,7 +20,7 @@ export const Card = ({ post, index, homie = false }: CardProps) => {
       rel="noreferrer"
     >
       <div className="flex self-start lg:self-center">
-        <div className="relative size-10 object-contain lg:size-24 group-hover:scale-200 origin-right duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:drop-shadow-2xl">
+        <div className="relative size-10 object-contain lg:size-24 group-hover:-translate-y-1/2 duration-400 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] group-hover:drop-shadow-2xl">
           {post.thumbnailUrl && (
             <Image
               src={post.thumbnailUrl}
