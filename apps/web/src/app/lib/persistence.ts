@@ -12,15 +12,51 @@ import {
   getAllPostsVotesMoarBetter,
 } from "./data";
 
+export async function getYesterdaysLaunches() {
+  // Get current date in UTC
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  
+  console.log('Today:', today.toISOString());
+  console.log('Yesterday:', yesterday.toISOString());
+  
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC(yesterday);
+
+  console.log('Query time range:', {
+    startOfDayUTC,
+    endOfDayUTC,
+    startDate: new Date(startOfDayUTC).toISOString(),
+    endDate: new Date(endOfDayUTC).toISOString()
+  });
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      hasAi: false,
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+  });
+
+  console.log('Found posts:', posts.length);
+  return posts;
+}
+
 export async function getTodaysLaunches(hasAi?: boolean) {
-  const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
   const posts = (
     await db.post.findMany({
       where: {
         // only get the posts that are the same day as today
         createdAt: {
-          gte: postedAfter,
-          lt: postedBefore,
+          gte: startOfDayUTC,
+          lt: endOfDayUTC,
         },
         deleted: false,
         ...(hasAi !== undefined && { hasAi }),
@@ -38,6 +74,7 @@ export async function getTodaysLaunches(hasAi?: boolean) {
     topics: post.topics.map((topic) => topic.Topic),
   }));
 
+  // TODO: why dont we stort in the db?
   return posts.sort((a, b) => b.votesCount - a.votesCount);
 }
 
@@ -223,3 +260,4 @@ export async function fetchAndUpdateDatabase() {
     aiProjectsPercentage,
   };
 }
+
