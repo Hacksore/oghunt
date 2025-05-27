@@ -15,6 +15,20 @@ model Topic {
   posts       TopicPost[]
 }
 
+enum EmailSource {
+  Form
+}
+
+// TODO: at somepoint do we want auth to be able to control this based on a user
+model EmailList {
+  email       String  @id
+  source      EmailSource
+
+  dailyEmails Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Post {
   id           String      @id
   url          String

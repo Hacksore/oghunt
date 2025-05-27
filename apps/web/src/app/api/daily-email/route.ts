@@ -1,3 +1,4 @@
+import prisma from "@/app/db";
 import env from "@/app/env";
 import { getYesterdaysLaunches } from "@/app/lib/launches";
 import { LoopsClient } from "loops";
@@ -28,16 +29,25 @@ export async function GET(request: NextRequest) {
     },
     {} as Record<string, string>,
   );
-  
-  const lists = await loops.getMailingLists();
 
-
-  const event = await loops.sendEvent({
-    eventName: "daily_launches",
-    eventProperties,
+  // TODO: what if this list gets bigger we might have to offload this some queue
+  const users = await prisma.emailList.findMany({
+    where: {
+      dailyEmails: true,
+    },
   });
 
-  console.log({ eventProperties, event });
+  for (const user of users) {
+    try {
+    await loops.sendEvent({
+      email: user.email,
+        eventName: "daily_launches",
+        eventProperties,
+      });
+    } catch (error) {
+      console.error("Failed to send event to user:", error);
+    }
+  }
 
   return Response.json({ eventProperties, event });
 }
