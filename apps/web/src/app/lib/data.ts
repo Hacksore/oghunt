@@ -57,8 +57,7 @@ const printRateLimitInfo = (headers: Headers) => {
 
 export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
-  const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
-  console.log({ postedAfter, postedBefore });
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
   let hasNextPage = true;
   let after = null;
   const allPosts: Post[] = [];
@@ -76,8 +75,8 @@ export async function getAllPost(): Promise<Post[]> {
         variables: {
           first: 100,
           after: after,
-          postedAfter: postedAfter,
-          postedBefore: postedBefore,
+          postedAfter: startOfDayUTC,
+          postedBefore: endOfDayUTC,
         },
       }),
       cache: "no-cache",

@@ -17,7 +17,5 @@ export async function subscribeToNewsletter(email: string) {
     throw new Error("Failed to add to internal list");
   }
 
-
   // TOOD: send them an email via SES
-
 }
