@@ -1,10 +1,7 @@
 import prisma from "@/app/db";
 import env from "@/app/env";
 import { getYesterdaysLaunches } from "@/app/lib/launches";
-import { LoopsClient } from "loops";
 import type { NextRequest } from "next/server";
-
-const loops = new LoopsClient(env.LOOPS_API_KEY);
 
 export const dynamic = "force-dynamic";
 
@@ -41,20 +38,8 @@ export async function GET(request: NextRequest) {
     },
   });
 
-  for (const user of users) {
-    console.log("[DEBUG] sending to", user.email)
-    try {
-      await loops.sendEvent({
-        email: user.email,
-        eventName: "daily_report",
-        eventProperties,
-      });
-    } catch (error) {
-      console.error("Failed to send event to user:", error);
-    }
-  }
+  // TODO: figure out how to send the daily email to the whole list
 
-  console.log("Sent daily email to", users.length, "users");
 
   return Response.json({ eventProperties });
 }

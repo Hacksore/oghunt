@@ -20,5 +20,5 @@
     "target": "ESNext"
   },
   "exclude": ["**/dist", "**/node_modules"],
-  "include": ["templates"]
+  "include": ["templates", "components"]
 }
