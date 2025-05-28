@@ -40,6 +40,5 @@ export async function GET(request: NextRequest) {
 
   // TODO: figure out how to send the daily email to the whole list
 
-
   return Response.json({ eventProperties });
 }
