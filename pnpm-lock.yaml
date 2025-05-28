@@ -59,9 +59,6 @@ importers:
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
-      loops:
-        specifier: ^5.0.1
-        version: 5.0.1
       lucide-react:
         specifier: ^0.511.0
         version: 0.511.0(react@19.1.0)
@@ -3273,10 +3270,6 @@ packages:
   loglevelnext@6.0.0:
     resolution: {integrity: sha512-FDl1AI2sJGjHHG3XKJd6sG3/6ncgiGCQ0YkW46nxe7SfqQq6hujd9CvFXIXtkGBUN83KPZ2KSOJK8q5P0bSSRQ==}
     engines: {node: '>= 18'}
-
-  loops@5.0.1:
-    resolution: {integrity: sha512-xM1c9mnlr8Hr4cHW944TQoK6ApynjinUWOgYZd9/B0/3lwTThq24BQ7+XLjgbFAP5kJzqDTRDQi3t+Diy51Udw==}
-    engines: {node: '>=18'}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -7461,8 +7454,6 @@ snapshots:
   lodash@4.17.21: {}
 
   loglevelnext@6.0.0: {}
-
-  loops@5.0.1: {}
 
   loose-envify@1.4.0:
     dependencies:

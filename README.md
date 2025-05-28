@@ -45,7 +45,6 @@ This is what you need to get up and running
    - `DATABASE_URL`: Set to `"postgresql://dev:dev@localhost:5432/oghunt"`
    - `GEMINI_API_KEY`: Your Gemini API key from step 2
    - `PRODUCTHUNT_TOKEN`: Your ProductHunt Developer Token from step 1
-   - `LOOPS_FORM_ENDPOINT`:  Set to whatever you'd like locally
 
 4. Start the database:
 ```

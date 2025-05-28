@@ -6,9 +6,6 @@ const envSchema = z.object({
   DATABASE_URL: z.string(),
   CRON_SECRET: z.string(),
   GEMINI_API_KEY: z.string(),
-  LOOPS_FORM_ENDPOINT: z.string(),
-  // TODO: document this or just ignore it in dev mode?
-  LOOPS_API_KEY: z.string(),
   VERCEL_URL: z.string().optional(),
 });
 
