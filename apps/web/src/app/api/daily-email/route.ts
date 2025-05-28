@@ -23,8 +23,9 @@ export async function GET(request: NextRequest) {
   const eventProperties = topThree.reduce(
     (acc, launch, index) => {
       const num = index + 1;
-      acc[`product_${num}.title`] = launch.name || `Test${num}`;
-      acc[`product_${num}.desc`] = launch.description || "something cool";
+      acc[`product_${num}.title`] = launch.name;
+      acc[`product_${num}.desc`] = launch.description;
+      acc[`product_${num}.url`] = launch.url;
       return acc;
     },
     {} as Record<string, string>,
@@ -35,13 +36,17 @@ export async function GET(request: NextRequest) {
     where: {
       dailyEmails: true,
     },
+    select: {
+      email: true,
+    },
   });
 
   for (const user of users) {
+    console.log("[DEBUG] sending to", user.email)
     try {
       await loops.sendEvent({
         email: user.email,
-        eventName: "daily_launches",
+        eventName: "daily_report",
         eventProperties,
       });
     } catch (error) {
@@ -49,5 +54,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  return Response.json({ eventProperties, event });
+  console.log("Sent daily email to", users.length, "users");
+
+  return Response.json({ eventProperties });
 }
