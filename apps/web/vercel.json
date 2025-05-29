@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/ingest-posts",
-      "schedule": "0 */4 * * *"
+      "schedule": "0 * * * *"
     },
     {
       "path": "/api/update-vote-count",
