@@ -51,7 +51,7 @@ const printRateLimitInfo = (headers: Headers) => {
   console.log("Product Hunt API Rate Limit:", {
     limit: headers.get("X-Rate-Limit-Limit"),
     remaining: headers.get("X-Rate-Limit-Remaining"),
-    resetIn: `${headers.get("X-Rate-Limit-Reset")} seconds`
+    resetIn: `${headers.get("X-Rate-Limit-Reset")} seconds`,
   });
 };
 
