@@ -47,6 +47,13 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
   }
 }`;
 
+const printRateLimitInfo = (headers: Headers) => {
+  console.log("Rate Limit Info:");
+  console.log(`Limit: ${headers.get("X-Rate-Limit-Limit")}`);
+  console.log(`Remaining: ${headers.get("X-Rate-Limit-Remaining")}`);
+  console.log(`Reset in: ${headers.get("X-Rate-Limit-Reset")} seconds`);
+};
+
 export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
   const [postedAfter, postedBefore] = Object.values(getStartAndEndOfDayInUTC());
@@ -75,9 +82,10 @@ export async function getAllPost(): Promise<Post[]> {
       cache: "no-cache",
     });
     const result: PostResponse = await response.json();
+    printRateLimitInfo(response.headers);
+
     if (!result.data) {
-      // dump all the headers so we know the rate limit
-      console.log(response.headers);
+      console.log("No data received from API");
     }
 
     const data = result.data?.posts;
@@ -103,9 +111,11 @@ export async function getAllPostsVotesMoarBetter(
       query: buildGetAllPostsVotes(ids),
     }),
     cache: "no-cache",
-  }).then((res) => res.json());
+  });
 
-  return response.data;
+  const result = await response.json();
+  printRateLimitInfo(response.headers);
+  return result.data;
 }
 
 export const convertPostToProductPost = (post: Post): ProductPost => {
