@@ -23,7 +23,7 @@ const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
 // Process posts in smaller chunks to avoid token limits
 // NOTE: hoping making this smaller gives us more accurate results
-const CHUNK_SIZE = 20;
+const CHUNK_SIZE = 25;
 
 // Helper function to format a product for analysis
 const formatProductText = (
@@ -45,6 +45,8 @@ Topics: ${topicsText}
 };
 
 // Helper function to generate AI content
+// NOTE: we need to keep this in the RPM range of <= 15
+// https://ai.google.dev/gemini-api/docs/rate-limits#free-tier
 const generateAiContent = async (prompt: string) => {
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash-001",
@@ -130,6 +132,7 @@ export const analyzePosts = async (
 ): Promise<Map<string, boolean>> => {
   const results = new Map<string, boolean>();
   let totalMismatches = 0;
+  let totalRequests = 0;
 
   // Process posts in chunks
   for (let i = 0; i < posts.length; i += CHUNK_SIZE) {
@@ -169,6 +172,7 @@ export const analyzePosts = async (
     let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
     try {
       response = await generateAiContent(prompt);
+      totalRequests++;
     } catch (error) {
       console.error("Failed to generate content for chunk:", error);
       throw new Error("Failed to analyze posts: AI service error");
@@ -208,6 +212,8 @@ export const analyzePosts = async (
       `Analysis complete with ${totalMismatches} chunks having mismatched result counts`,
     );
   }
+
+  console.log(`Total Gemini API requests made: ${totalRequests}`);
 
   return results;
 };
