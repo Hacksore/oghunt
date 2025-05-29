@@ -48,10 +48,11 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
 }`;
 
 const printRateLimitInfo = (headers: Headers) => {
-  console.log("Rate Limit Info:");
-  console.log(`Limit: ${headers.get("X-Rate-Limit-Limit")}`);
-  console.log(`Remaining: ${headers.get("X-Rate-Limit-Remaining")}`);
-  console.log(`Reset in: ${headers.get("X-Rate-Limit-Reset")} seconds`);
+  console.log("Product Hunt API Rate Limit:", {
+    limit: headers.get("X-Rate-Limit-Limit"),
+    remaining: headers.get("X-Rate-Limit-Remaining"),
+    resetIn: `${headers.get("X-Rate-Limit-Reset")} seconds`
+  });
 };
 
 export async function getAllPost(): Promise<Post[]> {
