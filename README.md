@@ -1,6 +1,6 @@
 # oghunt
 
-OGHUNT uses AI to remove the AI listings from today's Product Hunt launches.
+oghunt uses AI to remove the AI listings from today's Product Hunt launches.
 
 ![image](https://github.com/user-attachments/assets/28118c37-06df-4081-9504-cac4f18c7c76)
 

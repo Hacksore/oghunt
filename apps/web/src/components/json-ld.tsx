@@ -8,7 +8,7 @@ export function JsonLd({ posts }: JsonLdProps) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "OGHUNT",
+    name: "oghunt",
     description: "Product Hunt with ZERO AI Slop which uses AI to filter out AI projects",
     url: "https://oghunt.com",
     potentialAction: {

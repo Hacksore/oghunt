@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300;
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | Today's Top Launches",
+  title: "oghunt | Today's Top Launches",
   description:
     "Discover today's top product launches on Product Hunt, filtered to show only real innovative products.",
 });

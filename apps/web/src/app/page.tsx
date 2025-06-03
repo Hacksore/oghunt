@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | Product Hunt with ZERO AI Slop Powered By AI",
+  title: "oghunt | Product Hunt with ZERO AI Slop Powered By AI",
   description:
     "Product Hunt with ZERO AI Slop which uses AI to filter out AI products. You no longer have to worry about AI products cluttering your feed",
   skipOgImage: true,
@@ -43,7 +43,7 @@ export default async function Page() {
             </span>
           </h1>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 dark:text-neutral-400 max-md:text-balance">
-            OGHUNT filters out AI-generated products from{" "}
+            oghunt filters out AI-generated products from{" "}
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>

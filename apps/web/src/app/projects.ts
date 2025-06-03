@@ -30,7 +30,7 @@ export function createProject(
 
 export const PROJECTS: ProductPost[] = [
   createProject({
-    name: "OGHUNT",
+    name: "oghunt",
     url: "https://oghunt.com",
     tagline: "Product Hunt with ZERO AI Slop",
     description: "Product Hunt with ZERO AI Slop",

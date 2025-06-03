@@ -22,14 +22,14 @@ export const generateMetadata = async ({ params }: PageProps) => {
 
   if (!project) {
     return generateOGHuntMetadata({
-      title: "OGHUNT | Project Not Found",
+      title: "oghunt | Project Not Found",
       description: "The requested project could not be found.",
       skipOgImage: true,
     })();
   }
 
   return generateOGHuntMetadata({
-    title: `OGHUNT | ${project.name}`,
+    title: `oghunt | ${project.name}`,
     description: project.tagline,
     skipOgImage: true,
   })();

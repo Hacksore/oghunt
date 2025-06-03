@@ -1,6 +1,6 @@
 import type { ProductPost } from "../types";
 
-export const PRODUCT_HUNT_NAME = "OGHUNT";
+export const PRODUCT_HUNT_NAME = "oghunt";
 
 export const shouldIncludePost = async (
   post: {

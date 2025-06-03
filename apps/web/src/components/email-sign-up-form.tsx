@@ -35,7 +35,7 @@ export function EmailSignUpForm() {
             Get the latest updates and news delivered to your inbox
           </label>
           <p className="text-sm pb-4 text-neutral-500 text-balance">
-            Top 3 OGHUNT launches of the day sent daily to your inbox
+            Top 3 oghunt launches of the day sent daily to your inbox
           </p>
           <div className="relative">
             <input

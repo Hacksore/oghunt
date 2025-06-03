@@ -43,11 +43,11 @@ export function generateOGHuntMetadata({
         "Startup Products",
         "Product Discovery",
       ],
-      authors: [{ name: "OGHUNT" }],
+      authors: [{ name: "oghunt" }],
       openGraph: {
         title,
         description: description,
-        siteName: "OGHUNT",
+        siteName: "oghunt",
         ...(skipOgImage
           ? {}
           : {
@@ -56,7 +56,7 @@ export function generateOGHuntMetadata({
                   url: `${OG_URL}/api/og/${cacheKey}.png`,
                   width: 1200,
                   height: 630,
-                  alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+                  alt: "oghunt - Product Hunt with ZERO AI Slop",
                 },
               ],
             }),
@@ -66,7 +66,7 @@ export function generateOGHuntMetadata({
       },
       twitter: {
         card: "summary_large_image",
-        title: "OGHUNT",
+        title: "oghunt",
         description: description,
         creator: "@oghunt",
         ...(skipOgImage
@@ -77,7 +77,7 @@ export function generateOGHuntMetadata({
                   url: `${OG_URL}/api/og/${cacheKey}.png`,
                   width: 1200,
                   height: 630,
-                  alt: "OGHUNT - Product Hunt with ZERO AI Slop",
+                  alt: "oghunt - Product Hunt with ZERO AI Slop",
                 },
               ],
             }),

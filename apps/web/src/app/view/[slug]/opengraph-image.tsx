@@ -50,7 +50,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
         </p>
       </div>
       <p style={{ fontWeight: 700 }} tw="text-white text-4xl text-bold absolute bottom-8 left-8">
-        OGHUNT
+        oghunt
       </p>
     </div>,
     {

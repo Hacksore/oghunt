@@ -5,7 +5,7 @@ import { MobileCard } from "../../components/mobile-card";
 import { generateOGHuntMetadata } from "../metadata";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | The Homies Products",
+  title: "oghunt | The Homies Products",
   description: "Our homies cooked many different side products please give them a look 🙏",
 });
 

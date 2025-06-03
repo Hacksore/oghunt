@@ -5,7 +5,7 @@ import { generateOGHuntMetadata } from "../metadata";
 export const dynamic = "force-dynamic";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "OGHUNT | SlopMeter™ History",
+  title: "oghunt | SlopMeter™ History",
   description: "View the history of SlopMeter™ metrics",
 });
 
