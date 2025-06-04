@@ -3,7 +3,7 @@ import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
-import { getTodaysLaunches } from "./lib/persistence";
+import { getTodaysLaunches } from "./lib/launches";
 import { generateOGHuntMetadata } from "./metadata";
 
 export const dynamic = "force-dynamic";

@@ -2,7 +2,7 @@ import type { ProductPost } from "@/app/types";
 import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
 import { filterPosts } from "@/app/utils/string";
 import { unstable_cache } from "next/cache";
-import { getTodaysLaunches } from "../../lib/persistence";
+import { getTodaysLaunches } from "../../lib/launches";
 
 export const dynamic = "force-dynamic";
 
@@ -34,14 +34,14 @@ export async function GET() {
   const posts = await filterPosts(allPosts);
   const aiPosts = await filterPosts(allPosts, true);
 
-  const { postedAfter, postedBefore } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
   return Response.json({
     noAiPostCount: posts.length,
     aiPostCount: aiPosts.length,
     allPostCount: allPosts.length,
     timeRange: {
-      gte: postedAfter,
-      lt: postedBefore,
+      gte: startOfDayUTC,
+      lt: endOfDayUTC,
     },
     currentTimeUtc: new Date().toUTCString(),
     currentTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,

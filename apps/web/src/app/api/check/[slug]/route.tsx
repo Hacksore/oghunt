@@ -20,9 +20,9 @@ export async function GET(_request: Request, props: { params: Promise<{ slug: st
     });
   }
 
-  const { postedBefore, postedAfter } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
   const wouldShowToday =
-    post.createdAt > new Date(postedAfter) && post.createdAt < new Date(postedBefore);
+    post.createdAt > new Date(startOfDayUTC) && post.createdAt < new Date(endOfDayUTC);
 
   return Response.json({
     ...post,

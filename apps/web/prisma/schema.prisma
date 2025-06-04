@@ -15,6 +15,20 @@ model Topic {
   posts       TopicPost[]
 }
 
+enum EmailSource {
+  Form
+}
+
+// TODO: at somepoint do we want auth to be able to control this based on a user
+model EmailList {
+  email       String  @id
+  source      EmailSource
+
+  dailyEmails Boolean @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
 model Post {
   id           String      @id
   url          String
@@ -25,6 +39,7 @@ model Post {
   thumbnailUrl String
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
+  /// if the post is deleted, it means it was deleted by the user or product hunt team
   deleted      Boolean     @default(false)
   topics       TopicPost[]
 }
