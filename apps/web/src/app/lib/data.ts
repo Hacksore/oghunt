@@ -1,6 +1,8 @@
+import { toZonedTime } from "date-fns-tz";
 import env from "../env";
 import type { Post, PostResponse, ProductPost } from "../types";
 import { getStartAndEndOfDayInUTC } from "../utils/date";
+import { toPST } from "../utils/timezone";
 
 const buildGetAllPostsVotes = (keys: string[]) => `
 query {

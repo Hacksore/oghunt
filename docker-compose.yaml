@@ -11,6 +11,7 @@ services:
       POSTGRESQL_USERNAME: dev
       POSTGRESQL_PASSWORD: dev
       POSTGRESQL_DATABASE: oghunt
+      POSTGRESQL_TIMEZONE: America/Chicago
     # create a volume for the docker container_name
     volumes:
       - oghunt-data:/bitnami/postgres/data

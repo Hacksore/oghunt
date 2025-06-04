@@ -6,6 +6,7 @@ import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
 
 import env from "@/app/env";
+import { toZonedTime } from "date-fns-tz";
 
 export const dynamic = "force-dynamic";
 
@@ -40,6 +41,7 @@ export async function GET(request: NextRequest) {
     ...convertPostToProductPost(post),
     id: post.id,
   }));
+
   const aiAnalysisResults = await analyzePosts(postsToAnalyze);
 
   // Create a map of post IDs to their AI analysis results
@@ -91,6 +93,7 @@ export async function GET(request: NextRequest) {
           hasAi: postAiResults.get(post.id) ?? false,
           thumbnailUrl: post.thumbnail.url,
           deleted: false,
+          createdAt: new Date(post.createdAt),
         })),
       ),
       skipDuplicates: true,

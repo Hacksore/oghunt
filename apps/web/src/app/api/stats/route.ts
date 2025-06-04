@@ -1,6 +1,7 @@
 import type { ProductPost } from "@/app/types";
 import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
 import { filterPosts } from "@/app/utils/string";
+import { toZonedTime } from "date-fns-tz";
 import { unstable_cache } from "next/cache";
 import { getTodaysLaunches } from "../../lib/launches";
 
@@ -43,7 +44,8 @@ export async function GET() {
       gte: startOfDayUTC,
       lt: endOfDayUTC,
     },
-    currentTimeUtc: new Date().toUTCString(),
+    currentTimeUtc: toZonedTime(new Date(), "UTC").toISOString(),
+    currentTimePST: toZonedTime(new Date(), "America/Los_Angeles").toISOString(),
     currentTimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
     cache,
   });

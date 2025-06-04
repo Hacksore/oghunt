@@ -1,3 +1,5 @@
+import { getPSTDayRange } from "./timezone";
+
 // Function to get the current date in PST (UTC-8)
 // ProductHunt is in PST
 export function getCurrentDateInPST(startDate?: Date) {
@@ -13,29 +15,5 @@ export function getCurrentDateInPST(startDate?: Date) {
   return pstDate;
 }
 
-// Function to get the start and end of the current day in PST
-// Then convert to UTC ISO-8601 strings
-export function getStartAndEndOfDayInUTC(startDate?: Date) {
-  const currentPSTDate = getCurrentDateInPST(startDate);
-
-  // Get the PST date components
-  const year = currentPSTDate.getUTCFullYear();
-  const month = currentPSTDate.getUTCMonth();
-  const day = currentPSTDate.getUTCDate();
-
-  // Set to the start of the day (12:00 AM) in PST
-  const startOfDayPST = new Date(Date.UTC(year, month, day, 0, 0, 0));
-
-  // Set to the end of the day (11:59 PM) in PST
-  const endOfDayPST = new Date(Date.UTC(year, month, day, 23, 59, 59));
-
-  // Convert PST times to UTC ISO-8601 format
-  const startOfDayUTC = startOfDayPST.toISOString();
-  const endOfDayUTC = endOfDayPST.toISOString();
-
-  // Return the start and end of the day in UTC ISO-8601 format
-  return {
-    startOfDayUTC,
-    endOfDayUTC,
-  };
-}
+// Re-export the PST day range function for backward compatibility
+export const getStartAndEndOfDayInUTC = getPSTDayRange;
