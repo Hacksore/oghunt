@@ -1,5 +1,5 @@
 import prisma from "@/app/db";
-import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
+import { getPSTDayRange } from "@/app/utils/date";
 
 export async function GET(_request: Request, props: { params: Promise<{ slug: string }> }) {
   const params = await props.params;
@@ -20,7 +20,7 @@ export async function GET(_request: Request, props: { params: Promise<{ slug: st
     });
   }
 
-  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getPSTDayRange(new Date());
   const wouldShowToday =
     post.createdAt > new Date(startOfDayUTC) && post.createdAt < new Date(endOfDayUTC);
 
