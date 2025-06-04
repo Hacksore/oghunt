@@ -1,5 +1,5 @@
 import type { ProductPost } from "@/app/types";
-import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
+import { getDayRange } from "@/app/utils/date";
 import { filterPosts } from "@/app/utils/string";
 import { toZonedTime } from "date-fns-tz";
 import { unstable_cache } from "next/cache";
@@ -35,7 +35,7 @@ export async function GET() {
   const posts = await filterPosts(allPosts);
   const aiPosts = await filterPosts(allPosts, true);
 
-  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getDayRange(new Date());
   return Response.json({
     noAiPostCount: posts.length,
     aiPostCount: aiPosts.length,

@@ -1,8 +1,7 @@
-import { toZonedTime } from "date-fns-tz";
+
 import env from "../env";
 import type { Post, PostResponse, ProductPost } from "../types";
-import { getStartAndEndOfDayInUTC } from "../utils/date";
-import { toPST } from "../utils/timezone";
+import { getDayRange } from "../utils/date";
 
 const buildGetAllPostsVotes = (keys: string[]) => `
 query {
@@ -59,7 +58,7 @@ const printRateLimitInfo = (headers: Headers) => {
 
 export async function getAllPost(): Promise<Post[]> {
   // Get the current UTC date and time based on PST day
-  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getDayRange(new Date());
   let hasNextPage = true;
   let after = null;
   const allPosts: Post[] = [];

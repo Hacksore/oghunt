@@ -1,14 +1,14 @@
 "use server";
 
 import db from "../db";
-import { getStartAndEndOfDayInUTC } from "../utils/date";
+import { getDayRange } from "../utils/date";
 
 export async function getYesterdaysLaunches() {
   // Get current date in UTC
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
-  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC(yesterday);
+  const { startOfDayUTC, endOfDayUTC } = getDayRange(yesterday);
 
   const posts = await db.post.findMany({
     where: {
@@ -28,7 +28,7 @@ export async function getYesterdaysLaunches() {
 }
 
 export async function getTodaysLaunches(hasAi?: boolean) {
-  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+  const { startOfDayUTC, endOfDayUTC } = getDayRange(new Date());
   const posts = (
     await db.post.findMany({
       where: {
