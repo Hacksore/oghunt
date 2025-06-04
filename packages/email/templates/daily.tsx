@@ -1,5 +1,6 @@
-import { Body, Column, Container, Head, Html, Img, Preview, Row, Section, Text } from "jsx-email";
+import { Body, Column, Container, Head, Html, Preview, Row, Section, Text } from "jsx-email";
 import { Footer } from "../components/footer";
+import { Header } from "../components/header";
 
 const main = {
   backgroundColor: "#f6f9fc",
@@ -25,10 +26,6 @@ const paragraph = {
   textAlign: "left" as const,
 };
 
-const header = {
-  fontWeight: "bold",
-};
-
 const baseUrl = import.meta.isJsxEmailPreview ? "/assets" : "https://assets.oghunt.com";
 
 interface Product {
@@ -52,14 +49,12 @@ export const previewProps: TemplateProps = {
 export const Template = ({ products = [] }: { products: Product[] }) => (
   <Html>
     <Head />
-    <Preview>OGHUNT - Daily Update!</Preview>
+    <Preview>oghunt - Daily Update!</Preview>
     <Body style={main}>
       <Container style={container}>
         <Section style={box}>
-          <Section style={header}>
-            <Img src={`${baseUrl}/icon-64.png`} alt="OGHUNT Logo" width="64" height="64" />
-            <Text style={paragraph}>OGHUNT</Text>
-          </Section>
+          <Header baseUrl={baseUrl} />
+
           <Text style={paragraph}>Here are the top 3 launches from yesterday!</Text>
 
           <Row>
