@@ -5,8 +5,8 @@ import { generateOGHuntMetadata } from "../metadata";
 export const dynamic = "force-dynamic";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "oghunt | SlopMeter™ History",
-  description: "View the history of SlopMeter™ metrics",
+  title: "oghunt | SlopMeter History",
+  description: "View the history of SlopMeter metrics",
 });
 
 export default async function SlopPage() {
@@ -28,7 +28,7 @@ export default async function SlopPage() {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <section className="max-w-4xl w-full mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center">SlopMeter™ History</h1>
+        <h1 className="text-4xl font-bold mb-8 text-center">SlopMeter History</h1>
         <div className="w-full h-[500px]">
           <SlopGraph metrics={metrics} />
         </div>

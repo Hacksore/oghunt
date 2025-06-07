@@ -20,7 +20,7 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
         />
       </div>
       <div className="flex items-center gap-1 text-sm text-neutral-500 dark:text-neutral-400">
-        SlopMeter™
+        SlopMeter
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>

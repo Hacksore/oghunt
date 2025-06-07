@@ -43,7 +43,7 @@ export async function GET() {
       tw="flex flex-col items-center pb-12 justify-end"
     >
       <p style={{ fontWeight: 700 }} tw="flex text-gray-400 w-[90%] items-start pl-2 text-2xl">
-        SlopMeter™
+        SlopMeter
       </p>
       <div tw="flex w-[90%] h-20 bg-[#111111] rounded-3xl z-40">
         <div
