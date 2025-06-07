@@ -33,6 +33,10 @@ query GetAllPosts($first: Int, $last: Int, $before: String, $after: String, $pos
       tagline
       description
       votesCount
+      media {
+        url,
+        videoUrl
+      }
       topics {
         nodes {
           id

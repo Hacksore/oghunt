@@ -20,6 +20,10 @@ export interface Post {
   thumbnail: {
     url: string;
   };
+  media : {
+    url: string;
+    videoUrl?: string;
+  };
   topics: Topic;
   votesCount: number;
 }
