@@ -22,7 +22,7 @@ export default function ClientPage({ project }: ClientPageProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const media = (project.media as unknown as Media[]) || [];
+  const media = (project?.media as unknown as Media[]) || [];
   const videos = media.filter((m) => m.videoUrl);
   const images = media.filter((m) => !m.videoUrl);
 

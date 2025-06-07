@@ -131,6 +131,7 @@ export const convertPostToProductPost = (post: Post): ProductPost => {
     hasAi: false,
     name: post.name,
     tagline: post.tagline,
+    media: post.media,
     description: post.description,
     votesCount: post.votesCount,
     topics: post.topics.nodes.map((node) => {

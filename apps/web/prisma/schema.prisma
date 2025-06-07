@@ -15,18 +15,12 @@ model Topic {
   posts       TopicPost[]
 }
 
-enum EmailSource {
-  Form
-}
-
-// TODO: at somepoint do we want auth to be able to control this based on a user
 model EmailList {
-  email  String      @id
-  source EmailSource
-
-  dailyEmails Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  email       String      @id
+  source      EmailSource
+  dailyEmails Boolean     @default(false)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
 }
 
 model Post {
@@ -37,12 +31,10 @@ model Post {
   tagline      String
   description  String
   thumbnailUrl String
-  /// The images for the post on the CDN
-  media        Json        @default("[]")
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
+  media        Json?       @default("[]")
   /// if the post is deleted, it means it was deleted by the user or product hunt team
-  // FIXME: i think we broke this and are no longer using it lmao, we need to fix this
   deleted      Boolean     @default(false)
   topics       TopicPost[]
 }
@@ -50,17 +42,21 @@ model Post {
 model TopicPost {
   topicId String
   postId  String
-  Topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
   Post    Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  Topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([topicId, postId])
 }
 
 model Metric {
   id                   Int      @id @default(autoincrement())
-  timestamp            DateTime @default(dbgenerated("timezone('utc', now())")) @db.Timestamp(6)
+  timestamp            DateTime @default(dbgenerated("timezone('utc'::text, now())")) @db.Timestamp(6)
   totalProjects        Int
   totalVotes           Int
   aiProjectsPercentage Float
   aiVotesPercentage    Float
+}
+
+enum EmailSource {
+  Form
 }
