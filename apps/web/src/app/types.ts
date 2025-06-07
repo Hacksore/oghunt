@@ -20,7 +20,7 @@ export interface Post {
   thumbnail: {
     url: string;
   };
-  media : {
+  media: {
     url: string;
     videoUrl?: string;
   };

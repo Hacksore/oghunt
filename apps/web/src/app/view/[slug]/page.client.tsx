@@ -21,9 +21,9 @@ export default function ClientPage({ project }: ClientPageProps) {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  const media = ((project.media as unknown) as Media[]) || [];
-  const videos = media.filter(m => m.videoUrl);
-  const images = media.filter(m => !m.videoUrl);
+  const media = (project.media as unknown as Media[]) || [];
+  const videos = media.filter((m) => m.videoUrl);
+  const images = media.filter((m) => !m.videoUrl);
 
   return (
     <div className="container mx-auto py-8">
@@ -36,20 +36,34 @@ export default function ClientPage({ project }: ClientPageProps) {
                 {project.tagline}
               </p>
               <div className="flex flex-wrap gap-2">
-              {project.topics.map((topic) => (
+                {project.topics.map((topic) => (
                   <Pill key={topic.id} name={topic.name} />
                 ))}
               </div>
             </div>
-            <img
-              src={project.thumbnailUrl}
-              alt={project.name}
-              className="w-24 h-24 rounded-lg object-cover"
-            />
+            <div className="flex flex-col items-end">
+              <img
+                src={project.thumbnailUrl}
+                alt={project.name}
+                className="w-24 h-24 rounded-lg object-cover"
+              />
+            </div>
           </div>
 
           <div className="mt-6 space-y-4">
             <p className="text-neutral-600 dark:text-neutral-400">{project.description}</p>
+
+            <Button asChild>
+              <a
+                href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <ExternalLink className="w-4 h-4" />
+                View on Product Hunt
+              </a>
+            </Button>
 
             {media.length > 0 && (
               <div className="mt-6 space-y-8">
@@ -59,7 +73,10 @@ export default function ClientPage({ project }: ClientPageProps) {
                     <h3 className="text-xl font-semibold">Videos</h3>
                     <div className="grid grid-cols-1 gap-4">
                       {videos.map((media, index) => (
-                        <div key={`${project.id}-video-${index}`} className="relative aspect-video rounded-lg overflow-hidden">
+                        <div
+                          key={`${project.id}-video-${index}`}
+                          className="relative aspect-video rounded-lg overflow-hidden"
+                        >
                           <video
                             src={media.videoUrl}
                             controls
@@ -80,16 +97,16 @@ export default function ClientPage({ project }: ClientPageProps) {
                     <h3 className="text-xl font-semibold">Gallery</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {images.map((media, index) => (
-                        <button 
+                        <button
                           type="button"
-                          key={`${project.id}-image-${index}`} 
+                          key={`${project.id}-image-${index}`}
                           className="relative aspect-video rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity w-full text-left"
                           onClick={() => {
                             setLightboxIndex(index);
                             setLightboxOpen(true);
                           }}
                           onKeyDown={(e) => {
-                            if (e.key === 'Enter' || e.key === ' ') {
+                            if (e.key === "Enter" || e.key === " ") {
                               setLightboxIndex(index);
                               setLightboxOpen(true);
                             }
@@ -111,7 +128,7 @@ export default function ClientPage({ project }: ClientPageProps) {
                   open={lightboxOpen}
                   close={() => setLightboxOpen(false)}
                   index={lightboxIndex}
-                  slides={images.map(img => ({ src: img.url }))}
+                  slides={images.map((img) => ({ src: img.url }))}
                   carousel={{ finite: true }}
                   controller={{ closeOnBackdropClick: true }}
                   styles={{ container: { backgroundColor: "rgba(0, 0, 0, 0.75)" } }}
@@ -119,19 +136,7 @@ export default function ClientPage({ project }: ClientPageProps) {
               </div>
             )}
 
-            <div className="flex gap-4 mt-8">
-              <Button asChild>
-                <a
-                  href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  View on Product Hunt
-                </a>
-              </Button>
-            </div>
+            <div className="flex gap-4 mt-8"></div>
           </div>
         </div>
       </div>
