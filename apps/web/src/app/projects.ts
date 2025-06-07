@@ -3,7 +3,10 @@ import type { ProductPost } from "./types";
 let projectCounter = 1;
 
 export function createProject(
-  data: Omit<ProductPost, "id" | "topics" | "createdAt" | "votesCount" | "deleted" | "hasAi"> & {
+  data: Omit<
+    ProductPost,
+    "id" | "topics" | "createdAt" | "votesCount" | "deleted" | "hasAi" | "media"
+  > & {
     topics: string[];
   },
 ): ProductPost {
@@ -24,6 +27,7 @@ export function createProject(
       id: `${projectId}-${index + 1}`,
       postId: projectId,
     })),
+    media: [],
     ...restData,
   };
 }
