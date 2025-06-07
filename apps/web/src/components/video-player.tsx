@@ -8,7 +8,7 @@ interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ url, poster, className }: VideoPlayerProps) {
-  const [videoType, setVideoType] = useState<"youtube" | "vimeo" | "direct" | null>(null);
+  const [videoType, setVideoType] = useState<"youtube" | "vimeo" | "loom" | "direct" | null>(null);
   const [videoId, setVideoId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -20,6 +20,9 @@ export function VideoPlayer({ url, poster, className }: VideoPlayerProps) {
 
     // Vimeo URL patterns
     const vimeoPatterns = [/vimeo\.com\/([0-9]+)/, /player\.vimeo\.com\/video\/([0-9]+)/];
+
+    // Loom URL patterns
+    const loomPatterns = [/loom\.com\/share\/([a-zA-Z0-9]+)/, /loom\.com\/embed\/([a-zA-Z0-9]+)/];
 
     // Check for YouTube
     for (const pattern of youtubePatterns) {
@@ -36,6 +39,16 @@ export function VideoPlayer({ url, poster, className }: VideoPlayerProps) {
       const match = url.match(pattern);
       if (match) {
         setVideoType("vimeo");
+        setVideoId(match[1]);
+        return;
+      }
+    }
+
+    // Check for Loom
+    for (const pattern of loomPatterns) {
+      const match = url.match(pattern);
+      if (match) {
+        setVideoType("loom");
         setVideoId(match[1]);
         return;
       }
@@ -67,6 +80,16 @@ export function VideoPlayer({ url, poster, className }: VideoPlayerProps) {
           src={`https://player.vimeo.com/video/${videoId}`}
           title="Vimeo video player"
           allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full"
+        />
+      )}
+
+      {videoType === "loom" && (
+        <iframe
+          src={`https://www.loom.com/embed/${videoId}`}
+          title="Loom video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowFullScreen
           className="absolute inset-0 w-full h-full"
         />
