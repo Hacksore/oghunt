@@ -6,6 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import type { ProductPost } from "@/app/types";
 import { Pill } from "@/components/pill";
+import { useState } from "react";
 
 interface Media {
   url: string;
@@ -17,6 +18,8 @@ interface ClientPageProps {
 }
 
 export default function ClientPage({ project }: ClientPageProps) {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   const media = ((project.media as unknown) as Media[]) || [];
   const videos = media.filter(m => m.videoUrl);
@@ -74,7 +77,7 @@ export default function ClientPage({ project }: ClientPageProps) {
                 {/* Images Section */}
                 {images.length > 0 && (
                   <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Images</h3>
+                    <h3 className="text-xl font-semibold">Gallery</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {images.map((media, index) => (
                         <button 
@@ -82,17 +85,13 @@ export default function ClientPage({ project }: ClientPageProps) {
                           key={`${project.id}-image-${index}`} 
                           className="relative aspect-video rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity w-full text-left"
                           onClick={() => {
-                            const lightbox = document.querySelector('[data-yarl-lightbox]') as HTMLElement;
-                            if (lightbox) {
-                              lightbox.click();
-                            }
+                            setLightboxIndex(index);
+                            setLightboxOpen(true);
                           }}
                           onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
-                              const lightbox = document.querySelector('[data-yarl-lightbox]') as HTMLElement;
-                              if (lightbox) {
-                                lightbox.click();
-                              }
+                              setLightboxIndex(index);
+                              setLightboxOpen(true);
                             }
                           }}
                         >
@@ -109,9 +108,13 @@ export default function ClientPage({ project }: ClientPageProps) {
 
                 {/* Lightbox */}
                 <Lightbox
+                  open={lightboxOpen}
+                  close={() => setLightboxOpen(false)}
+                  index={lightboxIndex}
                   slides={images.map(img => ({ src: img.url }))}
                   carousel={{ finite: true }}
                   controller={{ closeOnBackdropClick: true }}
+                  styles={{ container: { backgroundColor: "rgba(0, 0, 0, 0.75)" } }}
                 />
               </div>
             )}
