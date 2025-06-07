@@ -53,17 +53,19 @@ export default function ClientPage({ project }: ClientPageProps) {
           <div className="mt-6 space-y-4">
             <p className="text-neutral-600 dark:text-neutral-400">{project.description}</p>
 
-            <Button asChild>
-              <a
-                href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <ExternalLink className="w-4 h-4" />
-                View on Product Hunt
-              </a>
-            </Button>
+            <div className="flex justify-end">
+              <Button asChild>
+                <a
+                  href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <ExternalLink className="w-4 h-4" />
+                  View on Product Hunt
+                </a>
+              </Button>
+            </div>
 
             {media.length > 0 && (
               <div className="mt-6 space-y-8">
@@ -136,7 +138,7 @@ export default function ClientPage({ project }: ClientPageProps) {
               </div>
             )}
 
-            <div className="flex gap-4 mt-8"></div>
+            <div className="flex gap-4 mt-8" />
           </div>
         </div>
       </div>

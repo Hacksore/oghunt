@@ -51,9 +51,6 @@ export default async function Page() {
             <Button asChild>
               <Link href="/list">View Today's Launches</Link>
             </Button>
-            <Button variant="outline" className="backdrop-blur">
-              <Link href="#newsletter">Get Daily Updates</Link>
-            </Button>
           </div>
         </div>
       </section>
