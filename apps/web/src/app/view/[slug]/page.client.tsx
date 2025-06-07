@@ -37,7 +37,7 @@ export default function ClientPage({ project }: ClientPageProps) {
                 {project.tagline}
               </p>
               <div className="flex flex-wrap gap-2">
-                {project.topics.map((topic) => (
+                {project.topics.sort().map((topic) => (
                   <Pill key={topic.id} name={topic.name} />
                 ))}
               </div>
