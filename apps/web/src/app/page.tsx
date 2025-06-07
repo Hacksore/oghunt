@@ -5,6 +5,7 @@ import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
 import { getTodaysLaunches } from "./lib/launches";
 import { generateOGHuntMetadata } from "./metadata";
+import { Star } from "@/components/icons/star";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
@@ -31,8 +32,9 @@ export default async function Page() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="p-[1px] mx-auto bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full w-fit mb-5">
             <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-2 items-center px-2 text-sm py-0.5">
+              <Star className="fill-red-400" />
               <span className="bg-gradient-to-r from-indigo-800 to-blue-800 dark:from-indigo-200 dark:to-blue-200 bg-clip-text text-transparent">
-                ✨ Now Using AI
+                Now Using AI
               </span>
             </div>
           </div>
