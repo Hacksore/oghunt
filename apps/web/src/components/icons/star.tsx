@@ -34,43 +34,5 @@ export const Star = ({ className = "" }: StarProps) => (
       d="M19.6875 34.1114C19.6875 33.3751 19.0999 32.7781 18.375 32.7781C17.6501 32.7781 17.0625 33.3751 17.0625 34.1114C17.0625 38.5298 13.5368 42.1114 9.1875 42.1114C8.46263 42.1114 7.875 42.7085 7.875 43.4447C7.875 44.181 8.46263 44.7781 9.1875 44.7781C13.5368 44.7781 17.0625 48.3597 17.0625 52.7781C17.0625 53.5143 17.6501 54.1114 18.375 54.1114C19.0999 54.1114 19.6875 53.5143 19.6875 52.7781C19.6875 48.3597 23.2132 44.7781 27.5625 44.7781C28.2873 44.7781 28.875 44.181 28.875 43.4447C28.875 42.7085 28.2873 42.1114 27.5625 42.1114C23.2132 42.1114 19.6875 38.5298 19.6875 34.1114Z"
       fill="#C3D5FF"
     />
-    <defs>
-      <linearGradient
-        id="paint0_linear_2025_60"
-        x1="7.875"
-        y1="54.1114"
-        x2="56.4375"
-        y2="54.1179"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#E59CFF" />
-        <stop offset="0.5" stop-color="#BA9CFF" />
-        <stop offset="1" stop-color="#9CB2FF" />
-      </linearGradient>
-      <linearGradient
-        id="paint1_linear_2025_60"
-        x1="7.875"
-        y1="54.1114"
-        x2="56.4375"
-        y2="54.1179"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#E59CFF" />
-        <stop offset="0.5" stop-color="#BA9CFF" />
-        <stop offset="1" stop-color="#9CB2FF" />
-      </linearGradient>
-      <linearGradient
-        id="paint2_linear_2025_60"
-        x1="7.875"
-        y1="54.1114"
-        x2="56.4375"
-        y2="54.1179"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stop-color="#E59CFF" />
-        <stop offset="0.5" stop-color="#BA9CFF" />
-        <stop offset="1" stop-color="#9CB2FF" />
-      </linearGradient>
-    </defs>
   </svg>
 );

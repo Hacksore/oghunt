@@ -1,4 +1,5 @@
 import { Star } from "@/components/icons/star";
+import { ProductHunt } from "@/components/product-hunt";
 import { Button } from "@/components/ui/button";
 import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
@@ -49,6 +50,10 @@ export default async function Page() {
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>
+          {/* TODO: enable for launch on product hunt */}
+          {/* <div className="flex justify-center mb-8"> */}
+          {/*   <ProductHunt /> */}
+          {/* </div> */}
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
             <Button asChild>
               <Link href="/list">View Today's Launches</Link>
