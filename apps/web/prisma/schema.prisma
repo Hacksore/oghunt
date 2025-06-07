@@ -42,6 +42,7 @@ model Post {
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
   /// if the post is deleted, it means it was deleted by the user or product hunt team
+  // FIXME: i think we broke this and are no longer using it lmao, we need to fix this
   deleted      Boolean     @default(false)
   topics       TopicPost[]
 }
