@@ -6,6 +6,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import type { ProductPost } from "@/app/types";
 import { Pill } from "@/components/pill";
+import { VideoPlayer } from "@/components/video-player";
 import { useState } from "react";
 
 interface Media {
@@ -53,7 +54,7 @@ export default function ClientPage({ project }: ClientPageProps) {
           <div className="mt-6 space-y-4">
             <p className="text-neutral-600 dark:text-neutral-400">{project.description}</p>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end mt-6">
               <Button asChild>
                 <a
                   href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
@@ -72,23 +73,18 @@ export default function ClientPage({ project }: ClientPageProps) {
                 {/* Videos Section */}
                 {videos.length > 0 && (
                   <div className="space-y-4">
-                    <h3 className="text-xl font-semibold">Videos</h3>
+                    <h3 className="text-xl font-semibold">Demo</h3>
                     <div className="grid grid-cols-1 gap-4">
-                      {videos.map((media, index) => (
-                        <div
-                          key={`${project.id}-video-${index}`}
-                          className="relative aspect-video rounded-lg overflow-hidden"
-                        >
-                          <video
-                            src={media.videoUrl}
-                            controls
-                            className="w-full h-full object-cover"
-                            poster={media.url}
-                          >
-                            <track kind="captions" src="" label="English" />
-                          </video>
-                        </div>
-                      ))}
+                      {videos.map(
+                        (media, index) =>
+                          media.videoUrl && (
+                            <VideoPlayer
+                              key={`${project.id}-video-${index}`}
+                              url={media.videoUrl}
+                              poster={media.url}
+                            />
+                          ),
+                      )}
                     </div>
                   </div>
                 )}
