@@ -120,6 +120,7 @@ export async function GET(request: NextRequest) {
             url: post.url,
             hasAi: postAiResults.get(post.id) ?? false,
             thumbnailUrl: post.thumbnail.url,
+            media: post.media,
             deleted: false,
           },
         }),
