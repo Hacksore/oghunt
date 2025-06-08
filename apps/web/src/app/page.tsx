@@ -81,9 +81,7 @@ export default async function Page() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button asChild>
-              <Link href="/list">View all launches →</Link>
-            </Button>
+            <Button href="/list">View all REAL launches →</Button>
           </div>
         </div>
       </section>
