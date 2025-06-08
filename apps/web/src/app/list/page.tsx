@@ -24,6 +24,8 @@ export default async function ListPage({
   const allAiPosts = await getTodaysLaunches(true);
   const allPosts = await getTodaysLaunches(false);
 
+  console.log({ ai: allAiPosts.length, nonAi: allPosts.length });
+
   // Get paginated posts for the list
   const { posts, totalPages } = await getTodaysLaunchesPaginated({
     hasAi: false,
@@ -37,7 +39,6 @@ export default async function ListPage({
         posts={posts}
         aiPostsCount={allAiPosts.length}
         nonAiPostsCount={allPosts.length}
-        aiPosts={allAiPosts}
         totalPages={totalPages}
         currentPage={pageNumber}
       />

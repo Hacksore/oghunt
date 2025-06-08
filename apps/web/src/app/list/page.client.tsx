@@ -9,7 +9,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListPageClientProps {
   posts: ProductPost[];
-  aiPosts: ProductPost[];
   totalPages: number;
   currentPage: number;
   aiPostsCount: number;
@@ -18,7 +17,6 @@ interface ListPageClientProps {
 
 export function ListPageClient({
   posts,
-  aiPosts,
   totalPages,
   currentPage,
   aiPostsCount,
