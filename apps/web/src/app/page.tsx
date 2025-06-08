@@ -55,9 +55,9 @@ export default async function Page() {
           {/*   <ProductHunt /> */}
           {/* </div> */}
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
-            <Button href="/list">View Real Launches</Button>
+            <Button href="/list">View REAL Launches</Button>
             <Button href="/ai" variant="outline">
-              View AI Launches
+              View AI Slop Launches
             </Button>
           </div>
         </div>
