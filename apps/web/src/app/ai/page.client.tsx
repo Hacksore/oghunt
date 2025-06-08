@@ -3,35 +3,25 @@
 import type { ProductPost } from "@/app/types";
 import { Card } from "@/components/card";
 import { MobileCard } from "@/components/mobile-card";
-import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
 
 interface ListPageClientProps {
   posts: ProductPost[];
   totalPages: number;
   currentPage: number;
-  aiPostsCount: number;
-  nonAiPostsCount: number;
+  totalCount: number;
 }
 
 export function ListPageClient({
   posts,
   totalPages,
   currentPage,
-  aiPostsCount,
-  nonAiPostsCount,
+  totalCount,
 }: ListPageClientProps) {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <section className="max-w-4xl w-full mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center">Top Real Launches</h1>
-
-        {/* Stats Section */}
-        <section className="w-full px-4 my-8">
-          <div className="max-w-4xl mx-auto">
-            <SlopMeterSection aiPostsCount={aiPostsCount} nonAiPostsCount={nonAiPostsCount} />
-          </div>
-        </section>
+        <h1 className="text-4xl font-bold mb-8 text-center">Top AI Launches</h1>
 
         <div className="flex flex-col gap-10 md:gap-4">
           {posts.map((post, index) => (
@@ -57,7 +47,7 @@ export function ListPageClient({
           <div className="flex justify-center gap-2 mt-8">
             <Button
               variant="outline"
-              href={`/list?page=${currentPage - 1}`}
+              href={`/ai?page=${currentPage - 1}`}
               aria-disabled={currentPage === 1}
               className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             >
@@ -68,7 +58,7 @@ export function ListPageClient({
             </span>
             <Button
               variant="outline"
-              href={`/list?page=${currentPage + 1}`}
+              href={`/ai?page=${currentPage + 1}`}
               aria-disabled={currentPage === totalPages}
               className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             >
