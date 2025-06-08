@@ -19,7 +19,7 @@ export const generateMetadata = generateOGHuntMetadata({
 });
 
 export default async function Page() {
-  const posts = await getTodaysLaunches(false);
+  const { posts } = await getTodaysLaunches({ hasAi: false, page: 1, pageSize: 3 });
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center">

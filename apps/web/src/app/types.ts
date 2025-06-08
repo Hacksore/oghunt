@@ -43,4 +43,11 @@ export interface PageInfo {
   endCursor: string | undefined;
 }
 
-export type ProductPost = NonNullable<Awaited<ReturnType<typeof getTodaysLaunches>>>[0];
+export interface PaginatedResponse<T> {
+  posts: T[];
+  totalCount: number;
+  totalPages: number;
+  currentPage: number;
+}
+
+export type ProductPost = NonNullable<Awaited<ReturnType<typeof getTodaysLaunches>>>['posts'][0];

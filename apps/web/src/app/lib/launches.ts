@@ -27,12 +27,30 @@ export async function getYesterdaysLaunches() {
   return posts;
 }
 
-export async function getTodaysLaunches(hasAi?: boolean) {
+interface GetTodaysLaunchesParams {
+  hasAi?: boolean;
+  page?: number;
+  pageSize?: number;
+}
+
+export async function getTodaysLaunches({ hasAi, page = 1, pageSize = 10 }: GetTodaysLaunchesParams = {}) {
   const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+  
+  // Get total count first
+  const totalCount = await db.post.count({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+  });
+
   const posts = (
     await db.post.findMany({
       where: {
-        // only get the posts that are the same day as today
         createdAt: {
           gte: startOfDayUTC,
           lt: endOfDayUTC,
@@ -47,12 +65,21 @@ export async function getTodaysLaunches(hasAi?: boolean) {
           },
         },
       },
+      skip: (page - 1) * pageSize,
+      take: pageSize,
     })
   ).map((post) => ({
     ...post,
     topics: post.topics.map((topic) => topic.Topic),
   }));
 
-  // TODO: why dont we stort in the db?
-  return posts.sort((a, b) => b.votesCount - a.votesCount);
+  // TODO: why dont we sort in the db?
+  const sortedPosts = posts.sort((a, b) => b.votesCount - a.votesCount);
+
+  return {
+    posts: sortedPosts,
+    totalCount,
+    totalPages: Math.ceil(totalCount / pageSize),
+    currentPage: page,
+  };
 }
