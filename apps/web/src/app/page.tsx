@@ -55,9 +55,7 @@ export default async function Page() {
           {/*   <ProductHunt /> */}
           {/* </div> */}
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
-            <Button asChild>
-              <Link href="/list">View Today's Launches</Link>
-            </Button>
+            <Button href="/list">View Today's Launches</Button>
           </div>
         </div>
       </section>
@@ -80,9 +78,7 @@ export default async function Page() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button asChild>
-              <Link href="/list">View all launches →</Link>
-            </Button>
+            <Button href="/list">View all launches →</Button>
           </div>
         </div>
       </section>

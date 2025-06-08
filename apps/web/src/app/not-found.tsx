@@ -6,9 +6,7 @@ export default function Component() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b p-1 text-center">
       <h1 className="text-9xl font-extrabold">404</h1>
-      <Button>
-        <Link href="/">Escape to Safety (Homepage)</Link>
-      </Button>
+      <Button href="/">Escape to Safety (Homepage)</Button>
       <p className="mb-8 mt-4 text-2xl font-semibold">
         Oops! Looks like this page took an unexpected vacation.
       </p>

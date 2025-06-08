@@ -55,7 +55,7 @@ export default function ClientPage({ project }: ClientPageProps) {
             <p className="text-neutral-600 dark:text-neutral-400">{project.description}</p>
 
             <div className="flex justify-end mt-6">
-              <Button asChild>
+              <Button>
                 <a
                   href={`https://www.producthunt.com/posts/${project.id}?utm_source=oghunt&utm_medium=referral&utm_campaign=view`}
                   target="_blank"

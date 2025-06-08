@@ -5,6 +5,7 @@ import { Card } from "@/components/card";
 import { MobileCard } from "@/components/mobile-card";
 import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListPageClientProps {
@@ -67,8 +68,12 @@ export function ListPageClient({
           <div className="flex justify-center gap-2 mt-8">
             <Button
               variant="outline"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
+              href={`/list?${new URLSearchParams({
+                ...Object.fromEntries(searchParams.entries()),
+                page: (currentPage - 1).toString(),
+              }).toString()}`}
+              aria-disabled={currentPage === 1}
+              className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             >
               Prev
             </Button>
@@ -77,8 +82,12 @@ export function ListPageClient({
             </span>
             <Button
               variant="outline"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
+              href={`/list?${new URLSearchParams({
+                ...Object.fromEntries(searchParams.entries()),
+                page: (currentPage + 1).toString(),
+              }).toString()}`}
+              aria-disabled={currentPage === totalPages}
+              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             >
               Next
             </Button>

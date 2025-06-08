@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
+import Link from "next/link";
 import type React from "react";
 
 import { cn } from "@/app/utils/tw";
@@ -33,25 +34,43 @@ const buttonVariants = cva(
   },
 );
 
+type ButtonProps = VariantProps<typeof buttonVariants> & {
+  asChild?: boolean;
+  fullWidth?: boolean;
+  className?: string;
+} & (
+    | ({ href: string } & Omit<React.ComponentProps<typeof Link>, "href" | "ref">)
+    | ({ href?: never } & Omit<React.ComponentProps<"button">, "ref">)
+  );
+
 function Button({
   className,
   variant,
   size,
   fullWidth = false,
   asChild = false,
+  href,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-    fullWidth?: boolean;
-  }) {
-  const Comp = asChild ? Slot : "button";
+}: ButtonProps) {
+  if (href) {
+    const { href: _, ...rest } = props as React.ComponentProps<typeof Link>;
+    return (
+      <Link
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }), fullWidth && "w-full")}
+        href={href}
+        {...rest}
+      />
+    );
+  }
 
+  const Comp = asChild ? Slot : "button";
+  const { ref, ...rest } = props as React.ComponentProps<"button">;
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), fullWidth && "w-full")}
-      {...props}
+      {...rest}
     />
   );
 }
