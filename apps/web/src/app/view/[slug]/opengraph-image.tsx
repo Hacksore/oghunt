@@ -49,7 +49,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
           {post.tagline}
         </p>
       </div>
-      <p style={{ fontWeight: 700 }} tw="text-white text-4xl text-bold absolute bottom-8 left-8">
+      <p style={{ fontWeight: 700 }} tw="text-white text-4xl absolute bottom-8 left-8">
         oghunt
       </p>
     </div>,
