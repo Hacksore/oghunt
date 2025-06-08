@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
   );
 
   // TODO: what if this list gets bigger we might have to offload this some queue
-  const users = await prisma.emailList.findMany({
+  const _users = await prisma.emailList.findMany({
     where: {
       dailyEmails: true,
     },

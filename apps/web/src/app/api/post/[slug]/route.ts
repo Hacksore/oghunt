@@ -17,7 +17,7 @@ export async function GET(_: Request, { params }: { params: Promise<{ slug: stri
     }
 
     return NextResponse.json(post);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

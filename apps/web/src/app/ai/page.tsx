@@ -1,5 +1,4 @@
-import { Analytics } from "@vercel/analytics/react";
-import { getTodaysLaunches, getTodaysLaunchesPaginated } from "../lib/launches";
+import { getTodaysLaunchesPaginated } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
 import { ListPageClient } from "./page.client";
 
@@ -22,7 +21,7 @@ export default async function ListPage({
   const pageSize = 10;
 
   // Get paginated posts for the list
-  const { posts, totalPages, totalCount } = await getTodaysLaunchesPaginated({
+  const { posts, totalPages } = await getTodaysLaunchesPaginated({
     hasAi: true,
     page: pageNumber,
     pageSize,
@@ -30,12 +29,7 @@ export default async function ListPage({
 
   return (
     <>
-      <ListPageClient
-        posts={posts}
-        totalCount={totalCount}
-        totalPages={totalPages}
-        currentPage={pageNumber}
-      />
+      <ListPageClient posts={posts} totalPages={totalPages} currentPage={pageNumber} />
     </>
   );
 }

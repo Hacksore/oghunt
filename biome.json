@@ -4,17 +4,24 @@
     "enabled": true
   },
   "linter": {
-    "ignore": [".next/**/*"],
+    "ignore": [
+      ".next/**/*"
+    ],
     "enabled": true,
     "rules": {
       "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "error"
+      },
       "nursery": {
         "noProcessEnv": "error"
       }
     }
   },
   "formatter": {
-    "ignore": [".next/**/*"],
+    "ignore": [
+      ".next/**/*"
+    ],
     "enabled": true,
     "formatWithErrors": false,
     "indentStyle": "space",

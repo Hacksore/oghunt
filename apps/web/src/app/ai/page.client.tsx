@@ -9,15 +9,9 @@ interface ListPageClientProps {
   posts: ProductPost[];
   totalPages: number;
   currentPage: number;
-  totalCount: number;
 }
 
-export function ListPageClient({
-  posts,
-  totalPages,
-  currentPage,
-  totalCount,
-}: ListPageClientProps) {
+export function ListPageClient({ posts, totalPages, currentPage }: ListPageClientProps) {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <section className="max-w-4xl w-full mx-auto">

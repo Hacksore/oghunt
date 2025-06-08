@@ -18,7 +18,7 @@ export function EmailSignUpForm() {
       await subscribeToNewsletter(email);
       setStatus("success");
       setEmail("");
-    } catch (error) {
+    } catch {
       setStatus("error");
       setErrorMessage("Failed to subscribe. Please try again.");
     }
