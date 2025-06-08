@@ -1,26 +1,35 @@
-'use client';
+"use client";
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import type { ProductPost } from "@/app/types";
 import { Card } from "@/components/card";
 import { MobileCard } from "@/components/mobile-card";
 import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
-import type { ProductPost } from "@/app/types";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListPageClientProps {
   posts: ProductPost[];
   aiPosts: ProductPost[];
   totalPages: number;
   currentPage: number;
+  aiPostsCount: number;
+  nonAiPostsCount: number;
 }
 
-export function ListPageClient({ posts, aiPosts, totalPages, currentPage }: ListPageClientProps) {
+export function ListPageClient({
+  posts,
+  aiPosts,
+  totalPages,
+  currentPage,
+  aiPostsCount,
+  nonAiPostsCount,
+}: ListPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const handlePageChange = (newPage: number) => {
     const params = new URLSearchParams(searchParams);
-    params.set('page', newPage.toString());
+    params.set("page", newPage.toString());
     router.push(`/list?${params.toString()}`);
   };
 
@@ -32,7 +41,7 @@ export function ListPageClient({ posts, aiPosts, totalPages, currentPage }: List
         {/* Stats Section */}
         <section className="w-full px-4 my-8">
           <div className="max-w-4xl mx-auto">
-            <SlopMeterSection aiPostsCount={aiPosts.length} nonAiPostsCount={posts.length} />
+            <SlopMeterSection aiPostsCount={aiPostsCount} nonAiPostsCount={nonAiPostsCount} />
           </div>
         </section>
 
@@ -80,4 +89,4 @@ export function ListPageClient({ posts, aiPosts, totalPages, currentPage }: List
       </section>
     </main>
   );
-} 
+}

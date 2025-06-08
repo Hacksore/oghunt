@@ -5,7 +5,7 @@ import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
-import { getTodaysLaunches } from "./lib/launches";
+import { getTodaysLaunchesPaginated } from "./lib/launches";
 import { generateOGHuntMetadata } from "./metadata";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export const generateMetadata = generateOGHuntMetadata({
 });
 
 export default async function Page() {
-  const { posts } = await getTodaysLaunches({ hasAi: false, page: 1, pageSize: 3 });
+  const { posts } = await getTodaysLaunchesPaginated({ hasAi: false, page: 1, pageSize: 3 });
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center">

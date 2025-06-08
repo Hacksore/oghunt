@@ -50,4 +50,4 @@ export interface PaginatedResponse<T> {
   currentPage: number;
 }
 
-export type ProductPost = NonNullable<Awaited<ReturnType<typeof getTodaysLaunches>>>['posts'][0];
+export type ProductPost = NonNullable<Awaited<ReturnType<typeof getTodaysLaunches>>>[0];

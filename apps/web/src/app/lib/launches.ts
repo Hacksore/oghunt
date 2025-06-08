@@ -33,9 +33,43 @@ interface GetTodaysLaunchesParams {
   pageSize?: number;
 }
 
-export async function getTodaysLaunches({ hasAi, page = 1, pageSize = 10 }: GetTodaysLaunchesParams = {}) {
+export async function getTodaysLaunches(hasAi?: boolean) {
   const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
-  
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
+        },
+      },
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+  });
+
+  return posts.map((post) => ({
+    ...post,
+    topics: post.topics.map((topic) => topic.Topic),
+  }));
+}
+
+export async function getTodaysLaunchesPaginated({
+  hasAi,
+  page = 1,
+  pageSize = 10,
+}: GetTodaysLaunchesParams = {}) {
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+
   // Get total count first
   const totalCount = await db.post.count({
     where: {
@@ -48,36 +82,34 @@ export async function getTodaysLaunches({ hasAi, page = 1, pageSize = 10 }: GetT
     },
   });
 
-  const posts = (
-    await db.post.findMany({
-      where: {
-        createdAt: {
-          gte: startOfDayUTC,
-          lt: endOfDayUTC,
-        },
-        deleted: false,
-        ...(hasAi !== undefined && { hasAi }),
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
       },
-      include: {
-        topics: {
-          select: {
-            Topic: true,
-          },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
         },
       },
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    })
-  ).map((post) => ({
-    ...post,
-    topics: post.topics.map((topic) => topic.Topic),
-  }));
-
-  // TODO: why dont we sort in the db?
-  const sortedPosts = posts.sort((a, b) => b.votesCount - a.votesCount);
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
 
   return {
-    posts: sortedPosts,
+    posts: posts.map((post) => ({
+      ...post,
+      topics: post.topics.map((topic) => topic.Topic),
+    })),
     totalCount,
     totalPages: Math.ceil(totalCount / pageSize),
     currentPage: page,

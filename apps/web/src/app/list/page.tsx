@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
-import { getTodaysLaunches } from "../lib/launches";
+import { getTodaysLaunches, getTodaysLaunchesPaginated } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
 import { ListPageClient } from "./page.client";
 
@@ -19,14 +19,19 @@ export default async function ListPage({
   const page = searchParams.page ? Number.parseInt(searchParams.page) : 1;
   const pageSize = 10;
 
-  const { posts, totalPages } = await getTodaysLaunches({ hasAi: false, page, pageSize });
-  const { posts: aiPosts } = await getTodaysLaunches({ hasAi: true, page, pageSize });
+  const allAiPosts = await getTodaysLaunches(true);
+  const allPosts = await getTodaysLaunches(false);
+
+  // Get paginated posts for the list
+  const { posts, totalPages } = await getTodaysLaunchesPaginated({ hasAi: false, page, pageSize });
 
   return (
     <>
       <ListPageClient
         posts={posts}
-        aiPosts={aiPosts}
+        aiPostsCount={allAiPosts.length}
+        nonAiPostsCount={allPosts.length}
+        aiPosts={allAiPosts}
         totalPages={totalPages}
         currentPage={page}
       />
