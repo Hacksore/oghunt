@@ -32,7 +32,7 @@ export default async function Page() {
         <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]" />
         <div className="max-w-4xl mx-auto text-center">
           <div className="p-[1px] mx-auto bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full w-fit mb-5">
-            <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-2 items-center px-2 text-sm py-0.5">
+            <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-1 items-center px-2 text-sm py-0.5">
               <Star className="text-blue-800 dark:text-indigo-200" />
               <span className="bg-gradient-to-r from-indigo-800 to-blue-800 dark:from-indigo-200 dark:to-blue-200 bg-clip-text text-transparent">
                 Now Using AI
@@ -78,7 +78,9 @@ export default async function Page() {
             ))}
           </div>
           <div className="text-center mt-8">
-            <Button href="/list">View all launches →</Button>
+            <Button asChild>
+              <Link href="/list">View all launches →</Link>
+            </Button>
           </div>
         </div>
       </section>
