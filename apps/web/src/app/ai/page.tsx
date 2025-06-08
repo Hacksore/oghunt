@@ -6,9 +6,9 @@ import { ListPageClient } from "./page.client";
 export const dynamic = "force-dynamic";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "oghunt | Today's Top Launches",
-  description:
-    "Discover today's top product launches on Product Hunt, filtered to show only real innovative products.",
+  title: "oghunt | AI Slop Launches",
+  description: "Discover today's AI slop launches on Product Hunt",
+  skipOgImage: true,
 });
 
 export default async function ListPage({
@@ -36,7 +36,6 @@ export default async function ListPage({
         totalPages={totalPages}
         currentPage={pageNumber}
       />
-      <Analytics />
     </>
   );
 }

@@ -6,9 +6,8 @@ import { ListPageClient } from "./page.client";
 export const dynamic = "force-dynamic";
 
 export const generateMetadata = generateOGHuntMetadata({
-  title: "oghunt | Today's Top Launches",
-  description:
-    "Discover today's top product launches on Product Hunt, filtered to show only real innovative products.",
+  title: "oghunt | Today's Real Launches",
+  description: "Discover today's REAL Product Hunt launches without AI slop",
 });
 
 export default async function ListPage({
@@ -23,8 +22,6 @@ export default async function ListPage({
 
   const allAiPosts = await getTodaysLaunches(true);
   const allPosts = await getTodaysLaunches(false);
-
-  console.log({ ai: allAiPosts.length, nonAi: allPosts.length });
 
   // Get paginated posts for the list
   const { posts, totalPages } = await getTodaysLaunchesPaginated({
@@ -42,7 +39,6 @@ export default async function ListPage({
         totalPages={totalPages}
         currentPage={pageNumber}
       />
-      <Analytics />
     </>
   );
 }
