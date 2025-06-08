@@ -5,7 +5,7 @@ import { Card } from "../components/card";
 import { JsonLd } from "../components/json-ld";
 import { Link } from "../components/link";
 import { MobileCard } from "../components/mobile-card";
-import { getTodaysLaunches } from "./lib/launches";
+import { getTodaysLaunchesPaginated } from "./lib/launches";
 import { generateOGHuntMetadata } from "./metadata";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +19,7 @@ export const generateMetadata = generateOGHuntMetadata({
 });
 
 export default async function Page() {
-  const posts = await getTodaysLaunches(false);
+  const { posts } = await getTodaysLaunchesPaginated({ hasAi: false, page: 1, pageSize: 3 });
 
   return (
     <main className="flex min-h-screen w-full flex-col items-center">
@@ -32,7 +32,7 @@ export default async function Page() {
         <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]" />
         <div className="max-w-4xl mx-auto text-center">
           <div className="p-[1px] mx-auto bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full w-fit mb-5">
-            <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-2 items-center px-2 text-sm py-0.5">
+            <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-1 items-center px-2 text-sm py-0.5">
               <Star className="text-blue-800 dark:text-indigo-200" />
               <span className="bg-gradient-to-r from-indigo-800 to-blue-800 dark:from-indigo-200 dark:to-blue-200 bg-clip-text text-transparent">
                 Now Using AI
@@ -55,9 +55,7 @@ export default async function Page() {
           {/*   <ProductHunt /> */}
           {/* </div> */}
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
-            <Button asChild>
-              <Link href="/list">View Today's Launches</Link>
-            </Button>
+            <Button href="/list">View Today's Launches</Button>
           </div>
         </div>
       </section>

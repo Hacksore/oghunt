@@ -1,15 +1,16 @@
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
+import Link from "next/link";
 import type React from "react";
 
 import { cn } from "@/app/utils/tw";
 
 const buttonVariants = cva(
-  "inline-flex cursor-pointer text-white items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:underline",
+  "inline-flex cursor-pointer text-black dark:text-white items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:underline",
   {
     variants: {
       variant: {
-        default: "bg-accent hover:text-white",
+        default: "bg-accent text-white",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
@@ -33,25 +34,43 @@ const buttonVariants = cva(
   },
 );
 
+type ButtonProps = VariantProps<typeof buttonVariants> & {
+  asChild?: boolean;
+  fullWidth?: boolean;
+  className?: string;
+} & (
+    | ({ href: string } & Omit<React.ComponentProps<typeof Link>, "href" | "ref">)
+    | ({ href?: never } & Omit<React.ComponentProps<"button">, "ref">)
+  );
+
 function Button({
   className,
   variant,
   size,
   fullWidth = false,
   asChild = false,
+  href,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean;
-    fullWidth?: boolean;
-  }) {
-  const Comp = asChild ? Slot : "button";
+}: ButtonProps) {
+  if (href) {
+    const { href: _, ...rest } = props as React.ComponentProps<typeof Link>;
+    return (
+      <Link
+        data-slot="button"
+        className={cn(buttonVariants({ variant, size, className }), fullWidth && "w-full")}
+        href={href}
+        {...rest}
+      />
+    );
+  }
 
+  const Comp = asChild ? Slot : "button";
+  const { ref, ...rest } = props as React.ComponentProps<"button">;
   return (
     <Comp
       data-slot="button"
       className={cn(buttonVariants({ variant, size, className }), fullWidth && "w-full")}
-      {...props}
+      {...rest}
     />
   );
 }

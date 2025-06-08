@@ -27,32 +27,91 @@ export async function getYesterdaysLaunches() {
   return posts;
 }
 
+interface GetTodaysLaunchesParams {
+  hasAi?: boolean;
+  page?: number;
+  pageSize?: number;
+}
+
 export async function getTodaysLaunches(hasAi?: boolean) {
   const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
-  const posts = (
-    await db.post.findMany({
-      where: {
-        // only get the posts that are the same day as today
-        createdAt: {
-          gte: startOfDayUTC,
-          lt: endOfDayUTC,
-        },
-        deleted: false,
-        ...(hasAi !== undefined && { hasAi }),
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
       },
-      include: {
-        topics: {
-          select: {
-            Topic: true,
-          },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
         },
       },
-    })
-  ).map((post) => ({
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+  });
+
+  return posts.map((post) => ({
     ...post,
     topics: post.topics.map((topic) => topic.Topic),
   }));
+}
 
-  // TODO: why dont we stort in the db?
-  return posts.sort((a, b) => b.votesCount - a.votesCount);
+export async function getTodaysLaunchesPaginated({
+  hasAi,
+  page = 1,
+  pageSize = 10,
+}: GetTodaysLaunchesParams = {}) {
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC();
+
+  // Get total count first
+  const totalCount = await db.post.count({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+  });
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
+        },
+      },
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+
+  return {
+    posts: posts.map((post) => ({
+      ...post,
+      topics: post.topics.map((topic) => topic.Topic),
+    })),
+    totalCount,
+    totalPages: Math.ceil(totalCount / pageSize),
+    currentPage: page,
+  };
 }
