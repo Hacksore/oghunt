@@ -72,7 +72,7 @@ export function ListPageClient({
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
             >
-              Previous
+              Prev
             </Button>
             <span className="flex items-center px-4">
               Page {currentPage} of {totalPages}

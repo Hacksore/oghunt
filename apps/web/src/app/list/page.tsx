@@ -14,16 +14,22 @@ export const generateMetadata = generateOGHuntMetadata({
 export default async function ListPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string | undefined }>;
 }) {
-  const page = searchParams.page ? Number.parseInt(searchParams.page) : 1;
+  const { page } = await searchParams;
+
+  const pageNumber = page ? Number.parseInt(page, 10) : 1;
   const pageSize = 10;
 
   const allAiPosts = await getTodaysLaunches(true);
   const allPosts = await getTodaysLaunches(false);
 
   // Get paginated posts for the list
-  const { posts, totalPages } = await getTodaysLaunchesPaginated({ hasAi: false, page, pageSize });
+  const { posts, totalPages } = await getTodaysLaunchesPaginated({
+    hasAi: false,
+    page: pageNumber,
+    pageSize,
+  });
 
   return (
     <>
@@ -33,7 +39,7 @@ export default async function ListPage({
         nonAiPostsCount={allPosts.length}
         aiPosts={allAiPosts}
         totalPages={totalPages}
-        currentPage={page}
+        currentPage={pageNumber}
       />
       <Analytics />
     </>
