@@ -28,8 +28,7 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
             </TooltipTrigger>
             <TooltipContent>
               <p className="max-w-[200px]">
-                The SlopMeter shows the ratio of AI-generated content to human-written content in
-                your feed. A higher AI ratio might indicate more automated or AI-assisted content.
+                The SlopMeter shows the ratio of AI slop products vs products that don't us AI.
               </p>
             </TooltipContent>
           </Tooltip>
