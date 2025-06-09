@@ -1,4 +1,5 @@
 import { Star } from "@/components/icons/star";
+import { PeerlistBadge } from "@/components/peerlist-badge";
 import { ProductHunt } from "@/components/product-hunt";
 import { Button } from "@/components/ui/button";
 import { Card } from "../components/card";
@@ -46,7 +47,7 @@ export default async function Page() {
             </span>
           </h1>
           <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 dark:text-neutral-400 max-md:text-balance">
-            oghunt filters out AI-generated products from{" "}
+            We filter out AI-generated products from{" "}
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>
@@ -54,6 +55,8 @@ export default async function Page() {
           {/* <div className="flex justify-center mb-8"> */}
           {/*   <ProductHunt /> */}
           {/* </div> */}
+          <PeerlistBadge />
+
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
             <Button href="/list">View REAL Launches</Button>
             <Button href="/ai" variant="outline">

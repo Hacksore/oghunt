@@ -27,7 +27,7 @@ export function SlopMeterSection({ aiPostsCount, nonAiPostsCount }: SlopMeterSec
               <Info className="h-4 w-4" />
             </TooltipTrigger>
             <TooltipContent>
-              <p className="max-w-[200px]">
+              <p className="max-w-[160px] text-center">
                 The SlopMeter shows the ratio of AI slop products vs products that don't us AI.
               </p>
             </TooltipContent>
