@@ -57,7 +57,7 @@ export function ListPageClient({
           <div className="flex justify-center gap-2 mt-8">
             <Button
               variant="outline"
-              href={`/list?page=${currentPage - 1}`}
+              href={`/list?page=${currentPage - 1}#`}
               aria-disabled={currentPage === 1}
               className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             >
@@ -68,7 +68,7 @@ export function ListPageClient({
             </span>
             <Button
               variant="outline"
-              href={`/list?page=${currentPage + 1}`}
+              href={`/list?page=${currentPage + 1}#`}
               aria-disabled={currentPage === totalPages}
               className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             >
