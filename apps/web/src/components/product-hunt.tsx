@@ -5,8 +5,9 @@ import { useTheme } from "next-themes";
 export const ProductHunt = () => {
   const { theme, systemTheme } = useTheme();
 
-  // get light or dark mode but also respect system theme
-  const determinedTheme = theme === "system" ? systemTheme : theme;
+  // TODO: make this a hook lol
+  const sysTheme = systemTheme === "dark" ? "dark" : "light";
+  const determinedTheme = (theme === "system" ? sysTheme : theme) || "dark";
 
   return (
     <a

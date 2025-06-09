@@ -51,11 +51,10 @@ export default async function Page() {
             <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
             innovation and creativity.
           </p>
-          {/* TODO: enable for launch on product hunt */}
-          {/* <div className="flex justify-center mb-8"> */}
-          {/*   <ProductHunt /> */}
-          {/* </div> */}
-          <PeerlistBadge />
+          <div className="flex flex-col items-center gap-4 justify-center mb-8">
+            <PeerlistBadge />
+            {/* <ProductHunt /> */}
+          </div>
 
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
             <Button href="/list">View REAL Launches</Button>

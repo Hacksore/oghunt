@@ -14,7 +14,7 @@ export const PeerlistBadge = () => {
       <img
         src={`/peerlist-${determineTheme}.svg`}
         alt="Peerlist Launch Badge"
-        className="mx-auto mb-8 w-42 h-auto"
+        className="mx-auto w-42 h-auto"
       />
     </Link>
   );
