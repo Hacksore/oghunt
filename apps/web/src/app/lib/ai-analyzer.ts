@@ -213,6 +213,9 @@ export const analyzePosts = async (
     );
   }
 
+  // TODO: get the product id and always set it to false
+  // results.set(PRODUCT_HUNT_ID, false);
+
   console.log(`Total Gemini API requests made: ${totalRequests}`);
 
   return results;
