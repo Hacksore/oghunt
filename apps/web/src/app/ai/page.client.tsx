@@ -3,6 +3,7 @@
 import type { ProductPost } from "@/app/types";
 import { Card } from "@/components/card";
 import { MobileCard } from "@/components/mobile-card";
+import Scroll from "@/components/scroll";
 import { Button } from "@/components/ui/button";
 
 interface ListPageClientProps {
@@ -14,6 +15,7 @@ interface ListPageClientProps {
 export function ListPageClient({ posts, totalPages, currentPage }: ListPageClientProps) {
   return (
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
+      <Scroll />
       <section className="max-w-4xl w-full mx-auto">
         <h1 className="text-4xl font-bold mb-8 text-center">Top AI Launches</h1>
 
