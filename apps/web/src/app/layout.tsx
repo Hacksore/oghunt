@@ -2,7 +2,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 
 import { Providers } from "@/app/providers";
-import { EmailSignUpForm } from "@/components/email-sign-up-form";
 import { Footer } from "../components/footer";
 import { Header } from "../components/header";
 import { cn } from "./utils/tw";
