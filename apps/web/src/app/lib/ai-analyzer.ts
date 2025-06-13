@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { GoogleGenAI } from "@google/genai";
 import env from "../env";
-import { parseJsonWithCodeFence, PRODUCT_HUNT_ID } from "../utils/string";
+import { PRODUCT_HUNT_ID, parseJsonWithCodeFence } from "../utils/string";
 
 interface AnalysisResult {
   isAiRelated: boolean;
