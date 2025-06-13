@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { GoogleGenAI } from "@google/genai";
 import env from "../env";
-import { parseJsonWithCodeFence } from "../utils/string";
+import { parseJsonWithCodeFence, PRODUCT_HUNT_ID } from "../utils/string";
 
 interface AnalysisResult {
   isAiRelated: boolean;
@@ -213,8 +213,7 @@ export const analyzePosts = async (
     );
   }
 
-  // TODO: get the product id and always set it to false
-  // results.set(PRODUCT_HUNT_ID, false);
+  results.set(PRODUCT_HUNT_ID, false);
 
   console.log(`Total Gemini API requests made: ${totalRequests}`);
 
