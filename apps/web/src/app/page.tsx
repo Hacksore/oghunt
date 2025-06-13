@@ -52,8 +52,8 @@ export default async function Page() {
             innovation and creativity.
           </p>
           <div className="flex flex-col items-center gap-4 justify-center mb-8">
-            <PeerlistBadge />
-            {/* <ProductHunt /> */}
+            {/* <PeerlistBadge /> */}
+            <ProductHunt />
           </div>
 
           <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
