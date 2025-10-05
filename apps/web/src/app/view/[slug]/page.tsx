@@ -1,5 +1,5 @@
-import { generateOGHuntMetadata } from "@/app/metadata";
 import { notFound } from "next/navigation";
+import { generateOGHuntMetadata } from "@/app/metadata";
 import db from "../../db";
 import ClientPage from "./page.client";
 

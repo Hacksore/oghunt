@@ -1,6 +1,6 @@
+import { unstable_cache } from "next/cache";
 import { getTodaysLaunches } from "@/app/lib/launches";
 import { filterPosts } from "@/app/utils/string";
-import { unstable_cache } from "next/cache";
 
 // NOTE: this function will try to cache the result for 15 minutes
 // however, we can revalidate it from both the update-vote-count and ingest-posts routes

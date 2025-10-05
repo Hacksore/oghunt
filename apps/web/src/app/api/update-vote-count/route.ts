@@ -1,7 +1,7 @@
-import env from "@/app/env";
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
+import env from "@/app/env";
 import db from "../../db";
 import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 

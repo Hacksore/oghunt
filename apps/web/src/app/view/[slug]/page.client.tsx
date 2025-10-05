@@ -1,13 +1,13 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import Lightbox from "yet-another-react-lightbox";
+import { Button } from "@/components/ui/button";
 import "yet-another-react-lightbox/styles.css";
+import { useState } from "react";
 import type { ProductPost } from "@/app/types";
 import { Pill } from "@/components/pill";
 import { VideoPlayer } from "@/components/video-player";
-import { useState } from "react";
 
 interface Media {
   url: string;

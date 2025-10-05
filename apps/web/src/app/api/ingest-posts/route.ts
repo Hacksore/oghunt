@@ -1,11 +1,10 @@
 import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
+import env from "@/app/env";
 import db from "../../db";
 import { analyzePosts } from "../../lib/ai-analyzer";
 import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
-
-import env from "@/app/env";
 
 export const dynamic = "force-dynamic";
 

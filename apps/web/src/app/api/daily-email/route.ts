@@ -1,7 +1,7 @@
+import type { NextRequest } from "next/server";
 import prisma from "@/app/db";
 import env from "@/app/env";
 import { getYesterdaysLaunches } from "@/app/lib/launches";
-import type { NextRequest } from "next/server";
 
 export const dynamic = "force-dynamic";
 

@@ -1,6 +1,6 @@
-import { fetchFont } from "@/app/utils/fetch-font";
 import { headers } from "next/headers";
 import { ImageResponse } from "next/og";
+import { fetchFont } from "@/app/utils/fetch-font";
 
 // Route segment config
 export const runtime = "edge";

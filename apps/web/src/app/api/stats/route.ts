@@ -1,7 +1,7 @@
+import { unstable_cache } from "next/cache";
 import type { ProductPost } from "@/app/types";
 import { getStartAndEndOfDayInUTC } from "@/app/utils/date";
 import { filterPosts } from "@/app/utils/string";
-import { unstable_cache } from "next/cache";
 import { getTodaysLaunches } from "../../lib/launches";
 
 export const dynamic = "force-dynamic";

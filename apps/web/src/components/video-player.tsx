@@ -1,5 +1,5 @@
-import { cn } from "@/app/utils/tw";
 import { useEffect, useState } from "react";
+import { cn } from "@/app/utils/tw";
 
 interface VideoPlayerProps {
   url: string;

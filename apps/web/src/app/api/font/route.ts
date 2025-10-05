@@ -2,8 +2,9 @@
  * Originally from Vercel's Satori project.
  * @link https://github.com/vercel/satori/blob/main/playground/pages/api/font.ts
  */
-import { fontParams } from "@/app/utils/fetch-font";
+
 import type { NextRequest } from "next/server";
+import { fontParams } from "@/app/utils/fetch-font";
 
 export const runtime = "edge";
 

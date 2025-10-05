@@ -1,8 +1,8 @@
 "use client";
-import { cn } from "@/app/utils/tw";
 import { Laptop, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { cn } from "@/app/utils/tw";
 import { Button } from "./ui/button";
 
 const themes = ["system", "light", "dark"] as const;

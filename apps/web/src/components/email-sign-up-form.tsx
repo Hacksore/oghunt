@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { subscribeToNewsletter } from "../app/actions/newsletter";
 
 export function EmailSignUpForm() {

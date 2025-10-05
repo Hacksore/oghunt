@@ -1,6 +1,6 @@
+import { ImageResponse } from "next/og";
 import env from "@/app/env";
 import { fetchFont } from "@/app/utils/fetch-font";
-import { ImageResponse } from "next/og";
 
 // Route segment config
 export const runtime = "edge";
