@@ -30,14 +30,12 @@ export default async function ListPage({
   });
 
   return (
-    <>
-      <ListPageClient
-        posts={posts}
-        aiPostsCount={allAiPosts.length}
-        nonAiPostsCount={allPosts.length}
-        totalPages={totalPages}
-        currentPage={pageNumber}
-      />
-    </>
+    <ListPageClient
+      posts={posts}
+      aiPostsCount={allAiPosts.length}
+      nonAiPostsCount={allPosts.length}
+      totalPages={totalPages}
+      currentPage={pageNumber}
+    />
   );
 }

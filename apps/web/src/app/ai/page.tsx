@@ -27,9 +27,5 @@ export default async function ListPage({
     pageSize,
   });
 
-  return (
-    <>
-      <ListPageClient posts={posts} totalPages={totalPages} currentPage={pageNumber} />
-    </>
-  );
+  return <ListPageClient posts={posts} totalPages={totalPages} currentPage={pageNumber} />;
 }
