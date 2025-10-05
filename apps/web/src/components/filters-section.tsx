@@ -58,7 +58,7 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
             </Button>
             
             {isCalendarOpen && (
-              <div className="absolute top-full right-0 mt-2 z-50 bg-background border border-border rounded-lg shadow-lg">
+              <div className="absolute top-full right-0 mt-2 z-50 bg-background border border-border rounded-lg shadow-lg" style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}>
                 <Calendar
                   mode="single"
                   selected={selectedDate}
@@ -74,6 +74,7 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
                     return date > today;
                   }}
                   className="rounded-md"
+                  style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
                 />
               </div>
             )}

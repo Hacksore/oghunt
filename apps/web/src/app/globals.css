@@ -70,3 +70,23 @@
   background-position: -40px -40px;
   background-image: linear-gradient(to right, #8884 1px, transparent 1px);
 }
+
+/* Force calendar popover to use theme colors */
+[data-slot="calendar"] {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+[data-slot="calendar"] .rdp {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+}
+
+[data-slot="calendar"] .rdp-day {
+  color: var(--foreground) !important;
+}
+
+[data-slot="calendar"] .rdp-day:hover {
+  background-color: var(--accent) !important;
+  color: var(--accent-foreground) !important;
+}
