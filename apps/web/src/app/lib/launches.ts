@@ -115,3 +115,94 @@ export async function getTodaysLaunchesPaginated({
     currentPage: page,
   };
 }
+
+interface GetLaunchesForDateParams {
+  date: Date;
+  hasAi?: boolean;
+  page?: number;
+  pageSize?: number;
+}
+
+export async function getLaunchesForDate({
+  date,
+  hasAi,
+  page = 1,
+  pageSize = 10,
+}: GetLaunchesForDateParams) {
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC(date);
+
+  // Get total count first
+  const totalCount = await db.post.count({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+  });
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
+        },
+      },
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+    skip: (page - 1) * pageSize,
+    take: pageSize,
+  });
+
+  return {
+    posts: posts.map((post) => ({
+      ...post,
+      topics: post.topics.map((topic) => topic.Topic),
+    })),
+    totalCount,
+    totalPages: Math.ceil(totalCount / pageSize),
+    currentPage: page,
+  };
+}
+
+export async function getLaunchesForDateAll(date: Date, hasAi?: boolean) {
+  const { startOfDayUTC, endOfDayUTC } = getStartAndEndOfDayInUTC(date);
+
+  const posts = await db.post.findMany({
+    where: {
+      createdAt: {
+        gte: startOfDayUTC,
+        lt: endOfDayUTC,
+      },
+      deleted: false,
+      ...(hasAi !== undefined && { hasAi }),
+    },
+    include: {
+      topics: {
+        select: {
+          Topic: true,
+        },
+      },
+    },
+    orderBy: {
+      votesCount: "desc",
+    },
+  });
+
+  return posts.map((post) => ({
+    ...post,
+    topics: post.topics.map((topic) => topic.Topic),
+  }));
+}

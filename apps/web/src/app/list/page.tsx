@@ -1,4 +1,4 @@
-import { getTodaysLaunches, getTodaysLaunchesPaginated } from "../lib/launches";
+import { getTodaysLaunches, getTodaysLaunchesPaginated, getLaunchesForDate, getLaunchesForDateAll } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
 import { ListPageClient } from "./page.client";
 
@@ -12,18 +12,29 @@ export const generateMetadata = generateOGHuntMetadata({
 export default async function ListPage({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string | undefined }>;
+  searchParams: Promise<{ page?: string | undefined; date?: string | undefined }>;
 }) {
-  const { page } = await searchParams;
+  const { page, date } = await searchParams;
 
   const pageNumber = page ? Number.parseInt(page, 10) : 1;
   const pageSize = 10;
 
-  const allAiPosts = await getTodaysLaunches(true);
-  const allPosts = await getTodaysLaunches(false);
+  // Parse the date parameter or default to today
+  const targetDate = date ? new Date(date) : new Date();
+  
+  // Validate the date
+  if (isNaN(targetDate.getTime())) {
+    // If invalid date, redirect to today
+    return <ListPageClient posts={[]} aiPostsCount={0} nonAiPostsCount={0} totalPages={0} currentPage={1} selectedDate={new Date()} />;
+  }
+
+  // Get posts for the selected date
+  const allAiPosts = await getLaunchesForDateAll(targetDate, true);
+  const allPosts = await getLaunchesForDateAll(targetDate, false);
 
   // Get paginated posts for the list
-  const { posts, totalPages } = await getTodaysLaunchesPaginated({
+  const { posts, totalPages } = await getLaunchesForDate({
+    date: targetDate,
     hasAi: false,
     page: pageNumber,
     pageSize,
@@ -36,6 +47,7 @@ export default async function ListPage({
       nonAiPostsCount={allPosts.length}
       totalPages={totalPages}
       currentPage={pageNumber}
+      selectedDate={targetDate}
     />
   );
 }
