@@ -11,6 +11,7 @@ export const PeerlistBadge = () => {
 
   return (
     <Link href="https://peerlist.io/hacksore/project/oghunt-20">
+      {/** biome-ignore lint/performance/noImgElement: regular image is fine */}
       <img
         src={`/peerlist-${determineTheme}.svg`}
         alt="Peerlist Launch Badge"

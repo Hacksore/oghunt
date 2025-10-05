@@ -9,6 +9,7 @@ export default function ErrorPage() {
       >
         Trash Devs Discord
       </a>
+      {/** biome-ignore lint/performance/noImgElement: regular image is fine */}
       <img
         src="https://media1.tenor.com/m/dHVat9e2S38AAAAC/rat-cry-mouse-cutie.gif"
         alt="Crying rat animation"

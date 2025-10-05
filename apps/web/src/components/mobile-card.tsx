@@ -14,6 +14,7 @@ export const MobileCard = ({ post, url }: { post: ProductPost; url?: string }) =
         <div className="flex items-center gap-2">
           <div className="transition-transform duration-300 group-hover:translate-x-2">
             {post.thumbnailUrl && (
+              // biome-ignore lint/performance/noImgElement: regular image is fine
               <img
                 src={post.thumbnailUrl}
                 className="size-10 rounded-lg object-contain"

@@ -68,6 +68,7 @@ export default function ClientPage({ project }: ClientPageProps) {
               </div>
             </div>
             <div className="flex flex-col items-end">
+              {/** biome-ignore lint/performance/noImgElement: no u */}
               <img
                 src={project.thumbnailUrl}
                 alt={project.name}
@@ -135,6 +136,7 @@ export default function ClientPage({ project }: ClientPageProps) {
                             }
                           }}
                         >
+                          {/** biome-ignore lint/performance/noImgElement: regular image is fine */}
                           <img
                             src={media.url}
                             alt={`${project.name} screenshot ${index + 1}`}

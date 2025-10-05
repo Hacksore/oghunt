@@ -15,6 +15,7 @@ export const ProductHunt = () => {
       target="_blank"
       rel="noopener noreferrer"
     >
+      {/** biome-ignore lint/performance/noImgElement: regular image is fine */}
       <img
         src={`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=966874&theme=${determinedTheme}&t=1749312733388`}
         alt="oghunt - Product&#0032;Hunt&#0032;with&#0032;ZERO&#0032;AI&#0032;Slop&#0032;Powered&#0032;By&#0032;AI | Product Hunt"

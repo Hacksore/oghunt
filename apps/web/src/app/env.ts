@@ -9,7 +9,7 @@ const envSchema = z.object({
   VERCEL_URL: z.string().optional(),
 });
 
-// biome-ignore lint/nursery/noProcessEnv: need to use process env here
+// biome-ignore lint/style/noProcessEnv: we are using zod
 const env = envSchema.parse(process.env);
 
 export default env;

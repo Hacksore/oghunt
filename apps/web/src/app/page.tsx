@@ -1,5 +1,4 @@
 import { Star } from "@/components/icons/star";
-import { PeerlistBadge } from "@/components/peerlist-badge";
 import { ProductHunt } from "@/components/product-hunt";
 import { Button } from "@/components/ui/button";
 import { Card } from "../components/card";

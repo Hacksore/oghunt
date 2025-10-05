@@ -44,12 +44,12 @@ export function JsonLd({ posts }: JsonLdProps) {
     <>
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: it's ok
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <script
         type="application/ld+json"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: it's ok
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productListJsonLd) }}
       />
     </>

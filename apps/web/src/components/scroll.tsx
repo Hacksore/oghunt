@@ -14,5 +14,5 @@ export default function Scroll() {
     );
     window.scroll(0, 0);
   }, [searchParams]);
-  return <></>;
+  return null;
 }

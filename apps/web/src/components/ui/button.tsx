@@ -65,7 +65,7 @@ function Button({
   }
 
   const Comp = asChild ? Slot : "button";
-  const { ref, ...rest } = props as React.ComponentProps<"button">;
+  const { ...rest } = props as React.ComponentProps<"button">;
   return (
     <Comp
       data-slot="button"

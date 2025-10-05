@@ -38,6 +38,7 @@ export function EmailSignUpForm() {
             Top 3 oghunt launches of the day sent daily to your inbox
           </p>
           <div className="relative">
+            {/** biome-ignore lint/correctness/useUniqueElementIds: bro wtf is this rule */}
             <input
               type="email"
               id="email"
