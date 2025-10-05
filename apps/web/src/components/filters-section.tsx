@@ -1,11 +1,10 @@
 "use client";
 
-import { Calendar } from "@/components/ui/calendar";
-import { Button } from "@/components/ui/button";
 import { CalendarIcon } from "lucide-react";
-import { useState } from "react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 interface FiltersSectionProps {
   selectedDate: Date;
@@ -19,9 +18,9 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
   const createDateUrl = (date: Date) => {
     const params = new URLSearchParams(searchParams);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    params.set('date', `${year}-${month}-${day}`);
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    params.set("date", `${year}-${month}-${day}`);
     return `/list?${params.toString()}`;
   };
 
@@ -30,7 +29,7 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
   const pstOffset = 8 * 60 * 60 * 1000; // PST is UTC-8
   const pstDate = new Date(now.getTime() - pstOffset);
   const today = new Date(pstDate.getUTCFullYear(), pstDate.getUTCMonth(), pstDate.getUTCDate());
-  
+
   // Check if the selected date is different from today
   const isFiltered = selectedDate.toDateString() !== today.toDateString();
 
@@ -46,15 +45,18 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
               className="flex items-center gap-2"
             >
               <CalendarIcon className="h-4 w-4" />
-              {selectedDate.toLocaleDateString('en-US', { 
-                month: 'short', 
-                day: 'numeric',
-                year: 'numeric'
+              {selectedDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                year: "numeric",
               })}
             </Button>
-            
+
             {isCalendarOpen && (
-              <div className="absolute top-full right-0 mt-2 z-50 bg-background border border-border rounded-lg shadow-lg" style={{ backgroundColor: 'var(--background)', borderColor: 'var(--border)' }}>
+              <div
+                className="absolute top-full right-0 mt-2 z-50 bg-background border border-border rounded-lg shadow-lg"
+                style={{ backgroundColor: "var(--background)", borderColor: "var(--border)" }}
+              >
                 <Calendar
                   mode="single"
                   selected={selectedDate}
@@ -70,12 +72,12 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
                     return date > today;
                   }}
                   className="rounded-md"
-                  style={{ backgroundColor: 'var(--background)', color: 'var(--foreground)' }}
+                  style={{ backgroundColor: "var(--background)", color: "var(--foreground)" }}
                 />
               </div>
             )}
           </div>
-          
+
           {/* Filtered indicator */}
           {isFiltered && (
             <div className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full border border-blue-200">
@@ -84,13 +86,12 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
           )}
         </div>
       </div>
-      
+
       {/* Close calendar when clicking outside */}
       {isCalendarOpen && (
-        <div 
-          className="fixed inset-0 z-40" 
-          onClick={() => setIsCalendarOpen(false)}
-        />
+        // biome-ignore lint/a11y/useKeyWithClickEvents: no u
+        // biome-ignore lint/a11y/noStaticElementInteractions: no u
+        <div className="fixed inset-0 z-40" onClick={() => setIsCalendarOpen(false)} />
       )}
     </div>
   );

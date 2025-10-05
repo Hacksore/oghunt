@@ -1,5 +1,6 @@
-import { getTodaysLaunches, getTodaysLaunchesPaginated, getLaunchesForDate, getLaunchesForDateAll } from "../lib/launches";
+import { getLaunchesForDate, getLaunchesForDateAll } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
+import { getCurrentDateInPST, parsePSTDate } from "../utils/date";
 import { ListPageClient } from "./page.client";
 
 export const dynamic = "force-dynamic";
@@ -19,20 +20,19 @@ export default async function ListPage({
   const pageNumber = page ? Number.parseInt(page, 10) : 1;
   const pageSize = 10;
 
-  // Parse the date parameter or default to today
+  // Parse the date parameter or default to today - ALWAYS in PST
   let targetDate: Date;
   if (date) {
-    // Parse YYYY-MM-DD format
-    const [year, month, day] = date.split('-').map(Number);
-    targetDate = new Date(year, month - 1, day); // month is 0-indexed
+    // Parse YYYY-MM-DD format as PST date
+    targetDate = parsePSTDate(date);
   } else {
-    // Default to today if no date parameter
-    targetDate = new Date();
+    // Default to today in PST if no date parameter
+    targetDate = getCurrentDateInPST();
   }
-  
-  // Validate the date - if invalid, default to today
-  if (isNaN(targetDate.getTime())) {
-    targetDate = new Date();
+
+  // Validate the date - if invalid, default to today in PST
+  if (Number.isNaN(targetDate.getTime())) {
+    targetDate = getCurrentDateInPST();
   }
 
   // Get posts for the selected date

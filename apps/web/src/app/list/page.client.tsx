@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
 import type { ProductPost } from "@/app/types";
 import { Card } from "@/components/card";
 import { FiltersSection } from "@/components/filters-section";
@@ -7,8 +9,7 @@ import { MobileCard } from "@/components/mobile-card";
 import Scroll from "@/components/scroll";
 import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { getCurrentDateInPST } from "../utils/date";
 
 interface ListPageClientProps {
   posts: ProductPost[];
@@ -29,37 +30,32 @@ export function ListPageClient({
 }: ListPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // Update URL to include date parameter if not present
   useEffect(() => {
-    const dateParam = searchParams.get('date');
+    const dateParam = searchParams.get("date");
     if (!dateParam) {
-      // Format the selected date as YYYY-MM-DD
-      const year = selectedDate.getFullYear();
-      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
-      const day = String(selectedDate.getDate()).padStart(2, '0');
+      // Format the selected date as YYYY-MM-DD using PST timezone
+      const pstDate = getCurrentDateInPST(selectedDate);
+      const year = pstDate.getUTCFullYear();
+      const month = String(pstDate.getUTCMonth() + 1).padStart(2, "0");
+      const day = String(pstDate.getUTCDate()).padStart(2, "0");
       const dateStr = `${year}-${month}-${day}`;
-      
+
       // Update URL without causing a page reload
       const newParams = new URLSearchParams(searchParams);
-      newParams.set('date', dateStr);
+      newParams.set("date", dateStr);
       router.replace(`/list?${newParams.toString()}`, { scroll: false });
     }
   }, [selectedDate, searchParams, router]);
 
-  // Format the date for display
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  };
-
   // Create pagination URL with date parameter preserved
   const createPaginationUrl = (page: number) => {
-    const dateStr = selectedDate.toISOString().split("T")[0];
+    const pstDate = getCurrentDateInPST(selectedDate);
+    const year = pstDate.getUTCFullYear();
+    const month = String(pstDate.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(pstDate.getUTCDate()).padStart(2, "0");
+    const dateStr = `${year}-${month}-${day}`;
     return `/list?date=${dateStr}&page=${page}`;
   };
 
@@ -67,20 +63,17 @@ export function ListPageClient({
     <main className="flex min-h-screen w-full flex-col items-center px-4 pt-10 md:px-8">
       <Scroll />
       <section className="max-w-4xl w-full mx-auto">
-        <h1 className="text-4xl font-bold mb-4 text-center">
-          Top Real Launches
-        </h1>
-
-        {/* Filters Section */}
-        <FiltersSection selectedDate={selectedDate} />
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-4xl font-bold">Top Real Launches</h1>
+          
+          {/* Filters Section - Right Aligned */}
+          <FiltersSection selectedDate={selectedDate} />
+        </div>
 
         {/* Stats Section */}
         <section className="w-full px-4 my-8">
           <div className="max-w-4xl mx-auto">
-            <SlopMeterSection
-              aiPostsCount={aiPostsCount}
-              nonAiPostsCount={nonAiPostsCount}
-            />
+            <SlopMeterSection aiPostsCount={aiPostsCount} nonAiPostsCount={nonAiPostsCount} />
           </div>
         </section>
 
@@ -99,9 +92,7 @@ export function ListPageClient({
 
         {posts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-xl text-gray-600">
-              No launches found for today. Check back later!
-            </p>
+            <p className="text-xl text-gray-600">No launches found for today. Check back later!</p>
           </div>
         )}
 
@@ -112,9 +103,7 @@ export function ListPageClient({
               variant="outline"
               href={createPaginationUrl(currentPage - 1)}
               aria-disabled={currentPage === 1}
-              className={
-                currentPage === 1 ? "pointer-events-none opacity-50" : ""
-              }
+              className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             >
               Prev
             </Button>
@@ -125,11 +114,7 @@ export function ListPageClient({
               variant="outline"
               href={createPaginationUrl(currentPage + 1)}
               aria-disabled={currentPage === totalPages}
-              className={
-                currentPage === totalPages
-                  ? "pointer-events-none opacity-50"
-                  : ""
-              }
+              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             >
               Next
             </Button>

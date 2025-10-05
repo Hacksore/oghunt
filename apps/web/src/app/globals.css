@@ -7,7 +7,7 @@
   --color-hover-accent: #ff6d79;
   --color-background: #fff;
   --color-border: var(--color-neutral-300);
-  
+
   /* shadcn/ui CSS variables */
   --background: var(--color-background);
   --foreground: var(--color-primary);
@@ -31,7 +31,7 @@
 .dark {
   --color-background: #070707;
   --color-border: var(--color-neutral-700);
-  
+
   /* shadcn/ui CSS variables for dark mode */
   --background: var(--color-background);
   --foreground: #fff;

@@ -1,3 +1,17 @@
+// Function to parse a YYYY-MM-DD string as a PST date
+export function parsePSTDate(dateString: string): Date {
+  const [year, month, day] = dateString.split("-").map(Number);
+
+  // Create a date object that represents the PST date
+  // We'll create it as if it's UTC, then adjust for PST offset
+  const utcDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0));
+
+  // Convert to PST by adding 8 hours (PST is UTC-8, so we add 8 to get UTC)
+  const pstDate = new Date(utcDate.getTime() + 8 * 60 * 60 * 1000);
+
+  return pstDate;
+}
+
 // Function to get the current date in PST (UTC-8)
 // ProductHunt is in PST
 export function getCurrentDateInPST(startDate?: Date) {
