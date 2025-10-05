@@ -27,17 +27,17 @@ export function ListPageClient({
 }: ListPageClientProps) {
   // Format the date for display
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { 
-      weekday: 'long', 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
   // Create pagination URL with date parameter preserved
   const createPaginationUrl = (page: number) => {
-    const dateStr = selectedDate.toISOString().split('T')[0];
+    const dateStr = selectedDate.toISOString().split("T")[0];
     return `/list?date=${dateStr}&page=${page}`;
   };
 
@@ -46,7 +46,7 @@ export function ListPageClient({
       <Scroll />
       <section className="max-w-4xl w-full mx-auto">
         <h1 className="text-4xl font-bold mb-4 text-center">
-          Best of {formatDate(selectedDate)}
+          Top Real Launches
         </h1>
 
         {/* Filters Section */}
@@ -55,7 +55,10 @@ export function ListPageClient({
         {/* Stats Section */}
         <section className="w-full px-4 my-8">
           <div className="max-w-4xl mx-auto">
-            <SlopMeterSection aiPostsCount={aiPostsCount} nonAiPostsCount={nonAiPostsCount} />
+            <SlopMeterSection
+              aiPostsCount={aiPostsCount}
+              nonAiPostsCount={nonAiPostsCount}
+            />
           </div>
         </section>
 
@@ -74,7 +77,9 @@ export function ListPageClient({
 
         {posts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-xl text-gray-600">No launches found for today. Check back later!</p>
+            <p className="text-xl text-gray-600">
+              No launches found for today. Check back later!
+            </p>
           </div>
         )}
 
@@ -85,7 +90,9 @@ export function ListPageClient({
               variant="outline"
               href={createPaginationUrl(currentPage - 1)}
               aria-disabled={currentPage === 1}
-              className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
+              className={
+                currentPage === 1 ? "pointer-events-none opacity-50" : ""
+              }
             >
               Prev
             </Button>
@@ -96,7 +103,11 @@ export function ListPageClient({
               variant="outline"
               href={createPaginationUrl(currentPage + 1)}
               aria-disabled={currentPage === totalPages}
-              className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
+              className={
+                currentPage === totalPages
+                  ? "pointer-events-none opacity-50"
+                  : ""
+              }
             >
               Next
             </Button>

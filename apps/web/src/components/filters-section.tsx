@@ -34,13 +34,6 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div>
-          <h2 className="text-lg font-semibold mb-2">Filters</h2>
-          <p className="text-sm text-neutral-500 dark:text-neutral-400">
-            Select a date to view Product Hunt launches
-          </p>
-        </div>
-        
         <div className="flex gap-2">
           {/* Date Filter */}
           <div className="relative">
