@@ -16,6 +16,16 @@ export function DateSelector({ currentDate, className = "" }: DateSelectorProps)
   const month = currentDate.getMonth();
   const day = currentDate.getDate();
   
+  // Get today's date for comparison (in PST)
+  // Product Hunt operates in PST, so we need to get the current PST date
+  const now = new Date();
+  const pstOffset = 8 * 60 * 60 * 1000; // PST is UTC-8
+  const pstDate = new Date(now.getTime() - pstOffset);
+  
+  const todayYear = pstDate.getUTCFullYear();
+  const todayMonth = pstDate.getUTCMonth();
+  const todayDay = pstDate.getUTCDate();
+  
   // Get the number of days in the current month
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   
@@ -26,17 +36,29 @@ export function DateSelector({ currentDate, className = "" }: DateSelectorProps)
   const prevMonth = new Date(year, month - 1, 1);
   const nextMonth = new Date(year, month + 1, 1);
   
+  // Check if next month is in the future
+  const isNextMonthFuture = 
+    nextMonth.getFullYear() > todayYear || 
+    (nextMonth.getFullYear() === todayYear && nextMonth.getMonth() > todayMonth);
+  
   // Create URL with current search params but update date
   const createDateUrl = (targetDate: Date) => {
     const params = new URLSearchParams(searchParams);
-    params.set('date', targetDate.toISOString().split('T')[0]); // YYYY-MM-DD format
+    // Format date as YYYY-MM-DD without timezone conversion
+    const year = targetDate.getFullYear();
+    const month = String(targetDate.getMonth() + 1).padStart(2, '0');
+    const day = String(targetDate.getDate()).padStart(2, '0');
+    params.set('date', `${year}-${month}-${day}`);
     return `/list?${params.toString()}`;
   };
   
   // Create URL for previous/next month
   const createMonthUrl = (targetMonth: Date) => {
     const params = new URLSearchParams(searchParams);
-    params.set('date', targetMonth.toISOString().split('T')[0]);
+    const year = targetMonth.getFullYear();
+    const month = String(targetMonth.getMonth() + 1).padStart(2, '0');
+    const day = String(targetMonth.getDate()).padStart(2, '0');
+    params.set('date', `${year}-${month}-${day}`);
     return `/list?${params.toString()}`;
   };
 
@@ -59,25 +81,45 @@ export function DateSelector({ currentDate, className = "" }: DateSelectorProps)
         {days.map((dayNum) => {
           const isSelected = dayNum === day;
           const dayDate = new Date(year, month, dayNum);
-          const isPast = dayDate < new Date(new Date().setHours(0, 0, 0, 0));
+          
+          // Check if this day is in the future
+          const isFuture = 
+            year > todayYear || 
+            (year === todayYear && month > todayMonth) || 
+            (year === todayYear && month === todayMonth && dayNum > todayDay);
+          
+          // Check if this day is today
+          const isToday = 
+            year === todayYear && 
+            month === todayMonth && 
+            dayNum === todayDay;
+          
+          const isPast = !isFuture && !isToday;
           
           return (
             <Button
               key={dayNum}
               variant={isSelected ? "default" : "ghost"}
               size="sm"
-              asChild
+              asChild={!isFuture}
+              disabled={isFuture}
               className={`min-w-[2.5rem] h-8 text-sm ${
                 isSelected 
                   ? "bg-red-500 hover:bg-red-600 text-white" 
-                  : isPast 
-                    ? "text-gray-700 hover:text-gray-900" 
-                    : "text-gray-400 hover:text-gray-600"
+                  : isFuture
+                    ? "text-gray-300 cursor-not-allowed opacity-50"
+                    : isPast 
+                      ? "text-gray-700 hover:text-gray-900" 
+                      : "text-gray-600 hover:text-gray-900"
               }`}
             >
-              <Link href={createDateUrl(dayDate)}>
-                {dayNum}
-              </Link>
+              {isFuture ? (
+                <span>{dayNum}</span>
+              ) : (
+                <Link href={createDateUrl(dayDate)}>
+                  {dayNum}
+                </Link>
+              )}
             </Button>
           );
         })}
@@ -87,12 +129,17 @@ export function DateSelector({ currentDate, className = "" }: DateSelectorProps)
       <Button
         variant="ghost"
         size="sm"
-        asChild
-        className="p-2"
+        asChild={!isNextMonthFuture}
+        disabled={isNextMonthFuture}
+        className={`p-2 ${isNextMonthFuture ? 'opacity-50 cursor-not-allowed' : ''}`}
       >
-        <Link href={createMonthUrl(nextMonth)}>
+        {isNextMonthFuture ? (
           <ChevronRight className="h-4 w-4" />
-        </Link>
+        ) : (
+          <Link href={createMonthUrl(nextMonth)}>
+            <ChevronRight className="h-4 w-4" />
+          </Link>
+        )}
       </Button>
     </div>
   );

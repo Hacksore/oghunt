@@ -20,7 +20,14 @@ export default async function ListPage({
   const pageSize = 10;
 
   // Parse the date parameter or default to today
-  const targetDate = date ? new Date(date) : new Date();
+  let targetDate: Date;
+  if (date) {
+    // Parse YYYY-MM-DD format
+    const [year, month, day] = date.split('-').map(Number);
+    targetDate = new Date(year, month - 1, day); // month is 0-indexed
+  } else {
+    targetDate = new Date();
+  }
   
   // Validate the date
   if (isNaN(targetDate.getTime())) {
