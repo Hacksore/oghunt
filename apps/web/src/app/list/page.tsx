@@ -26,13 +26,13 @@ export default async function ListPage({
     const [year, month, day] = date.split('-').map(Number);
     targetDate = new Date(year, month - 1, day); // month is 0-indexed
   } else {
+    // Default to today if no date parameter
     targetDate = new Date();
   }
   
-  // Validate the date
+  // Validate the date - if invalid, default to today
   if (isNaN(targetDate.getTime())) {
-    // If invalid date, redirect to today
-    return <ListPageClient posts={[]} aiPostsCount={0} nonAiPostsCount={0} totalPages={0} currentPage={1} selectedDate={new Date()} />;
+    targetDate = new Date();
   }
 
   // Get posts for the selected date

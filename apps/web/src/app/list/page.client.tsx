@@ -7,6 +7,8 @@ import { MobileCard } from "@/components/mobile-card";
 import Scroll from "@/components/scroll";
 import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface ListPageClientProps {
   posts: ProductPost[];
@@ -25,6 +27,26 @@ export function ListPageClient({
   nonAiPostsCount,
   selectedDate,
 }: ListPageClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
+  // Update URL to include date parameter if not present
+  useEffect(() => {
+    const dateParam = searchParams.get('date');
+    if (!dateParam) {
+      // Format the selected date as YYYY-MM-DD
+      const year = selectedDate.getFullYear();
+      const month = String(selectedDate.getMonth() + 1).padStart(2, '0');
+      const day = String(selectedDate.getDate()).padStart(2, '0');
+      const dateStr = `${year}-${month}-${day}`;
+      
+      // Update URL without causing a page reload
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set('date', dateStr);
+      router.replace(`/list?${newParams.toString()}`, { scroll: false });
+    }
+  }, [selectedDate, searchParams, router]);
+
   // Format the date for display
   const formatDate = (date: Date) => {
     return date.toLocaleDateString("en-US", {

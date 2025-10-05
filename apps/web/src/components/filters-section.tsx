@@ -30,11 +30,14 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
   const pstOffset = 8 * 60 * 60 * 1000; // PST is UTC-8
   const pstDate = new Date(now.getTime() - pstOffset);
   const today = new Date(pstDate.getUTCFullYear(), pstDate.getUTCMonth(), pstDate.getUTCDate());
+  
+  // Check if the selected date is different from today
+  const isFiltered = selectedDate.toDateString() !== today.toDateString();
 
   return (
     <div className="mb-8">
       <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           {/* Date Filter */}
           <div className="relative">
             <Button
@@ -72,6 +75,13 @@ export function FiltersSection({ selectedDate }: FiltersSectionProps) {
               </div>
             )}
           </div>
+          
+          {/* Filtered indicator */}
+          {isFiltered && (
+            <div className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full border border-blue-200">
+              Filtered
+            </div>
+          )}
         </div>
       </div>
       
