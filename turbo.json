@@ -30,6 +30,11 @@
         "^check"
       ]
     },
+    "lint": {
+      "dependsOn": [
+        "^fix"
+      ]
+    },
     "format": {
       "dependsOn": [
         "^fix"

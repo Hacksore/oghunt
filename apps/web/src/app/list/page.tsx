@@ -1,4 +1,3 @@
-import { Analytics } from "@vercel/analytics/react";
 import { getTodaysLaunches, getTodaysLaunchesPaginated } from "../lib/launches";
 import { generateOGHuntMetadata } from "../metadata";
 import { ListPageClient } from "./page.client";

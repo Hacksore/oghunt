@@ -10,6 +10,7 @@
     "db:studio": "dotenv -e .env -- turbo run db:studio",
     "check": "turbo run check",
     "format": "turbo run format",
+    "lint": "turbo run lint",
     "fix": "turbo run fix"
   },
   "devDependencies": {
