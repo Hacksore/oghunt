@@ -7,11 +7,49 @@
   --color-hover-accent: #ff6d79;
   --color-background: #fff;
   --color-border: var(--color-neutral-300);
+  
+  /* shadcn/ui CSS variables */
+  --background: var(--color-background);
+  --foreground: var(--color-primary);
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-accent);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-background);
+  --secondary: var(--color-neutral-100);
+  --secondary-foreground: var(--color-primary);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-500);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-background);
+  --popover: var(--color-background);
+  --popover-foreground: var(--color-primary);
+  --card: var(--color-background);
+  --card-foreground: var(--color-primary);
 }
 
 .dark {
   --color-background: #070707;
   --color-border: var(--color-neutral-700);
+  
+  /* shadcn/ui CSS variables for dark mode */
+  --background: var(--color-background);
+  --foreground: #fff;
+  --border: var(--color-border);
+  --input: var(--color-border);
+  --ring: var(--color-accent);
+  --primary: #fff;
+  --primary-foreground: var(--color-background);
+  --secondary: var(--color-neutral-800);
+  --secondary-foreground: #fff;
+  --muted: var(--color-neutral-800);
+  --muted-foreground: var(--color-neutral-400);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-background);
+  --popover: var(--color-background);
+  --popover-foreground: #fff;
+  --card: var(--color-background);
+  --card-foreground: #fff;
 }
 
 /* biome-ignore lint/suspicious/noUnknownAtRules: for tailwind */

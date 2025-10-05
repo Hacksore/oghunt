@@ -2,13 +2,11 @@
 
 import type { ProductPost } from "@/app/types";
 import { Card } from "@/components/card";
-import { DateSelector } from "@/components/date-selector";
+import { FiltersSection } from "@/components/filters-section";
 import { MobileCard } from "@/components/mobile-card";
 import Scroll from "@/components/scroll";
 import { SlopMeterSection } from "@/components/slop-meter-section";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 
 interface ListPageClientProps {
   posts: ProductPost[];
@@ -27,8 +25,6 @@ export function ListPageClient({
   nonAiPostsCount,
   selectedDate,
 }: ListPageClientProps) {
-  const searchParams = useSearchParams();
-  
   // Format the date for display
   const formatDate = (date: Date) => {
     return date.toLocaleDateString('en-US', { 
@@ -39,11 +35,10 @@ export function ListPageClient({
     });
   };
 
-  // Create URL with current search params but update specific parameter
-  const createUrl = (param: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(param, value);
-    return `/list?${params.toString()}`;
+  // Create pagination URL with date parameter preserved
+  const createPaginationUrl = (page: number) => {
+    const dateStr = selectedDate.toISOString().split('T')[0];
+    return `/list?date=${dateStr}&page=${page}`;
   };
 
   return (
@@ -54,63 +49,8 @@ export function ListPageClient({
           Best of {formatDate(selectedDate)}
         </h1>
 
-        {/* Navigation Tabs */}
-        <div className="flex flex-col sm:flex-row gap-4 mb-6">
-          {/* Scope/Frequency Tabs */}
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              asChild
-              className="text-red-500 border-b-2 border-red-500 rounded-none px-2 py-1"
-            >
-              <Link href={createUrl('scope', 'daily')}>Daily</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              asChild
-              className="text-gray-600 hover:text-gray-900 px-2 py-1"
-            >
-              <Link href={createUrl('scope', 'weekly')}>Weekly</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              asChild
-              className="text-gray-600 hover:text-gray-900 px-2 py-1"
-            >
-              <Link href={createUrl('scope', 'monthly')}>Monthly</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              asChild
-              className="text-gray-600 hover:text-gray-900 px-2 py-1"
-            >
-              <Link href={createUrl('scope', 'yearly')}>Yearly</Link>
-            </Button>
-          </div>
-
-          {/* Content Filter Tabs */}
-          <div className="flex gap-2">
-            <Button
-              variant="ghost"
-              asChild
-              className="text-red-500 border-b-2 border-red-500 rounded-none px-2 py-1"
-            >
-              <Link href={createUrl('filter', 'featured')}>Featured</Link>
-            </Button>
-            <Button
-              variant="ghost"
-              asChild
-              className="text-gray-600 hover:text-gray-900 px-2 py-1"
-            >
-              <Link href={createUrl('filter', 'all')}>All</Link>
-            </Button>
-          </div>
-        </div>
-
-        {/* Date Selector */}
-        <div className="mb-8">
-          <DateSelector currentDate={selectedDate} />
-        </div>
+        {/* Filters Section */}
+        <FiltersSection selectedDate={selectedDate} />
 
         {/* Stats Section */}
         <section className="w-full px-4 my-8">
@@ -143,7 +83,7 @@ export function ListPageClient({
           <div className="flex justify-center gap-2 mt-8">
             <Button
               variant="outline"
-              href={createUrl('page', String(currentPage - 1))}
+              href={createPaginationUrl(currentPage - 1)}
               aria-disabled={currentPage === 1}
               className={currentPage === 1 ? "pointer-events-none opacity-50" : ""}
             >
@@ -154,7 +94,7 @@ export function ListPageClient({
             </span>
             <Button
               variant="outline"
-              href={createUrl('page', String(currentPage + 1))}
+              href={createPaginationUrl(currentPage + 1)}
               aria-disabled={currentPage === totalPages}
               className={currentPage === totalPages ? "pointer-events-none opacity-50" : ""}
             >
