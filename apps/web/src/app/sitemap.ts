@@ -57,34 +57,43 @@ const getCachedPosts = unstable_cache(
 );
 
 export async function generateSitemaps() {
-  // Get total count of non-deleted posts with caching
-  const totalPosts = await getCachedPostCount();
+  try {
+    // Get total count of non-deleted posts with caching
+    const totalPosts = await getCachedPostCount();
 
-  // Calculate number of sitemap chunks needed (50k per chunk for better performance)
-  // Google's limit is 50,000 URLs per sitemap, so we can safely use this
-  const CHUNK_SIZE = 50000;
-  const totalChunks = Math.ceil(totalPosts / CHUNK_SIZE);
+    // Calculate number of sitemap chunks needed (50k per chunk for better performance)
+    // Google's limit is 50,000 URLs per sitemap, so we can safely use this
+    const CHUNK_SIZE = 50000;
+    const totalChunks = Math.ceil(totalPosts / CHUNK_SIZE);
 
-  // Return array of sitemap IDs
-  return Array.from({ length: totalChunks }, (_, i) => ({ id: i }));
+    // Return array of sitemap IDs
+    return Array.from({ length: totalChunks }, (_, i) => ({ id: i }));
+  } catch (error) {
+    console.error('Sitemap generation error:', error);
+    // Return at least one sitemap chunk if database fails
+    return [{ id: 0 }];
+  }
 }
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   const CHUNK_SIZE = 50000;
 
-  // Get posts for this chunk using cached query
-  const posts = await getCachedPosts(id, CHUNK_SIZE);
+  try {
+    // Get posts for this chunk using cached query
+    const posts = await getCachedPosts(id, CHUNK_SIZE);
 
-  // Create sitemap entries for posts with optimized URL generation
-  const postUrls = posts.map((post) => ({
-    url: `https://oghunt.com/view/${post.id}-${escapeXml(post.name.toLowerCase().replace(/\s+/g, "-"))}`,
-    lastModified: post.createdAt,
-    changeFrequency: "daily" as const,
-    priority: 0.8,
-  }));
+    // Create sitemap entries for posts with optimized URL generation
+    const postUrls = posts.map((post) => ({
+      url: `https://oghunt.com/view/${post.id}-${escapeXml(post.name.toLowerCase().replace(/\s+/g, "-"))}`,
+      lastModified: post.createdAt,
+      changeFrequency: "daily" as const,
+      priority: 0.8,
+    }));
 
-  // For the first sitemap (id: 0), include static pages
-  if (id === 0) {
+    return postUrls;
+  } catch (error) {
+    console.error('Sitemap generation error:', error);
+    // Return minimal sitemap with static pages if database fails
     return [
       {
         url: "https://oghunt.com",
@@ -110,10 +119,6 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
         changeFrequency: "daily",
         priority: 0.8,
       },
-      ...postUrls,
     ];
   }
-
-  // For other chunks, only return posts
-  return postUrls;
 }
