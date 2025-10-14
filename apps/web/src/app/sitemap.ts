@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { unstable_cache } from "next/cache";
 import db from "./db";
 
 // Function to escape XML special characters
@@ -11,13 +12,53 @@ function escapeXml(unsafe: string): string {
     .replace(/'/g, "&apos;");
 }
 
+// Cached function to get total post count (6 hours cache)
+const getCachedPostCount = unstable_cache(
+  async () => {
+    return await db.post.count({
+      where: {
+        deleted: false,
+      },
+    });
+  },
+  ["post-count"],
+  {
+    revalidate: 6 * 60 * 60, // 6 hours in seconds
+    tags: ["posts"],
+  }
+);
+
+// Cached function to get posts for a specific chunk (6 hours cache)
+const getCachedPosts = unstable_cache(
+  async (chunkId: number, chunkSize: number) => {
+    const skip = chunkId * chunkSize;
+    
+    return await db.post.findMany({
+      where: {
+        deleted: false,
+      },
+      select: {
+        id: true,
+        name: true,
+        createdAt: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      skip,
+      take: chunkSize,
+    });
+  },
+  ["posts-chunk"],
+  {
+    revalidate: 6 * 60 * 60, // 6 hours in seconds
+    tags: ["sitemap-posts"],
+  }
+);
+
 export async function generateSitemaps() {
-  // Get total count of non-deleted posts with optimized query
-  const totalPosts = await db.post.count({
-    where: {
-      deleted: false,
-    },
-  });
+  // Get total count of non-deleted posts with caching
+  const totalPosts = await getCachedPostCount();
 
   // Calculate number of sitemap chunks needed (50k per chunk for better performance)
   // Google's limit is 50,000 URLs per sitemap, so we can safely use this
@@ -30,24 +71,9 @@ export async function generateSitemaps() {
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   const CHUNK_SIZE = 50000;
-  const skip = id * CHUNK_SIZE;
 
-  // Optimized query - only select minimal fields needed for sitemap
-  const posts = await db.post.findMany({
-    where: {
-      deleted: false,
-    },
-    select: {
-      id: true,
-      name: true,
-      createdAt: true,
-    },
-    orderBy: {
-      createdAt: "desc", // Most recent first
-    },
-    skip,
-    take: CHUNK_SIZE,
-  });
+  // Get posts for this chunk using cached query
+  const posts = await getCachedPosts(id, CHUNK_SIZE);
 
   // Create sitemap entries for posts with optimized URL generation
   const postUrls = posts.map((post) => ({
