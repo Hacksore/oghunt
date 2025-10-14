@@ -25,14 +25,14 @@ const getCachedPostCount = unstable_cache(
   {
     revalidate: 6 * 60 * 60, // 6 hours in seconds
     tags: ["posts"],
-  }
+  },
 );
 
 // Cached function to get posts for a specific chunk (6 hours cache)
 const getCachedPosts = unstable_cache(
   async (chunkId: number, chunkSize: number) => {
     const skip = chunkId * chunkSize;
-    
+
     return await db.post.findMany({
       where: {
         deleted: false,
@@ -53,7 +53,7 @@ const getCachedPosts = unstable_cache(
   {
     revalidate: 6 * 60 * 60, // 6 hours in seconds
     tags: ["sitemap-posts"],
-  }
+  },
 );
 
 export async function generateSitemaps() {
@@ -66,10 +66,11 @@ export async function generateSitemaps() {
     const CHUNK_SIZE = 50000;
     const totalChunks = Math.ceil(totalPosts / CHUNK_SIZE);
 
-    // Return array of sitemap IDs
-    return Array.from({ length: totalChunks }, (_, i) => ({ id: i }));
+    // Always return at least one chunk (for static pages), plus additional chunks for posts
+    const chunks = Math.max(1, totalChunks);
+    return Array.from({ length: chunks }, (_, i) => ({ id: i }));
   } catch (error) {
-    console.error('Sitemap generation error:', error);
+    console.error("Sitemap generation error:", error);
     // Return at least one sitemap chunk if database fails
     return [{ id: 0 }];
   }
@@ -90,9 +91,41 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
       priority: 0.8,
     }));
 
+    // For the first sitemap (id: 0), include static pages
+    if (id === 0) {
+      return [
+        {
+          url: "https://oghunt.com",
+          lastModified: new Date(),
+          changeFrequency: "hourly",
+          priority: 1,
+        },
+        {
+          url: "https://oghunt.com/homies",
+          lastModified: new Date(),
+          changeFrequency: "daily",
+          priority: 1,
+        },
+        {
+          url: "https://oghunt.com/slop",
+          lastModified: new Date(),
+          changeFrequency: "daily",
+          priority: 0.8,
+        },
+        {
+          url: "https://oghunt.com/ai",
+          lastModified: new Date(),
+          changeFrequency: "daily",
+          priority: 0.8,
+        },
+        ...postUrls,
+      ];
+    }
+
+    // For other chunks, only return posts
     return postUrls;
   } catch (error) {
-    console.error('Sitemap generation error:', error);
+    console.error("Sitemap generation error:", error);
     // Return minimal sitemap with static pages if database fails
     return [
       {
