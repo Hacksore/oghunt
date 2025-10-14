@@ -8,6 +8,7 @@
     "db:generate": "turbo run db:generate",
     "db:push": "dotenv -e .env -- turbo run db:push",
     "db:studio": "dotenv -e .env -- turbo run db:studio",
+    "db:seed": "dotenv -e .env -- turbo run db:seed",
     "check": "turbo run check",
     "format": "turbo run format",
     "lint": "turbo run lint",

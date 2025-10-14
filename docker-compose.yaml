@@ -2,16 +2,13 @@ name: oghunt
 
 services:
   db:
-    # rolling tags fucked us, so downgrading for now
-    # https://github.com/bitnami/containers/issues/74788
-    image: bitnami/postgresql:13
+    image: bitnami/postgresql
     container_name: oghunt-db
     restart: always
     environment:
       POSTGRESQL_USERNAME: dev
       POSTGRESQL_PASSWORD: dev
       POSTGRESQL_DATABASE: oghunt
-    # create a volume for the docker container_name
     volumes:
       - oghunt-data:/bitnami/postgres/data
     ports:

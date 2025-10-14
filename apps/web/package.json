@@ -13,7 +13,8 @@
     "fix": "biome check src --write",
     "db:push": "prisma db push",
     "db:studio": "prisma studio",
-    "db:generate": "prisma generate"
+    "db:generate": "prisma generate",
+    "db:seed": "tsx scripts/seed-db.ts"
   },
   "dependencies": {
     "@google/genai": "^0.14.1",
@@ -37,6 +38,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.0.0",
     "@tailwindcss/postcss": "^4.1.7",
     "@types/d3": "^7.4.3",
     "@types/node": "^20",

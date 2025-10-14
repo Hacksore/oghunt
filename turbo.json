@@ -23,6 +23,7 @@
       ]
     },
     "db:studio": {},
+    "db:seed": {},
     "db:push": {},
     "db:generate": {},
     "check": {
