@@ -9,7 +9,7 @@ export async function GET(): Promise<Response> {
 
     // Create sitemap entries for dynamic chunks
     const dynamicEntries = Array.from({ length: chunks }, (_, i) => ({
-      loc: `https://oghunt.com/sitemap${i}.xml`,
+      loc: `https://oghunt.com/sitemap/${i}.xml`,
       lastmod: new Date().toISOString(),
     }));
 
@@ -41,7 +41,7 @@ export async function GET(): Promise<Response> {
         lastmod: new Date().toISOString(),
       },
       {
-        loc: "https://oghunt.com/sitemap0.xml",
+        loc: "https://oghunt.com/sitemap/0.xml",
         lastmod: new Date().toISOString(),
       },
     ];
