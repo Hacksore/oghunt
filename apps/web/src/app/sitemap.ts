@@ -24,7 +24,6 @@ const getCachedPostCount = unstable_cache(
   ["post-count"],
   {
     revalidate: 6 * 60 * 60, // 6 hours in seconds
-    tags: ["posts"],
   },
 );
 
@@ -52,7 +51,6 @@ const getCachedPosts = unstable_cache(
   ["posts-chunk"],
   {
     revalidate: 6 * 60 * 60, // 6 hours in seconds
-    tags: ["sitemap-posts"],
   },
 );
 
