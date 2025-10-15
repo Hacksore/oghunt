@@ -1,5 +1,5 @@
+import { generateSitemapIndex, STATIC_PAGES } from "../lib/sitemap-helpers";
 import { generateSitemaps } from "../sitemap";
-import { generateSitemapIndex } from "../lib/sitemap-helpers";
 
 export async function GET(): Promise<Response> {
   try {
@@ -7,20 +7,22 @@ export async function GET(): Promise<Response> {
     const sitemapChunks = await generateSitemaps();
     const chunks = sitemapChunks.length;
 
+    // Convert static pages to sitemap entries format
+    const staticEntries = STATIC_PAGES.map((page) => ({
+      loc: page.url,
+      lastmod: page.lastModified.toISOString(),
+      priority: page.priority,
+    }));
+
     // Create sitemap entries for dynamic chunks
     const dynamicEntries = Array.from({ length: chunks }, (_, i) => ({
       loc: `https://oghunt.com/sitemap/${i}.xml`,
       lastmod: new Date().toISOString(),
+      priority: 0.5, // Default priority for dynamic sitemap chunks
     }));
 
-    // Create sitemap entry for static pages
-    const staticEntry = {
-      loc: "https://oghunt.com/sitemap-static.xml",
-      lastmod: new Date().toISOString(),
-    };
-
-    // Combine all sitemap entries
-    const allEntries = [staticEntry, ...dynamicEntries];
+    // Combine all sitemap entries (static first, then dynamic)
+    const allEntries = [...staticEntries, ...dynamicEntries];
 
     // Generate sitemap index XML using helper
     const sitemapIndex = generateSitemapIndex(allEntries);
@@ -35,14 +37,18 @@ export async function GET(): Promise<Response> {
     console.error("Sitemap index generation error:", error);
 
     // Return minimal sitemap index if database fails
+    const fallbackStaticEntries = STATIC_PAGES.map((page) => ({
+      loc: page.url,
+      lastmod: page.lastModified.toISOString(),
+      priority: page.priority,
+    }));
+
     const fallbackEntries = [
-      {
-        loc: "https://oghunt.com/sitemap-static.xml",
-        lastmod: new Date().toISOString(),
-      },
+      ...fallbackStaticEntries,
       {
         loc: "https://oghunt.com/sitemap/0.xml",
         lastmod: new Date().toISOString(),
+        priority: 0.5, // Default priority for dynamic sitemap chunks
       },
     ];
 

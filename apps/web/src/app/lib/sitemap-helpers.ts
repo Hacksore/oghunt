@@ -3,6 +3,7 @@
 export interface SitemapEntry {
   loc: string;
   lastmod: string;
+  priority: number;
 }
 
 export interface StaticPage {
