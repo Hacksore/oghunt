@@ -91,67 +91,11 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
       priority: 0.8,
     }));
 
-    // For the first sitemap (id: 0), include static pages
-    if (id === 0) {
-      return [
-        {
-          url: "https://oghunt.com",
-          lastModified: new Date(),
-          changeFrequency: "hourly",
-          priority: 1,
-        },
-        {
-          url: "https://oghunt.com/homies",
-          lastModified: new Date(),
-          changeFrequency: "daily",
-          priority: 1,
-        },
-        {
-          url: "https://oghunt.com/slop",
-          lastModified: new Date(),
-          changeFrequency: "daily",
-          priority: 0.8,
-        },
-        {
-          url: "https://oghunt.com/ai",
-          lastModified: new Date(),
-          changeFrequency: "daily",
-          priority: 0.8,
-        },
-        ...postUrls,
-      ];
-    }
-
-    // For other chunks, only return posts
+    // All chunks now only contain posts (static pages are in separate sitemap)
     return postUrls;
   } catch (error) {
     console.error("Sitemap generation error:", error);
-    // Return minimal sitemap with static pages if database fails
-    return [
-      {
-        url: "https://oghunt.com",
-        lastModified: new Date(),
-        changeFrequency: "hourly",
-        priority: 1,
-      },
-      {
-        url: "https://oghunt.com/homies",
-        lastModified: new Date(),
-        changeFrequency: "daily",
-        priority: 1,
-      },
-      {
-        url: "https://oghunt.com/slop",
-        lastModified: new Date(),
-        changeFrequency: "daily",
-        priority: 0.8,
-      },
-      {
-        url: "https://oghunt.com/ai",
-        lastModified: new Date(),
-        changeFrequency: "daily",
-        priority: 0.8,
-      },
-    ];
+    // Return empty sitemap if database fails (static pages are handled separately)
+    return [];
   }
 }
