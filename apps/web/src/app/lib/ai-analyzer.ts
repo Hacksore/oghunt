@@ -49,7 +49,7 @@ Topics: ${topicsText}
 // https://ai.google.dev/gemini-api/docs/rate-limits#free-tier
 const generateAiContent = async (prompt: string) => {
   const response = await ai.models.generateContent({
-    model: "gemini-2.0-flash-001",
+    model: "gemini-2.5-flash",
     contents: prompt,
     config: {
       systemInstruction:
