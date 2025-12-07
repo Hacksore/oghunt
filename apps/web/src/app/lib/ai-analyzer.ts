@@ -23,7 +23,7 @@ const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
 // Process posts in smaller chunks to avoid token limits
 // NOTE: hoping making this smaller gives us more accurate results
-const CHUNK_SIZE = 25;
+const CHUNK_SIZE = 35;
 
 // Helper function to format a product for analysis
 const formatProductText = (
