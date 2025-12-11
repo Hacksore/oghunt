@@ -245,7 +245,7 @@ export const analyzePosts = async (
   let totalMismatches = 0;
 
   // Prepare all chunks and their prompts upfront
-  const chunks: typeof posts[] = [];
+  const chunks: (typeof posts)[] = [];
   const prompts: string[] = [];
 
   for (let i = 0; i < posts.length; i += CHUNK_SIZE) {

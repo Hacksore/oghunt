@@ -9,7 +9,7 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: ^2.2.5
+        specifier: ^2.3.8
         version: 2.3.8
       dotenv-cli:
         specifier: ^8.0.0

@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* biome-ignore lint/suspicious/noUnknownAtRules: for tailwind */
 @theme inline {
   --color-primary: #070707;
   --color-accent: #ff495b;
@@ -14,7 +13,6 @@
   --color-border: var(--color-neutral-700);
 }
 
-/* biome-ignore lint/suspicious/noUnknownAtRules: for tailwind */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @keyframes rotate {
