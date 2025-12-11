@@ -17,7 +17,7 @@
     "db:seed": "tsx scripts/seed-db.ts"
   },
   "dependencies": {
-    "@google/genai": "^0.14.1",
+    "@google/genai": "^1.32.0",
     "@next/third-parties": "15.3.2",
     "@prisma/client": "6.16.3",
     "@radix-ui/react-label": "^2.1.7",

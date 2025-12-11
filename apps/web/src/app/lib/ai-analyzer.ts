@@ -44,31 +44,134 @@ Topics: ${topicsText}
 ---`;
 };
 
-// Helper function to generate AI content
-// NOTE: we need to keep this in the RPM range of <= 15
-// https://ai.google.dev/gemini-api/docs/rate-limits#free-tier
-const generateAiContent = async (prompt: string) => {
-  const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash",
-    contents: prompt,
+// Helper function to generate AI content using Batch API
+// Batch API processes requests asynchronously at 50% cost
+// https://ai.google.dev/gemini-api/docs/batch-api
+const generateAiContentBatch = async (prompts: string[]) => {
+  // Create inline requests for the batch API
+  const inlineRequests = prompts.map((prompt) => ({
+    contents: [
+      {
+        parts: [{ text: prompt }],
+        role: "user" as const,
+      },
+    ],
     config: {
-      systemInstruction:
-        "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
+      systemInstruction: {
+        parts: [
+          {
+            text: "You are an AI content analyzer that determines if products are AI-related. You must respond with valid JSON only.",
+          },
+        ],
+      },
+    },
+  }));
+
+  // Create batch job with all requests
+  const batchJob = await ai.batches.create({
+    model: "gemini-2.5-flash",
+    src: inlineRequests,
+    config: {
+      displayName: `ai-analysis-batch-${Date.now()}`,
     },
   });
 
-  console.log({
-    inputTokens: response.usageMetadata?.promptTokenCount,
-    outputTokens: response.usageMetadata?.candidatesTokenCount,
-    totalTokens: response.usageMetadata?.totalTokenCount,
+  console.log(`Created batch job: ${batchJob.name}`);
+
+  // Poll for completion (with reasonable timeout)
+  const MAX_WAIT_TIME = 5 * 60 * 1000; // 5 minutes max wait
+  const POLL_INTERVAL = 10 * 1000; // Poll every 10 seconds
+  const startTime = Date.now();
+
+  const completedStates = new Set([
+    "JOB_STATE_SUCCEEDED",
+    "JOB_STATE_FAILED",
+    "JOB_STATE_CANCELLED",
+    "JOB_STATE_EXPIRED",
+  ]);
+
+  let currentBatchJob = await ai.batches.get({
+    name: batchJob.name,
   });
 
-  return response;
+  while (!completedStates.has(currentBatchJob.state)) {
+    if (Date.now() - startTime > MAX_WAIT_TIME) {
+      throw new Error(
+        `Batch job ${batchJob.name} did not complete within ${MAX_WAIT_TIME / 1000} seconds. Job state: ${currentBatchJob.state}. You may need to poll for results later.`,
+      );
+    }
+
+    console.log(
+      `Batch job state: ${currentBatchJob.state}. Waiting ${POLL_INTERVAL / 1000} seconds...`,
+    );
+    await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
+    // @ts-expect-error - batches API exists at runtime but types may not be available yet
+    currentBatchJob = await ai.batches.get({
+      name: batchJob.name,
+    });
+  }
+
+  if (currentBatchJob.state === "JOB_STATE_FAILED") {
+    let errorMessage = "Unknown error";
+    if (typeof currentBatchJob.error === "string") {
+      errorMessage = currentBatchJob.error;
+    } else if (
+      currentBatchJob.error &&
+      typeof currentBatchJob.error === "object" &&
+      "message" in currentBatchJob.error
+    ) {
+      const errorObj = currentBatchJob.error as { message?: string };
+      errorMessage = errorObj.message || JSON.stringify(currentBatchJob.error);
+    } else if (currentBatchJob.error) {
+      errorMessage = JSON.stringify(currentBatchJob.error);
+    }
+    throw new Error(`Batch job failed: ${errorMessage}`);
+  }
+
+  if (currentBatchJob.state !== "JOB_STATE_SUCCEEDED") {
+    throw new Error(`Batch job ended with state: ${currentBatchJob.state}`);
+  }
+
+  // Retrieve results
+  if (!currentBatchJob.dest?.inlinedResponses) {
+    throw new Error("Batch job succeeded but no inline responses found");
+  }
+
+  console.log(
+    `Batch job completed successfully. Retrieved ${currentBatchJob.dest.inlinedResponses.length} responses`,
+  );
+
+  // Return array of responses matching the order of input prompts
+  type InlineResponse = {
+    response?: {
+      text?: string | null;
+      usageMetadata?: {
+        promptTokenCount?: number;
+        candidatesTokenCount?: number;
+        totalTokenCount?: number;
+      };
+    };
+    error?: unknown;
+  };
+  return currentBatchJob.dest.inlinedResponses.map((inlineResponse: InlineResponse) => {
+    if (inlineResponse.error) {
+      throw new Error(
+        `Error in batch response: ${typeof inlineResponse.error === "string" ? inlineResponse.error : JSON.stringify(inlineResponse.error)}`,
+      );
+    }
+
+    if (!inlineResponse.response) {
+      throw new Error("Batch response missing response field");
+    }
+
+    return inlineResponse.response;
+  });
 };
 
 // Helper function to parse and validate AI response
+// Works with both regular API responses and batch API responses
 const parseAiResponse = (
-  response: Awaited<ReturnType<typeof ai.models.generateContent>>,
+  response: { text?: string | null; usageMetadata?: unknown },
   expectedLength?: number,
 ): ParseResponse => {
   let parsedResponse: unknown;
@@ -132,35 +235,14 @@ export const analyzePosts = async (
 ): Promise<Map<string, boolean>> => {
   const results = new Map<string, boolean>();
   let totalMismatches = 0;
-  let totalRequests = 0;
 
-  // Process posts in chunks
+  // Prepare all chunks and their prompts upfront
+  const chunks: typeof posts[] = [];
+  const prompts: string[] = [];
+
   for (let i = 0; i < posts.length; i += CHUNK_SIZE) {
     const chunkPosts = posts.slice(i, i + CHUNK_SIZE);
-    console.log(
-      "Analyzing chunk",
-      Math.floor(i / CHUNK_SIZE) + 1,
-      "of",
-      Math.ceil(posts.length / CHUNK_SIZE),
-    );
-    console.log("Posts in chunk:", chunkPosts.length);
-    console.log(
-      "Prompt length:",
-      BATCH_ANALYSIS_PROMPT.length +
-        chunkPosts.reduce(
-          (acc, post) =>
-            acc +
-            post.name.length +
-            post.tagline.length +
-            post.description.length +
-            post.topics.reduce(
-              (tacc, topic) => tacc + topic.name.length + topic.description.length,
-              0,
-            ),
-          0,
-        ),
-      "characters",
-    );
+    chunks.push(chunkPosts);
 
     // Format chunk posts into a single prompt
     const productsText = chunkPosts
@@ -168,14 +250,45 @@ export const analyzePosts = async (
       .join("\n\n");
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
+    prompts.push(prompt);
 
-    let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
-    try {
-      response = await generateAiContent(prompt);
-      totalRequests++;
-    } catch (error) {
-      console.error("Failed to generate content for chunk:", error);
-      throw new Error("Failed to analyze posts: AI service error");
+    console.log(
+      `Prepared chunk ${chunks.length} with ${chunkPosts.length} posts (${prompt.length} characters)`,
+    );
+  }
+
+  console.log(
+    `Created ${chunks.length} chunks. Submitting batch job with ${prompts.length} requests...`,
+  );
+
+  // Submit all requests in a single batch job
+  let batchResponses: Awaited<ReturnType<typeof generateAiContentBatch>>;
+  try {
+    batchResponses = await generateAiContentBatch(prompts);
+    console.log(`Batch job completed. Processing ${batchResponses.length} responses...`);
+  } catch (error) {
+    console.error("Failed to process batch job:", error);
+    throw new Error("Failed to analyze posts: AI service error");
+  }
+
+  // Process each response and map results back to posts
+  for (let chunkIndex = 0; chunkIndex < chunks.length; chunkIndex++) {
+    const chunkPosts = chunks[chunkIndex];
+    const response = batchResponses[chunkIndex];
+
+    if (!response) {
+      console.error(`Missing response for chunk ${chunkIndex + 1}`);
+      continue;
+    }
+
+    // Log token usage if available
+    if (response.usageMetadata) {
+      console.log({
+        chunk: chunkIndex + 1,
+        inputTokens: response.usageMetadata.promptTokenCount,
+        outputTokens: response.usageMetadata.candidatesTokenCount,
+        totalTokens: response.usageMetadata.totalTokenCount,
+      });
     }
 
     const {
@@ -187,7 +300,7 @@ export const analyzePosts = async (
     if (expectedCount !== undefined && expectedCount !== actualCount) {
       totalMismatches++;
       console.warn(
-        `Chunk ${Math.floor(i / CHUNK_SIZE) + 1}: Expected ${expectedCount} results but got ${actualCount}`,
+        `Chunk ${chunkIndex + 1}: Expected ${expectedCount} results but got ${actualCount}`,
       );
     }
 
@@ -195,6 +308,11 @@ export const analyzePosts = async (
     for (let j = 0; j < chunkPosts.length; j++) {
       const post = chunkPosts[j];
       const result = analysisResults[j];
+
+      if (!result) {
+        console.warn(`Missing result for post ${post.name} in chunk ${chunkIndex + 1}`);
+        continue;
+      }
 
       console.log({
         post: post.name,
@@ -215,7 +333,9 @@ export const analyzePosts = async (
 
   results.set(PRODUCT_HUNT_ID, false);
 
-  console.log(`Total Gemini API requests made: ${totalRequests}`);
+  console.log(
+    `Analysis complete. Processed ${posts.length} posts using 1 batch API request (50% cost savings)`,
+  );
 
   return results;
 };
