@@ -7,11 +7,7 @@
     {
       "path": "/api/update-vote-count",
       "schedule": "*/15 * * * *"
-    },
-    {
-      "path": "/api/daily-email",
-      "schedule": "0 9 * * *"
-    }
+   }
   ],
   "functions": {
     "app/api/**/*": {

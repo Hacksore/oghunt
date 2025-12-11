@@ -76,7 +76,12 @@ const generateAiContentBatch = async (prompts: string[]) => {
     },
   });
 
-  console.log(`Created batch job: ${batchJob.name}`);
+  if (!batchJob.name) {
+    throw new Error("Batch job created but name is missing");
+  }
+
+  const batchJobName = batchJob.name;
+  console.log(`Created batch job: ${batchJobName}`);
 
   // Poll for completion (with reasonable timeout)
   const MAX_WAIT_TIME = 5 * 60 * 1000; // 5 minutes max wait
@@ -91,24 +96,27 @@ const generateAiContentBatch = async (prompts: string[]) => {
   ]);
 
   let currentBatchJob = await ai.batches.get({
-    name: batchJob.name,
+    name: batchJobName,
   });
 
-  while (!completedStates.has(currentBatchJob.state)) {
+  while (currentBatchJob.state && !completedStates.has(currentBatchJob.state)) {
     if (Date.now() - startTime > MAX_WAIT_TIME) {
       throw new Error(
-        `Batch job ${batchJob.name} did not complete within ${MAX_WAIT_TIME / 1000} seconds. Job state: ${currentBatchJob.state}. You may need to poll for results later.`,
+        `Batch job ${batchJobName} did not complete within ${MAX_WAIT_TIME / 1000} seconds. Job state: ${currentBatchJob.state ?? "unknown"}. You may need to poll for results later.`,
       );
     }
 
     console.log(
-      `Batch job state: ${currentBatchJob.state}. Waiting ${POLL_INTERVAL / 1000} seconds...`,
+      `Batch job state: ${currentBatchJob.state ?? "unknown"}. Waiting ${POLL_INTERVAL / 1000} seconds...`,
     );
     await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL));
-    // @ts-expect-error - batches API exists at runtime but types may not be available yet
     currentBatchJob = await ai.batches.get({
-      name: batchJob.name,
+      name: batchJobName,
     });
+  }
+
+  if (!currentBatchJob.state) {
+    throw new Error("Batch job state is missing");
   }
 
   if (currentBatchJob.state === "JOB_STATE_FAILED") {
