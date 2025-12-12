@@ -69,7 +69,7 @@ const generateAiContentBatch = async (prompts: string[]) => {
 
   // Create batch job with all requests
   const batchJob = await ai.batches.create({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash-lite",
     src: inlineRequests,
     config: {
       displayName: `ai-analysis-batch-${Date.now()}`,
