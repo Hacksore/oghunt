@@ -204,11 +204,7 @@ export const analyzePosts = async (
       continue; // Skip to next chunk
     }
 
-    const {
-      results: analysisResults,
-      expectedCount,
-      actualCount,
-    } = parseResult;
+    const { results: analysisResults, expectedCount, actualCount } = parseResult;
 
     if (expectedCount !== undefined && expectedCount !== actualCount) {
       totalMismatches++;
