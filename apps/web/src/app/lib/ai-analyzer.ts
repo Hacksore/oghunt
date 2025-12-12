@@ -21,9 +21,7 @@ const BATCH_ANALYSIS_PROMPT = readFileSync(join(process.cwd(), "src/app/lib/prom
 
 const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
 
-// Process posts in smaller chunks to avoid token limits
-// NOTE: hoping making this smaller gives us more accurate results
-const CHUNK_SIZE = 35;
+const CHUNK_SIZE = 25;
 
 // Helper function to format a product for analysis
 const formatProductText = (
@@ -67,16 +65,21 @@ const generateAiContent = async (prompt: string) => {
 };
 
 // Helper function to parse and validate AI response
+// Returns null if parsing fails - caller should handle gracefully
 const parseAiResponse = (
   response: Awaited<ReturnType<typeof ai.models.generateContent>>,
   expectedLength?: number,
-): ParseResponse => {
+): ParseResponse | null => {
   let parsedResponse: unknown;
   try {
     parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
+    if (parsedResponse === null) {
+      console.error("Failed to parse JSON: parseJsonWithCodeFence returned null");
+      return null;
+    }
   } catch (error: unknown) {
     console.error("Failed to parse JSON after cleaning:", error);
-    throw new Error("Failed to analyze: Invalid response format");
+    return null;
   }
 
   let analysisResults: AnalysisResult[];
@@ -98,20 +101,23 @@ const parseAiResponse = (
     }
 
     // Validate each result has required properties
+    // Default to true (AI slop) if we can't determine
     analysisResults = analysisResults.map((result) => {
       if (!result || typeof result !== "object") {
-        throw new Error("Failed to analyze: Invalid result format", {
-          cause: result,
-        });
+        console.warn("Invalid result format, defaulting to AI slop:", result);
+        return {
+          isAiRelated: true, // Default to true - assume AI slop
+          reasoning: "Unable to analyze: Invalid result format",
+        };
       }
       return {
-        isAiRelated: result?.isAiRelated ?? false,
+        isAiRelated: result?.isAiRelated ?? true, // Default to true - assume AI slop
         reasoning: result?.reasoning ?? "No reasoning provided",
       };
     });
   } catch (error) {
     console.error("Error processing analysis results:", error);
-    throw new Error("Failed to analyze: Invalid results format");
+    return null;
   }
 
   return {
@@ -169,20 +175,40 @@ export const analyzePosts = async (
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
-    let response: Awaited<ReturnType<typeof ai.models.generateContent>>;
+    let response: Awaited<ReturnType<typeof ai.models.generateContent>> | null = null;
     try {
       response = await generateAiContent(prompt);
       totalRequests++;
     } catch (error) {
       console.error("Failed to generate content for chunk:", error);
-      throw new Error("Failed to analyze posts: AI service error");
+      console.warn(
+        `Chunk ${Math.floor(i / CHUNK_SIZE) + 1}: Defaulting all posts to AI slop due to API error`,
+      );
+      // Default all posts in this chunk to true (AI slop)
+      for (const post of chunkPosts) {
+        results.set(post.id, true);
+      }
+      continue; // Skip to next chunk
+    }
+
+    const parseResult = parseAiResponse(response, chunkPosts.length);
+
+    // If parsing failed, default all posts in chunk to true (AI slop)
+    if (parseResult === null) {
+      console.warn(
+        `Chunk ${Math.floor(i / CHUNK_SIZE) + 1}: Failed to parse response, defaulting all posts to AI slop`,
+      );
+      for (const post of chunkPosts) {
+        results.set(post.id, true);
+      }
+      continue; // Skip to next chunk
     }
 
     const {
       results: analysisResults,
       expectedCount,
       actualCount,
-    } = parseAiResponse(response, chunkPosts.length);
+    } = parseResult;
 
     if (expectedCount !== undefined && expectedCount !== actualCount) {
       totalMismatches++;
@@ -196,14 +222,17 @@ export const analyzePosts = async (
       const post = chunkPosts[j];
       const result = analysisResults[j];
 
+      // If result is missing, default to true (AI slop)
+      const isAiRelated = result?.isAiRelated ?? true;
+
       console.log({
         post: post.name,
-        isAiRelated: result.isAiRelated,
-        reasoning: result?.reasoning,
+        isAiRelated,
+        reasoning: result?.reasoning ?? "No reasoning provided (defaulted to AI slop)",
       });
 
       // Use post ID as the cache key
-      results.set(post.id, result.isAiRelated);
+      results.set(post.id, isAiRelated);
     }
   }
 
