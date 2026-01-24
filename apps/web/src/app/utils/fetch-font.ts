@@ -2,7 +2,8 @@ import { z } from "zod";
 
 import env from "../env";
 
-const baseUrl = env.VERCEL_URL ? `https://${env.VERCEL_URL}` : "http://localhost:3000";
+// Use the same URL logic as the OG route for consistency
+const baseUrl = env.NODE_ENV === "production" ? "https://oghunt.com" : "http://localhost:3000";
 
 type Primitives = boolean | number | string | null;
 type JsonValue = JsonValue[] | Primitives | { [key: string]: JsonValue };
@@ -42,11 +43,27 @@ export const fontParams = zodParams(
   }),
 );
 
-export const fetchFont = (family: string, weight?: number, text?: string) =>
-  fetch(
-    `${baseUrl}/api/font?${fontParams.toSearchString({
-      family,
-      weight,
-      text,
-    })}`,
-  ).then((res) => res.arrayBuffer());
+export const fetchFont = async (family: string, weight?: number, text?: string) => {
+  const url = `${baseUrl}/api/font?${fontParams.toSearchString({
+    family,
+    weight,
+    text,
+  })}`;
+
+  const res = await fetch(url);
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch font: ${res.status} ${res.statusText}`);
+  }
+
+  const contentType = res.headers.get("content-type");
+  // Check if we got HTML instead of a font file
+  if (contentType?.includes("text/html")) {
+    const text = await res.text();
+    throw new Error(
+      `Font API returned HTML instead of font file. Response: ${text.substring(0, 200)}`,
+    );
+  }
+
+  return res.arrayBuffer();
+};

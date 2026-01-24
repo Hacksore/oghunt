@@ -29,11 +29,22 @@ function arrayBufferToBase64(buffer: ArrayBuffer): string {
 // Image generation
 export async function GET(_request: Request, _context: { params: Promise<{ reqid?: string }> }) {
   try {
-    const [inter900, inter700, inter400] = await Promise.all([
-      fetchFont("Inter", 900),
-      fetchFont("Inter", 700),
-      fetchFont("Inter", 400),
-    ]);
+    let inter900: ArrayBuffer;
+    let inter700: ArrayBuffer;
+    let inter400: ArrayBuffer;
+
+    try {
+      [inter900, inter700, inter400] = await Promise.all([
+        fetchFont("Inter", 900),
+        fetchFont("Inter", 700),
+        fetchFont("Inter", 400),
+      ]);
+    } catch (fontError) {
+      console.error("Font fetch error:", fontError);
+      throw new Error(
+        `Failed to fetch fonts: ${fontError instanceof Error ? fontError.message : String(fontError)}`,
+      );
+    }
 
     const baseImageResponse = await fetch(new URL("./base-og.png", import.meta.url));
     if (!baseImageResponse.ok) {
