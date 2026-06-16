@@ -5,7 +5,7 @@ let projectCounter = 1;
 export function createProject(
   data: Omit<
     ProductPost,
-    "id" | "topics" | "createdAt" | "votesCount" | "deleted" | "hasAi" | "media"
+    "id" | "topics" | "createdAt" | "votesCount" | "deleted" | "hasAi" | "reasoning" | "media"
   > & {
     topics: string[];
   },
@@ -18,6 +18,7 @@ export function createProject(
   return {
     id: projectId,
     hasAi: false,
+    reasoning: null,
     deleted: false,
     votesCount: 0,
     createdAt: new Date(),

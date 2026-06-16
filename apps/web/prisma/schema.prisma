@@ -34,6 +34,8 @@ model Post {
   thumbnailUrl String
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
+  /// the classifier's reasoning for the hasAi verdict (which AI terms it found); null for rows analyzed before this field existed
+  reasoning    String?
   media        Json?       @default("[]")
   /// if the post is deleted, it means it was deleted by the user or product hunt team
   deleted      Boolean     @default(false)

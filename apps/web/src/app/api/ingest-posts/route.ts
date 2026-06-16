@@ -41,9 +41,12 @@ export async function GET(request: NextRequest) {
   }));
   const aiAnalysisResults = await analyzePosts(postsToAnalyze);
 
-  // Create a map of post IDs to their AI analysis results
+  // Create a map of post IDs to their AI analysis result (isAiRelated + reasoning)
   const postAiResults = new Map(
-    posts.map((post) => [post.id, aiAnalysisResults.get(post.id) ?? false]),
+    posts.map((post) => [
+      post.id,
+      aiAnalysisResults.get(post.id) ?? { isAiRelated: false, reasoning: null },
+    ]),
   );
 
   const existingPostsList = await db.post.findMany({
@@ -88,7 +91,8 @@ export async function GET(request: NextRequest) {
           tagline: post.tagline,
           url: post.url,
           media: post.media,
-          hasAi: postAiResults.get(post.id) ?? false,
+          hasAi: postAiResults.get(post.id)?.isAiRelated ?? false,
+          reasoning: postAiResults.get(post.id)?.reasoning ?? null,
           thumbnailUrl: post.thumbnail.url,
           createdAt: post.createdAt,
           deleted: false,
@@ -117,7 +121,8 @@ export async function GET(request: NextRequest) {
             description: post.description,
             tagline: post.tagline,
             url: post.url,
-            hasAi: postAiResults.get(post.id) ?? false,
+            hasAi: postAiResults.get(post.id)?.isAiRelated ?? false,
+            reasoning: postAiResults.get(post.id)?.reasoning ?? null,
             thumbnailUrl: post.thumbnail.url,
             media: post.media,
             deleted: false,

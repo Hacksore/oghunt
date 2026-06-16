@@ -129,6 +129,7 @@ export const convertPostToProductPost = (post: Post): ProductPost => {
     createdAt: new Date(post.createdAt),
     url: post.url,
     hasAi: false,
+    reasoning: null,
     name: post.name,
     tagline: post.tagline,
     media: post.media,

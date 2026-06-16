@@ -135,8 +135,8 @@ export const analyzePosts = async (
     description: string;
     topics: { name: string; description: string }[];
   }[],
-): Promise<Map<string, boolean>> => {
-  const results = new Map<string, boolean>();
+): Promise<Map<string, AnalysisResult>> => {
+  const results = new Map<string, AnalysisResult>();
   let totalMismatches = 0;
   let totalRequests = 0;
 
@@ -186,7 +186,10 @@ export const analyzePosts = async (
       );
       // Default all posts in this chunk to true (AI slop)
       for (const post of chunkPosts) {
-        results.set(post.id, true);
+        results.set(post.id, {
+          isAiRelated: true,
+          reasoning: "Analysis unavailable: the AI request failed.",
+        });
       }
       continue; // Skip to next chunk
     }
@@ -199,7 +202,10 @@ export const analyzePosts = async (
         `Chunk ${Math.floor(i / CHUNK_SIZE) + 1}: Failed to parse response, defaulting all posts to AI slop`,
       );
       for (const post of chunkPosts) {
-        results.set(post.id, true);
+        results.set(post.id, {
+          isAiRelated: true,
+          reasoning: "Analysis unavailable: the AI response could not be parsed.",
+        });
       }
       continue; // Skip to next chunk
     }
@@ -220,15 +226,16 @@ export const analyzePosts = async (
 
       // If result is missing, default to true (AI slop)
       const isAiRelated = result?.isAiRelated ?? true;
+      const reasoning = result?.reasoning ?? "No reasoning provided (defaulted to AI slop)";
 
       console.log({
         post: post.name,
         isAiRelated,
-        reasoning: result?.reasoning ?? "No reasoning provided (defaulted to AI slop)",
+        reasoning,
       });
 
       // Use post ID as the cache key
-      results.set(post.id, isAiRelated);
+      results.set(post.id, { isAiRelated, reasoning });
     }
   }
 
@@ -238,7 +245,7 @@ export const analyzePosts = async (
     );
   }
 
-  results.set(PRODUCT_HUNT_ID, false);
+  results.set(PRODUCT_HUNT_ID, { isAiRelated: false, reasoning: "Product Hunt itself" });
 
   console.log(`Total Gemini API requests made: ${totalRequests}`);
 

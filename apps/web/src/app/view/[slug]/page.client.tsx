@@ -47,9 +47,23 @@ export default function ClientPage({ project }: ClientPageProps) {
                 />
               </svg>
               {project.hasAi && (
-                <h2 className="text-lg font-bold text-red-700 dark:text-red-400">
-                  This product is some form of AI slop and you should probably not use it
-                </h2>
+                <div>
+                  <h2 className="text-lg font-bold text-red-700 dark:text-red-400">
+                    Flagged as AI-related
+                  </h2>
+                  {project.reasoning ? (
+                    <p className="text-sm text-red-700/80 dark:text-red-400/80">
+                      <span className="font-semibold">Why the model flagged it:</span>{" "}
+                      {project.reasoning}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-red-700/80 dark:text-red-400/80">
+                      The classifier detected AI/ML terms in this listing, so it is filtered from
+                      the no-slop feed — an automated match, not a quality judgment about the
+                      product.
+                    </p>
+                  )}
+                </div>
               )}
             </div>
           </div>
