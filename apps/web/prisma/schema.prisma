@@ -38,6 +38,15 @@ model Post {
   /// if the post is deleted, it means it was deleted by the user or product hunt team
   deleted      Boolean     @default(false)
   topics       TopicPost[]
+
+  // The hot read path (home, /list, /ai, /api/list, /api/stats) filters by
+  // deleted + hasAi over a createdAt day-range. Without these indexes Postgres
+  // sequentially scans the entire table on every request, which is the main
+  // driver of Disk IO budget consumption.
+  @@index([deleted, hasAi, createdAt])
+  // Serves the sitemap (deleted = false, ordered by createdAt) and any
+  // createdAt range query that does not constrain hasAi.
+  @@index([deleted, createdAt])
 }
 
 model TopicPost {
@@ -47,6 +56,10 @@ model TopicPost {
   Topic   Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
 
   @@id([topicId, postId])
+  // The composite primary key is keyed on topicId first, so resolving a post's
+  // topics (Prisma `include: { topics }`) cannot use it and falls back to a
+  // sequential scan. This index makes those lookups index-backed.
+  @@index([postId])
 }
 
 model Metric {
@@ -56,6 +69,10 @@ model Metric {
   totalVotes           Int
   aiProjectsPercentage Float
   aiVotesPercentage    Float
+
+  // The /slop page (force-dynamic) filters by a timestamp window and /api/stats/time
+  // orders by timestamp; index it so those reads don't scan the whole table.
+  @@index([timestamp])
 }
 
 enum EmailSource {
