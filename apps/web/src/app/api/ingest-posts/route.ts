@@ -3,7 +3,7 @@ import type { NextRequest } from "next/server";
 import env from "@/app/env";
 import db from "../../db";
 import { analyzePosts } from "../../lib/ai-analyzer";
-import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
+import { convertPostToProductPost, getAllPost } from "../../lib/data";
 import { PRODUCT_HUNT_NAME } from "../../utils/string";
 
 export const dynamic = "force-dynamic";
@@ -22,17 +22,7 @@ export async function GET(request: NextRequest) {
   const partitionedCreatePosts = [];
 
   // TODO: rate limit bypass?
-  const rawPosts = await getAllPost();
-  const allVotes = await getAllPostsVotesMoarBetter(rawPosts.map((post) => post.id));
-
-  const posts = [];
-  for (const post of rawPosts) {
-    const maybePost = allVotes[`post${post.id}`];
-    if (maybePost) {
-      post.votesCount = allVotes[`post${post.id}`].votesCount;
-      posts.push(post);
-    }
-  }
+  const posts = await getAllPost();
 
   // Analyze all posts in one batch
   const postsToAnalyze = posts.map((post) => ({
