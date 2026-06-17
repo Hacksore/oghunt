@@ -89,13 +89,18 @@ export async function getAllPost(): Promise<Post[]> {
     printRateLimitInfo(response.headers);
 
     if (!result.data) {
-      console.log("No data received from API");
+      const remaining = response.headers.get("X-Rate-Limit-Remaining");
+      const errors = result.errors ? JSON.stringify(result.errors) : "unknown error";
+      console.log(
+        `No data received from API (rate limit remaining: ${remaining ?? "unknown"}, errors: ${errors})`,
+      );
+      break;
     }
 
     const data = result.data?.posts;
     allPosts.push(...(data?.nodes || []));
-    after = data.pageInfo.endCursor;
-    hasNextPage = data.pageInfo.hasNextPage;
+    after = data?.pageInfo?.endCursor ?? null;
+    hasNextPage = data?.pageInfo?.hasNextPage ?? false;
   }
 
   return allPosts;
