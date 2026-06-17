@@ -8,6 +8,7 @@ export interface PostResponse {
       totalCount: number;
     };
   };
+  errors?: { message: string }[];
 }
 
 export interface Post {
