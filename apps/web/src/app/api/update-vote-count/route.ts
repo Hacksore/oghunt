@@ -3,7 +3,7 @@ import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
 import env from "@/app/env";
 import db from "../../db";
-import { getAllPost } from "../../lib/data";
+import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +15,17 @@ export async function GET(request: NextRequest) {
     });
   }
 
-  const posts = await getAllPost();
+  const rawPosts = await getAllPost();
+  const allVotes = await getAllPostsVotesMoarBetter(rawPosts.map((post) => post.id));
+
+  const posts = [];
+  for (const post of rawPosts) {
+    const maybePost = allVotes[`post${post.id}`];
+    if (maybePost) {
+      post.votesCount = allVotes[`post${post.id}`].votesCount;
+      posts.push(post);
+    }
+  }
 
   let updatedCount = 0;
   const failedUpdates: { postId: string; error: string }[] = [];
