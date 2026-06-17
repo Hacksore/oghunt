@@ -124,7 +124,6 @@ export async function getAllPostsVotesMoarBetter(
 
 export const convertPostToProductPost = (post: Post): ProductPost => {
   return {
-    deleted: false,
     id: post.id,
     createdAt: new Date(post.createdAt),
     url: post.url,

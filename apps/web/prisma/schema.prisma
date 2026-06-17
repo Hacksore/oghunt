@@ -35,18 +35,15 @@ model Post {
   votesCount   Int         @default(0)
   hasAi        Boolean     @default(false)
   media        Json?       @default("[]")
-  /// if the post is deleted, it means it was deleted by the user or product hunt team
-  deleted      Boolean     @default(false)
   topics       TopicPost[]
 
-  // The hot read path (home, /list, /ai, /api/list, /api/stats) filters by
-  // deleted + hasAi over a createdAt day-range. Without these indexes Postgres
-  // sequentially scans the entire table on every request, which is the main
-  // driver of Disk IO budget consumption.
-  @@index([deleted, hasAi, createdAt])
-  // Serves the sitemap (deleted = false, ordered by createdAt) and any
-  // createdAt range query that does not constrain hasAi.
-  @@index([deleted, createdAt])
+  // The hot read path (home, /list, /ai) filters by hasAi over a createdAt
+  // day-range. Without an index Postgres sequentially scans the entire table on
+  // every request, which is the main driver of Disk IO budget consumption.
+  @@index([hasAi, createdAt])
+  // Serves the createdAt-range/ordered reads that do not constrain hasAi
+  // (/api/list, /api/stats, sitemap).
+  @@index([createdAt])
 }
 
 model TopicPost {

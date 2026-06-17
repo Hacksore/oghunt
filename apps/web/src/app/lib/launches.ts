@@ -16,7 +16,6 @@ export async function getYesterdaysLaunches() {
         gte: new Date(startOfDayUTC),
         lt: new Date(endOfDayUTC),
       },
-      deleted: true,
       hasAi: false,
     },
     orderBy: {
@@ -42,7 +41,6 @@ export async function getTodaysLaunches(hasAi?: boolean) {
         gte: startOfDayUTC,
         lt: endOfDayUTC,
       },
-      deleted: false,
       ...(hasAi !== undefined && { hasAi }),
     },
     include: {
@@ -77,7 +75,6 @@ export async function getTodaysLaunchesPaginated({
         gte: startOfDayUTC,
         lt: endOfDayUTC,
       },
-      deleted: false,
       ...(hasAi !== undefined && { hasAi }),
     },
   });
@@ -88,7 +85,6 @@ export async function getTodaysLaunchesPaginated({
         gte: startOfDayUTC,
         lt: endOfDayUTC,
       },
-      deleted: false,
       ...(hasAi !== undefined && { hasAi }),
     },
     include: {

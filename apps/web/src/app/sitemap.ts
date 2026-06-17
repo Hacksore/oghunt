@@ -15,11 +15,7 @@ function escapeXml(unsafe: string): string {
 // Cached function to get total post count (6 hours cache)
 const getCachedPostCount = unstable_cache(
   async () => {
-    return await db.post.count({
-      where: {
-        deleted: false,
-      },
-    });
+    return await db.post.count();
   },
   ["post-count"],
   {
@@ -33,9 +29,6 @@ const getCachedPosts = unstable_cache(
     const skip = chunkId * chunkSize;
 
     return await db.post.findMany({
-      where: {
-        deleted: false,
-      },
       select: {
         id: true,
         name: true,
@@ -56,7 +49,7 @@ const getCachedPosts = unstable_cache(
 
 export async function generateSitemaps() {
   try {
-    // Get total count of non-deleted posts with caching
+    // Get total count of posts with caching
     const totalPosts = await getCachedPostCount();
 
     // Calculate number of sitemap chunks needed (50k per chunk for better performance)

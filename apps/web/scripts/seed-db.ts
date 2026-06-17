@@ -7,7 +7,6 @@ const createFakePost = (_: unknown, id: number): Prisma.PostCreateManyInput => {
   return {
     createdAt: new Date(),
     name: faker.lorem.sentence(),
-    deleted: false,
     description: faker.lorem.paragraph(),
     hasAi: false,
     media: Array.from({ length: 10 }, () => ({

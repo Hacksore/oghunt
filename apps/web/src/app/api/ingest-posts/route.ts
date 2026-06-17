@@ -4,7 +4,6 @@ import env from "@/app/env";
 import db from "../../db";
 import { analyzePosts } from "../../lib/ai-analyzer";
 import { convertPostToProductPost, getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
-import { PRODUCT_HUNT_NAME } from "../../utils/string";
 
 export const dynamic = "force-dynamic";
 
@@ -91,7 +90,6 @@ export async function GET(request: NextRequest) {
           hasAi: postAiResults.get(post.id) ?? false,
           thumbnailUrl: post.thumbnail.url,
           createdAt: post.createdAt,
-          deleted: false,
         })),
       ),
       skipDuplicates: true,
@@ -120,7 +118,6 @@ export async function GET(request: NextRequest) {
             hasAi: postAiResults.get(post.id) ?? false,
             thumbnailUrl: post.thumbnail.url,
             media: post.media,
-            deleted: false,
           },
         }),
       ),
@@ -139,21 +136,6 @@ export async function GET(request: NextRequest) {
   await db.topicPost.createMany({
     data: topicPosts,
     skipDuplicates: true,
-  });
-
-  await db.post.updateMany({
-    where: {
-      name: {
-        not: PRODUCT_HUNT_NAME,
-      },
-      id: {
-        notIn: posts.map((post) => post.id),
-      },
-      deleted: false,
-    },
-    data: {
-      deleted: true,
-    },
   });
 
   revalidatePath("/api/list");
