@@ -61,24 +61,3 @@ docker compose up -d
    - Include the header: `Authorization: Bearer CRON_SECRET` where `CRON_SECRET` matches your `.env` value
 
 Please feel free to check out our [architecture diagram](./public/og-hunt-diagram.excalidraw) in Excalidraw.
-
-## Team
-
-- Lead Developer: [Pizza](https://github.com/RossLitzenberger)
-- Product Owner: [Pati](https://typehero.dev/)
-- Project Manager: [Hacksore](https://github.com/Hacksore)
-- Senior Lead Developer: [Jim](https://github.com/JoshHyde9)
-- Tech Consultant: [Trash](https://github.com/bautistaaa)
-- Algorithm Specialist: [🐝](https://github.com/ArcherScript)
-- Database Engineer: [Overclock](https://github.com/LucFauvel)
-- Knows HTML: [Chad](https://github.com/chadstewart)
-- Lead 404 Engineer: [Shane](https://github.com/swalker326)
-- Lead UI/UX Engineer: [Boston](https://github.com/BostonRohan)
-- System Architect: [Max](https://github.com/maxdemaio)
-- Data Scientist: [TypeSafe](https://github.com/typesafeui)
-- Data Visualization: [Nathan](https://github.com/nathanroark)
-- Senior Lead Frontend Developer: [Jean](https://github.com/Kampouse)
-- Human Resources: [Metalface](https://github.com/metal-face)
-- Scrum Leader: [Aodhan](https://github.com/MVAodhan)
-- 👑✨💅 Our Glorious Lead Tailwind Engineer: [PicklNik](https://github.com/picklenik)
-- Civil Engineering Lead: [Mark](https://github.com/markkhoo)
