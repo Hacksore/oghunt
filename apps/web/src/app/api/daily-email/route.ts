@@ -1,13 +1,13 @@
 import type { NextRequest } from "next/server";
 import prisma from "@/app/db";
-import env from "@/app/env";
+import { isCronRequestAuthorized } from "@/app/env";
 import { getYesterdaysLaunches } from "@/app/lib/launches";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${env.CRON_SECRET}` && env.NODE_ENV === "production") {
+  if (!isCronRequestAuthorized(authHeader)) {
     return new Response("Unauthorized", {
       status: 401,
     });

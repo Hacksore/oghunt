@@ -19,7 +19,18 @@ interface ParseResponse {
 
 const BATCH_ANALYSIS_PROMPT = readFileSync(join(process.cwd(), "src/app/lib/prompt.txt"), "utf-8");
 
-const ai = new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+let ai: GoogleGenAI | undefined;
+
+const getAi = () => {
+  if (!env.GEMINI_API_KEY) {
+    throw new Error("GEMINI_API_KEY is required to analyze posts");
+  }
+
+  ai ??= new GoogleGenAI({ apiKey: env.GEMINI_API_KEY });
+  return ai;
+};
+
+type AiResponse = Awaited<ReturnType<ReturnType<typeof getAi>["models"]["generateContent"]>>;
 
 const CHUNK_SIZE = 25;
 
@@ -46,7 +57,7 @@ Topics: ${topicsText}
 // NOTE: we need to keep this in the RPM range of <= 15
 // https://ai.google.dev/gemini-api/docs/rate-limits#free-tier
 const generateAiContent = async (prompt: string) => {
-  const response = await ai.models.generateContent({
+  const response = await getAi().models.generateContent({
     model: "gemini-2.5-flash-lite",
     contents: prompt,
     config: {
@@ -66,10 +77,7 @@ const generateAiContent = async (prompt: string) => {
 
 // Helper function to parse and validate AI response
 // Returns null if parsing fails - caller should handle gracefully
-const parseAiResponse = (
-  response: Awaited<ReturnType<typeof ai.models.generateContent>>,
-  expectedLength?: number,
-): ParseResponse | null => {
+const parseAiResponse = (response: AiResponse, expectedLength?: number): ParseResponse | null => {
   let parsedResponse: unknown;
   try {
     parsedResponse = parseJsonWithCodeFence(response.text ?? "[]");
@@ -175,7 +183,7 @@ export const analyzePosts = async (
 
     const prompt = BATCH_ANALYSIS_PROMPT.replace("{products}", productsText);
 
-    let response: Awaited<ReturnType<typeof ai.models.generateContent>> | null = null;
+    let response: AiResponse | null = null;
     try {
       response = await generateAiContent(prompt);
       totalRequests++;

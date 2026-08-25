@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import type { NextRequest } from "next/server";
-import env from "@/app/env";
+import { isCronRequestAuthorized } from "@/app/env";
 import db from "../../db";
 import { getAllPost, getAllPostsVotesMoarBetter } from "../../lib/data";
 
@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
-  if (authHeader !== `Bearer ${env.CRON_SECRET}` && env.NODE_ENV === "production") {
+  if (!isCronRequestAuthorized(authHeader)) {
     return new Response("Unauthorized", {
       status: 401,
     });
