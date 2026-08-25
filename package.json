@@ -1,25 +1,17 @@
 {
-  "name": "my-turborepo",
+  "name": "oghunt",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "start": "turbo run dev",
-    "db:generate": "turbo run db:generate",
-    "db:push": "dotenv -e .env -- turbo run db:push",
-    "db:studio": "dotenv -e .env -- turbo run db:studio",
-    "db:seed": "dotenv -e .env -- turbo run db:seed",
-    "check": "turbo run check",
-    "format": "turbo run format",
-    "lint": "turbo run lint",
-    "fix": "turbo run fix"
+    "build": "pnpm --filter web build",
+    "dev": "pnpm --filter web dev",
+    "start": "pnpm --filter web start",
+    "check": "pnpm --filter web check",
+    "format": "pnpm --filter web format",
+    "lint": "pnpm --filter web lint",
+    "fix": "pnpm --filter web fix"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "dotenv-cli": "^8.0.0",
-    "npm-run-all": "^4.1.5",
-    "turbo": "^2.5.3",
-    "typescript": "5.8.2"
+    "@biomejs/biome": "^2.3.8"
   },
   "packageManager": "pnpm@10.11.0",
   "engines": {

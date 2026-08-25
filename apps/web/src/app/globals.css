@@ -1,32 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-primary: #070707;
   --color-accent: #ff495b;
-  --color-hover-accent: #ff6d79;
-  --color-background: #fff;
-  --color-border: var(--color-neutral-300);
-}
-
-.dark {
-  --color-background: #070707;
-  --color-border: var(--color-neutral-700);
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@keyframes rotate {
-  from {
-    transform: translate(-50%, -50%) scale(1.4) rotate(0turn);
-  }
-
-  to {
-    transform: translate(-50%, -50%) scale(1.4) rotate(1turn);
-  }
-}
-
-.bg-lines-grid {
-  background-size: 80px 80px;
-  background-position: -40px -40px;
-  background-image: linear-gradient(to right, #8884 1px, transparent 1px);
+html {
+  background: #0a0a0a;
 }

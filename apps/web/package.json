@@ -10,49 +10,21 @@
     "check": "biome check src",
     "format": "biome format --write",
     "lint": "biome lint",
-    "fix": "biome check src --write",
-    "db:push": "prisma db push",
-    "db:studio": "prisma studio",
-    "db:generate": "prisma generate",
-    "db:seed": "tsx scripts/seed-db.ts"
+    "fix": "biome check src --write"
   },
   "dependencies": {
-    "@google/genai": "^1.32.0",
-    "@next/third-parties": "15.3.2",
-    "@prisma/client": "6.16.3",
-    "@radix-ui/react-label": "^2.1.7",
-    "@radix-ui/react-slot": "^1.2.3",
-    "@radix-ui/react-tooltip": "^1.2.7",
-    "@vercel/analytics": "^1.3.1",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "d3": "^7.9.0",
-    "date-fns": "^3.6.0",
-    "lucide-react": "^0.511.0",
-    "next-themes": "^0.4.6",
     "react": "19.1.0",
     "react-confetti": "^6.4.0",
-    "react-dom": "19.1.0",
-    "recharts": "^2.15.3",
-    "tailwind-merge": "^3.3.0",
-    "yet-another-react-lightbox": "^3.23.2",
-    "zod": "^3.23.8"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.0.0",
     "@tailwindcss/postcss": "^4.1.7",
-    "@types/d3": "^7.4.3",
     "@types/node": "^20",
     "@types/react": "19.1.4",
     "@types/react-dom": "19.1.5",
-    "@types/recharts": "^2.0.1",
-    "dotenv": "^16.4.5",
     "next": "15.5.7",
     "postcss": "^8.5.3",
-    "prisma": "6.16.3",
     "tailwindcss": "^4.1.7",
-    "tsx": "^4.17.0",
-    "tw-animate-css": "^1.3.0",
     "typescript": "^5"
   }
 }

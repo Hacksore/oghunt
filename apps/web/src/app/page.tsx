@@ -1,90 +1,172 @@
-import { Star } from "@/components/icons/star";
-import { ProductHunt } from "@/components/product-hunt";
-import { Button } from "@/components/ui/button";
-import { Card } from "../components/card";
-import { JsonLd } from "../components/json-ld";
-import { Link } from "../components/link";
-import { MobileCard } from "../components/mobile-card";
-import { getTodaysLaunchesPaginated } from "./lib/launches";
-import { generateOGHuntMetadata } from "./metadata";
+"use client";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 300; // TODO: fix this for launch to be 1 hour, revalidate at most every hour
+import { useEffect, useState } from "react";
+import Confetti from "react-confetti";
 
-export const generateMetadata = generateOGHuntMetadata({
-  title: "oghunt | Product Hunt with ZERO AI Slop Powered By AI",
-  description:
-    "Product Hunt with ZERO AI Slop which uses AI to filter out AI products. You no longer have to worry about AI products cluttering your feed",
-  skipOgImage: true,
-});
+const FRIENDS = [
+  { domain: "seanboult.dev", href: "https://seanboult.dev" },
+  { domain: "bidwatch.app", href: "https://bidwatch.app" },
+  { domain: "overlayed.dev", href: "https://overlayed.dev" },
+  { domain: "flosa.app", href: "https://flosa.app" },
+  { domain: "seattlesafeeats.com", href: "https://seattlesafeeats.com" },
+  { domain: "splist.fm", href: "https://splist.fm" },
+  {
+    domain: "cook-around-find-out-v2.vercel.app",
+    href: "https://cook-around-find-out-v2.vercel.app",
+  },
+];
 
-export default async function Page() {
-  const { posts } = await getTodaysLaunchesPaginated({ hasAi: false, page: 1, pageSize: 3 });
+export default function Page() {
+  const [celebration, setCelebration] = useState(0);
+  const [showBidwatch, setShowBidwatch] = useState(false);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const updateViewport = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    const celebrate = (event: KeyboardEvent) => {
+      if (
+        event.key.toLowerCase() !== "f" ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.altKey ||
+        event.target instanceof HTMLInputElement ||
+        event.target instanceof HTMLTextAreaElement
+      ) {
+        return;
+      }
+
+      setShowBidwatch(true);
+      setCelebration((count) => count + 1);
+    };
+
+    window.addEventListener("keydown", celebrate);
+
+    return () => window.removeEventListener("keydown", celebrate);
+  }, []);
+
+  const celebrate = () => {
+    setShowBidwatch(true);
+    setCelebration((count) => count + 1);
+  };
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center">
-      <JsonLd posts={posts} />
+    <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-neutral-100 px-4 py-16 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50">
+      {celebration > 0 && (
+        <Confetti
+          key={celebration}
+          className="pointer-events-none fixed inset-0 z-50"
+          width={viewport.width}
+          height={viewport.height}
+          numberOfPieces={500}
+          recycle={false}
+          gravity={0.18}
+        />
+      )}
 
-      {/* Hero Section */}
-      <section className="w-full pt-4 pb-8 sm:py-20 px-4 relative overflow-clip">
-        <div className="-z-10 absolute bottom-0 right-1/2 translate-1/2 size-1/2 bg-accent/20 rounded-full blur-3xl" />
-        {/* no -skew-x-12 because @Hacksore said we're straight 🏳️‍🌈 */}
-        <div className="-z-10 absolute bottom-0 right-1/2 translate-x-1/2 translate-y-1/4 size-1/2 bg-lines-grid [mask-image:radial-gradient(ellipse_at_center,red,transparent)]" />
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="p-[1px] mx-auto bg-gradient-to-r from-indigo-400 to-blue-400 rounded-full w-fit mb-5">
-            <div className="bg-white dark:bg-black bg-gradient-to-r from-indigo-400/40 to-blue-400/40 rounded-full flex gap-1 items-center px-2 text-sm py-0.5">
-              <Star className="text-blue-800 dark:text-indigo-200" />
-              <span className="bg-gradient-to-r from-indigo-800 to-blue-800 dark:from-indigo-200 dark:to-blue-200 bg-clip-text text-transparent">
-                Now Using AI
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgb(255_73_91_/_0.18),_transparent_32%),radial-gradient(circle_at_bottom,_rgb(59_130_246_/_0.14),_transparent_28%)]" />
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+
+      <section className="relative w-full max-w-3xl">
+        <div className="rounded-[2rem] border border-neutral-200/80 bg-white/85 p-8 text-center shadow-2xl shadow-neutral-950/10 backdrop-blur sm:p-12 dark:border-neutral-800/80 dark:bg-neutral-900/80 dark:shadow-black/30">
+          <div className="mx-auto mb-6 w-fit rounded-full border border-accent/20 bg-accent/10 px-4 py-1 text-sm font-medium tracking-[0.2em] text-accent uppercase">
+            oghunt shutdown
+          </div>
+
+          <div className="space-y-4">
+            <p className="text-sm font-medium tracking-[0.3em] text-neutral-500 uppercase dark:text-neutral-400">
+              Effective July 2, 2026
+            </p>
+            <h1 className="text-5xl font-semibold tracking-tight sm:text-6xl">
+              <span className="bg-gradient-to-br from-accent via-accent to-blue-500 bg-clip-text text-transparent">
+                Goodbye.
               </span>
+            </h1>
+          </div>
+
+          <div className="mt-8 space-y-6 text-left text-lg leading-8 text-neutral-700 sm:text-xl dark:text-neutral-200">
+            <p>
+              This website was meant to show you useful things that happened on Product Hunt, but
+              today is the day that we must take it down. Slop is affecting everything, but not all
+              products are slop. We tried to fight the slop with slop and it obviously didn&apos;t
+              work. It is very hard to tell something is high quality when so much of it is slop or
+              uses AI.
+            </p>
+            <p>
+              Effective July 2, 2026, this website is no longer in operation. Please pay your
+              respects by pressing{" "}
+              <button
+                type="button"
+                onClick={celebrate}
+                className="inline-flex cursor-pointer items-center rounded-md border border-neutral-300 bg-neutral-100 px-2 py-0.5 text-base font-semibold text-neutral-900 shadow-sm transition hover:border-accent hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-50"
+                aria-label="Press F to pay respects"
+              >
+                F
+              </button>
+              .
+            </p>
+            <p>
+              We learned a lot during this project, but it can&apos;t go on forever. There are
+              obviously things we could&apos;ve done to improve the product and make it less harmful
+              to people&apos;s products, but that will not be happening at this point in time, and I
+              am going to archive the repo. Bye.
+            </p>
+          </div>
+
+          <div
+            aria-live="polite"
+            className={`grid transition-all duration-700 ${
+              showBidwatch ? "mt-8 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <div className="rounded-2xl border border-blue-400/30 bg-gradient-to-br from-blue-500/10 via-white/70 to-accent/10 p-6 text-left dark:via-neutral-900/70">
+                <p className="text-xs font-semibold tracking-[0.22em] text-blue-600 uppercase dark:text-blue-400">
+                  One more thing
+                </p>
+                <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+                  I launched{" "}
+                  <a
+                    className="text-accent underline decoration-accent/30 underline-offset-4"
+                    href="https://bidwatch.app"
+                  >
+                    bidwatch.app
+                  </a>
+                </h2>
+                <p className="mt-2 text-base leading-7 text-neutral-600 sm:text-lg dark:text-neutral-300">
+                  Find and snipe all the things you want on eBay. The hunt continues over there.
+                </p>
+              </div>
             </div>
           </div>
-          <h1 className="text-5xl font-bold mb-6 max-sm:text-balance">
-            Discover <br className="md:hidden" /> Real Products, <br className="lg:hidden" />{" "}
-            <span className="bg-white bg-gradient-to-br from-accent to-accent/60 bg-clip-text text-transparent">
-              No AI Slop
-            </span>
-          </h1>
-          <p className="text-xl mb-8 max-w-2xl mx-auto text-neutral-500 dark:text-neutral-400 max-md:text-balance">
-            We filter out AI-generated products from{" "}
-            <Link href="https://producthunt.com">Product Hunt</Link>, helping you discover genuine
-            innovation and creativity.
+        </div>
+
+        <nav aria-label="Friends of oghunt" className="mt-8 text-center">
+          <p className="text-xs font-semibold tracking-[0.24em] text-neutral-500 uppercase dark:text-neutral-400">
+            The homies &amp; what&apos;s next
           </p>
-          <div className="flex flex-col items-center gap-4 justify-center mb-8">
-            {/* <PeerlistBadge /> */}
-            <ProductHunt />
-          </div>
-
-          <div className="flex flex-col items-center sm:flex-row gap-4 justify-center">
-            <Button href="/list">View REAL Launches</Button>
-            <Button href="/ai" variant="outline">
-              View AI Slop Launches
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Products Section */}
-      <section className="w-full px-4 border-t border-neutral-500/40 pt-16 relative bg-neutral-100 dark:bg-neutral-950 pb-12 rounded-b-3xl">
-        <div className="-z-10 absolute top-0 left-1/2 -translate-1/2 w-1/2 h-64 bg-accent/5 rounded-full blur-3xl" />
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-8">Today's Top 3 Launches</h2>
-          <div className="flex flex-col gap-10 md:gap-4">
-            {posts.slice(0, 3).map((post, index) => (
-              <div key={post.id}>
-                <div className="hidden md:flex">
-                  <Card post={post} index={index} />
-                </div>
-                <div className="md:hidden">
-                  <MobileCard post={post} />
-                </div>
-              </div>
+          <ul className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-3 text-sm">
+            {FRIENDS.map((friend) => (
+              <li key={friend.domain}>
+                <a
+                  href={friend.href}
+                  className="text-neutral-600 underline decoration-neutral-400/50 underline-offset-4 transition hover:text-accent hover:decoration-accent dark:text-neutral-300"
+                >
+                  {friend.domain}
+                </a>
+              </li>
             ))}
-          </div>
-          <div className="text-center mt-8">
-            <Button href="/list">View all REAL launches →</Button>
-          </div>
-        </div>
+          </ul>
+        </nav>
       </section>
     </main>
   );

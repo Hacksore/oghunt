@@ -1,6 +1,11 @@
 import "./globals.css";
 
-import { Providers } from "@/app/providers";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Goodbye from oghunt",
+  description: "oghunt has shut down. The hunt continues at bidwatch.app.",
+};
 
 export default function RootLayout({
   children,
@@ -8,10 +13,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <Providers>{children}</Providers>
-      </body>
+    <html lang="en" className="dark">
+      <body>{children}</body>
     </html>
   );
 }
