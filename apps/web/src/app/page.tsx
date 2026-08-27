@@ -9,6 +9,7 @@ type CounterResponse = {
 
 const POLL_INTERVAL_MS = 3_000;
 const RETRY_DELAYS_MS = [0, 500, 1_000];
+const COUNT_ANIMATION_MS = 420;
 
 const FRIENDS = [
   { domain: "seanboult.dev", href: "https://seanboult.dev" },
@@ -22,6 +23,56 @@ const FRIENDS = [
     href: "https://cook-around-find-out-v2.vercel.app",
   },
 ];
+
+type CountTransition = {
+  from: number;
+  to: number;
+};
+
+function RollingCount({ value }: { value: number }) {
+  const visibleValueRef = useRef(value);
+  const [transition, setTransition] = useState<CountTransition | null>(null);
+
+  useEffect(() => {
+    if (value === visibleValueRef.current) {
+      return;
+    }
+
+    const from = visibleValueRef.current;
+    visibleValueRef.current = value;
+    setTransition({ from, to: value });
+
+    const timeout = window.setTimeout(() => setTransition(null), COUNT_ANIMATION_MS);
+    return () => window.clearTimeout(timeout);
+  }, [value]);
+
+  const restingValue = transition?.to ?? visibleValueRef.current;
+  const direction = transition && transition.to > transition.from ? "up" : "down";
+
+  return (
+    <span className="rolling-count relative inline-block h-6 w-[9ch] shrink-0 overflow-hidden align-middle leading-6">
+      {transition ? (
+        <>
+          <span
+            key={`old-${transition.from}-${transition.to}`}
+            aria-hidden="true"
+            className={`absolute inset-0 block text-left counter-roll-old-${direction}`}
+          >
+            {transition.from.toLocaleString()}
+          </span>
+          <span
+            key={`new-${transition.from}-${transition.to}`}
+            className={`absolute inset-0 block text-left counter-roll-new-${direction}`}
+          >
+            {transition.to.toLocaleString()}
+          </span>
+        </>
+      ) : (
+        <span className="block text-left">{restingValue.toLocaleString()}</span>
+      )}
+    </span>
+  );
+}
 
 export default function Page() {
   const [celebration, setCelebration] = useState(0);
@@ -191,10 +242,10 @@ export default function Page() {
               aria-atomic="true"
               className="text-center text-base text-neutral-500 tabular-nums dark:text-neutral-400"
             >
-              <span className="inline-grid grid-cols-[auto_8ch] items-baseline gap-2">
+              <span className="inline-flex items-center gap-2">
                 <span>Respects paid:</span>
-                <span className="text-left font-semibold text-neutral-800 dark:text-neutral-200">
-                  {displayedCount.toLocaleString()}
+                <span className="font-semibold text-neutral-800 dark:text-neutral-200">
+                  <RollingCount value={displayedCount} />
                 </span>
               </span>
             </p>

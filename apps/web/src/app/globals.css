@@ -9,3 +9,80 @@
 html {
   background: #0a0a0a;
 }
+
+.rolling-count {
+  contain: layout paint;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes counter-roll-out-up {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-110%);
+  }
+}
+
+@keyframes counter-roll-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes counter-roll-out-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(110%);
+  }
+}
+
+@keyframes counter-roll-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-110%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.counter-roll-old-up {
+  animation: counter-roll-out-up 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.counter-roll-new-up {
+  animation: counter-roll-in-up 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.counter-roll-old-down {
+  animation: counter-roll-out-down 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.counter-roll-new-down {
+  animation: counter-roll-in-down 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .counter-roll-old-up,
+  .counter-roll-old-down {
+    display: none;
+  }
+
+  .counter-roll-new-up,
+  .counter-roll-new-down {
+    animation: none;
+  }
+}
