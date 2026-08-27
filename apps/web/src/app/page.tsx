@@ -29,7 +29,7 @@ type CountTransition = {
   to: number;
 };
 
-function RollingCount({ value }: { value: number }) {
+function RollingCount({ isLoading, value }: { isLoading: boolean; value: number }) {
   const visibleValueRef = useRef(value);
   const [transition, setTransition] = useState<CountTransition | null>(null);
 
@@ -51,7 +51,12 @@ function RollingCount({ value }: { value: number }) {
 
   return (
     <span className="rolling-count relative inline-block h-6 w-[9ch] shrink-0 overflow-hidden align-middle leading-6">
-      {transition ? (
+      {isLoading ? (
+        <output
+          aria-label="Loading respect count"
+          className="absolute top-1/2 left-0 h-4 w-[4ch] -translate-y-1/2 animate-pulse rounded-sm bg-neutral-300 motion-reduce:animate-none dark:bg-neutral-700"
+        />
+      ) : transition ? (
         <>
           <span
             key={`old-${transition.from}-${transition.to}`}
@@ -245,7 +250,7 @@ export default function Page() {
               <span className="inline-flex items-center gap-2">
                 <span>Respects paid:</span>
                 <span className="font-semibold text-neutral-800 dark:text-neutral-200">
-                  <RollingCount value={displayedCount} />
+                  <RollingCount isLoading={confirmedCount === null} value={displayedCount} />
                 </span>
               </span>
             </p>
