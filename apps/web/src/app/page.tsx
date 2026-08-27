@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Confetti from "react-confetti";
+
+type CounterResponse = {
+  count: number;
+};
+
+const POLL_INTERVAL_MS = 3_000;
+const RETRY_DELAYS_MS = [0, 500, 1_000];
 
 const FRIENDS = [
   { domain: "seanboult.dev", href: "https://seanboult.dev" },
@@ -20,6 +27,15 @@ export default function Page() {
   const [celebration, setCelebration] = useState(0);
   const [showBidwatch, setShowBidwatch] = useState(false);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
+  const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
+  const [pendingCount, setPendingCount] = useState(0);
+  const submittingRef = useRef(false);
+
+  const celebrate = useCallback(() => {
+    setShowBidwatch(true);
+    setCelebration((count) => count + 1);
+    setPendingCount((count) => count + 1);
+  }, []);
 
   useEffect(() => {
     const updateViewport = () => {
@@ -33,9 +49,10 @@ export default function Page() {
   }, []);
 
   useEffect(() => {
-    const celebrate = (event: KeyboardEvent) => {
+    const handleKeyDown = (event: KeyboardEvent) => {
       if (
         event.key.toLowerCase() !== "f" ||
+        event.repeat ||
         event.metaKey ||
         event.ctrlKey ||
         event.altKey ||
@@ -45,19 +62,74 @@ export default function Page() {
         return;
       }
 
-      setShowBidwatch(true);
-      setCelebration((count) => count + 1);
+      celebrate();
     };
 
-    window.addEventListener("keydown", celebrate);
+    window.addEventListener("keydown", handleKeyDown);
 
-    return () => window.removeEventListener("keydown", celebrate);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [celebrate]);
+
+  useEffect(() => {
+    const refreshCount = async () => {
+      if (document.visibilityState !== "visible" || submittingRef.current) {
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/f");
+        if (!response.ok) {
+          throw new Error(`Counter request failed with ${response.status}`);
+        }
+
+        const data = (await response.json()) as CounterResponse;
+        setConfirmedCount((count) => Math.max(count ?? 0, data.count));
+      } catch {}
+    };
+
+    void refreshCount();
+    const interval = window.setInterval(refreshCount, POLL_INTERVAL_MS);
+
+    return () => window.clearInterval(interval);
   }, []);
 
-  const celebrate = () => {
-    setShowBidwatch(true);
-    setCelebration((count) => count + 1);
-  };
+  useEffect(() => {
+    if (pendingCount === 0 || submittingRef.current) {
+      return;
+    }
+
+    submittingRef.current = true;
+
+    const submitNextCount = async () => {
+      for (const retryDelay of RETRY_DELAYS_MS) {
+        if (retryDelay > 0) {
+          await new Promise((resolve) => window.setTimeout(resolve, retryDelay));
+        }
+
+        try {
+          const response = await fetch("/api/f", { method: "POST" });
+          if (!response.ok) {
+            throw new Error(`Counter request failed with ${response.status}`);
+          }
+
+          const data = (await response.json()) as CounterResponse;
+          setConfirmedCount((count) => Math.max(count ?? 0, data.count));
+          setPendingCount((count) => Math.max(0, count - 1));
+          submittingRef.current = false;
+          return;
+        } catch {
+          // Retry brief network and service failures before dropping this queued press.
+        }
+      }
+
+      setPendingCount((count) => Math.max(0, count - 1));
+      submittingRef.current = false;
+    };
+
+    void submitNextCount();
+  }, [pendingCount]);
+
+  const displayedCount = (confirmedCount ?? 0) + pendingCount;
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-neutral-100 px-4 py-16 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50">
@@ -113,6 +185,18 @@ export default function Page() {
                 F
               </button>
               .
+            </p>
+            <p
+              aria-live="polite"
+              aria-atomic="true"
+              className="text-center text-base text-neutral-500 tabular-nums dark:text-neutral-400"
+            >
+              <span className="inline-grid grid-cols-[auto_8ch] items-baseline gap-2">
+                <span>Respects paid:</span>
+                <span className="text-left font-semibold text-neutral-800 dark:text-neutral-200">
+                  {displayedCount.toLocaleString()}
+                </span>
+              </span>
             </p>
             <p>
               We learned a lot during this project, but it can&apos;t go on forever. There are

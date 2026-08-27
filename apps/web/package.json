@@ -13,6 +13,8 @@
     "fix": "biome check src --write"
   },
   "dependencies": {
+    "@upstash/redis": "^1.38.3",
+    "dotenv": "^17.4.2",
     "react": "19.1.0",
     "react-confetti": "^6.4.0",
     "react-dom": "19.1.0"
