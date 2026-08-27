@@ -80,7 +80,7 @@ function RollingCount({ isLoading, value }: { isLoading: boolean; value: number 
 }
 
 export default function Page() {
-  const [celebration, setCelebration] = useState(0);
+  const [hasCelebrated, setHasCelebrated] = useState(false);
   const [showBidwatch, setShowBidwatch] = useState(false);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
@@ -89,7 +89,7 @@ export default function Page() {
 
   const celebrate = useCallback(() => {
     setShowBidwatch(true);
-    setCelebration((count) => count + 1);
+    setHasCelebrated(true);
     setPendingCount((count) => count + 1);
   }, []);
 
@@ -189,9 +189,8 @@ export default function Page() {
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-neutral-100 px-4 py-16 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50">
-      {celebration > 0 && (
+      {hasCelebrated && (
         <Confetti
-          key={celebration}
           className="pointer-events-none fixed inset-0 z-50"
           width={viewport.width}
           height={viewport.height}
