@@ -86,8 +86,11 @@ export default function Page() {
   const [confirmedCount, setConfirmedCount] = useState<number | null>(null);
   const [pendingCount, setPendingCount] = useState(0);
   const submittingRef = useRef(false);
+  const counterRevisionRef = useRef(0);
+  const latestPollRef = useRef(0);
 
   const celebrate = useCallback(() => {
+    counterRevisionRef.current += 1;
     setShowBidwatch(true);
     setHasCelebrated(true);
     setPendingCount((count) => count + 1);
@@ -132,6 +135,9 @@ export default function Page() {
         return;
       }
 
+      const pollId = ++latestPollRef.current;
+      const counterRevision = counterRevisionRef.current;
+
       try {
         const response = await fetch("/api/f");
         if (!response.ok) {
@@ -139,7 +145,9 @@ export default function Page() {
         }
 
         const data = (await response.json()) as CounterResponse;
-        setConfirmedCount((count) => Math.max(count ?? 0, data.count));
+        if (pollId === latestPollRef.current && counterRevision === counterRevisionRef.current) {
+          setConfirmedCount(data.count);
+        }
       } catch {}
     };
 
@@ -169,7 +177,7 @@ export default function Page() {
           }
 
           const data = (await response.json()) as CounterResponse;
-          setConfirmedCount((count) => Math.max(count ?? 0, data.count));
+          setConfirmedCount(data.count);
           setPendingCount((count) => Math.max(0, count - 1));
           submittingRef.current = false;
           return;
