@@ -9,7 +9,9 @@ type CounterResponse = {
 
 const POLL_INTERVAL_MS = 3_000;
 const RETRY_DELAYS_MS = [0, 500, 1_000];
-const COUNT_ANIMATION_MS = 420;
+const COUNT_ANIMATION_MS = 140;
+const COUNT_LERP_INTERVAL_MS = 160;
+const COUNT_LERP_FACTOR = 0.35;
 
 const FRIENDS = [
   { domain: "seanboult.dev", href: "https://seanboult.dev" },
@@ -28,6 +30,30 @@ type CountTransition = {
   from: number;
   to: number;
 };
+
+function useLerpedCount(target: number) {
+  const [displayed, setDisplayed] = useState(target);
+
+  useEffect(() => {
+    if (displayed === target) {
+      return;
+    }
+
+    const timeout = window.setTimeout(() => {
+      setDisplayed((current) => {
+        const difference = target - current;
+        const distance = Math.abs(difference);
+        const step = Math.min(distance, Math.max(1, Math.ceil(distance * COUNT_LERP_FACTOR)));
+
+        return current + Math.sign(difference) * step;
+      });
+    }, COUNT_LERP_INTERVAL_MS);
+
+    return () => window.clearTimeout(timeout);
+  }, [displayed, target]);
+
+  return displayed;
+}
 
 function RollingCount({ isLoading, value }: { isLoading: boolean; value: number }) {
   const visibleValueRef = useRef(value);
@@ -193,7 +219,8 @@ export default function Page() {
     void submitNextCount();
   }, [pendingCount]);
 
-  const displayedCount = (confirmedCount ?? 0) + pendingCount;
+  const targetCount = (confirmedCount ?? 0) + pendingCount;
+  const displayedCount = useLerpedCount(targetCount);
 
   return (
     <main className="relative flex min-h-screen items-center justify-center overflow-hidden bg-neutral-100 px-4 py-16 text-neutral-950 dark:bg-neutral-950 dark:text-neutral-50">
