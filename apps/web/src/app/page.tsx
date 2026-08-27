@@ -17,6 +17,7 @@ const FRIENDS = [
   { domain: "seanboult.dev", href: "https://seanboult.dev" },
   { domain: "bidwatch.app", href: "https://bidwatch.app" },
   { domain: "overlayed.dev", href: "https://overlayed.dev" },
+  { domain: "heycv.app", href: "https://heycv.app" },
   { domain: "flosa.app", href: "https://flosa.app" },
   { domain: "seattlesafeeats.com", href: "https://seattlesafeeats.com" },
   { domain: "splist.fm", href: "https://splist.fm" },
